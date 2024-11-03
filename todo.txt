@@ -1,0 +1,34 @@
+Stage 1:
+- Create basic functionality.
+
+Models:
+ x FoodItem: Represents a food item with name, amount, unit, expiration date, and cost.
+ x Fridge: Manages a collection of ingredients stored in the fridge, tracking their quantities.
+
+Services:
+  FridgeManager: Handles adding/removing ingredients, searching for items, and calculating fridge contents/value, boolean expired.
+
+Utilities:
+ x DateUtility: Provides helper methods for date handling (e.g., checking expiration, formatting dates).
+
+Stage 2 (with same classes just improved):
+- Improve preexisting classes.
+- Add new functionality.
+
+Models:
+  FoodItem: Same as stage 1.
+  Fridge: Same as stage 1.
+
+  Recipe: Represents a recipe with a name, description, method, and list of ingredients.
+    - HashMap?
+  Cookbook: Stores multiple recipes for later use.
+    - ArrayList.
+
+Services:
+  FridgeManager: Checks ingredient quantities for recipes, manages fridge contents, and integrates with RecipeManager.
+    - Use HashMap?
+  RecipeManager: Adds/removes recipes, checks if ingredients are available for a recipe, and suggests dishes.
+    - Use HashMap?
+
+Utilities:
+  DateUtility: Same as stage 1.
