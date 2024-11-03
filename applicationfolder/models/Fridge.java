@@ -22,20 +22,6 @@ public class Fridge {
     this.fridgeContents = new HashMap<>();
   }
 
-  /**
-   * MOVE TO FRIDGE MANAGER!!!!
-   * !!!!!!!!!!!!!!!!!
-   * 
-   * Adds an ingredient to the fridge along with a specified amount.
-   * If the ingredient already exists, it updates the amount.
-   *
-   * @param ingredient the Ingredient object to be added to the fridge.
-   * @param amount     the amount of the ingredient to be added.
-   */
-  public void addIngredientToFridge(Ingredient ingredient, int amount) {
-    fridgeContents.put(ingredient, amount);
-  }
-
   // Copy to FridgeManager for clarity (do not remove here,
   // just add the getFridgeContents to another getter in Manager)
   // Gets entire content of the fridgeContents HashMap.
