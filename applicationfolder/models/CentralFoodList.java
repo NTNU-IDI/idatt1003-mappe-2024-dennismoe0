@@ -39,4 +39,8 @@ public class CentralFoodList {
   public Ingredient getIngredient(String name) {
     return foodList.get(name);
   }
+
+  public Ingredient getIngredientByName(String itemName) {
+    return foodList.get(itemName);
+  }
 }

@@ -31,14 +31,17 @@ public class TestClient {
 
       // Display fridge contents
       System.out.println("\nFridge Contents:");
-      fridge.getFridgeContents().forEach((ingredient, amount) -> 
-        System.out.println(ingredient.getItemName() + ": " + amount + " units"));
+      fridge.getFridgeContents()
+          .forEach((ingredient, amount) -> System.out.println(ingredient.getItemName() + ": " + amount + " units"));
 
       // Check ingredient amounts
       System.out.println("\nCheck specific ingredient amounts:");
-      System.out.println("Amount of Apple in fridge: " + fridge.getIngredientAmount(manager.getIngredientByName("Apple")));
-      System.out.println("Amount of Banana in fridge: " + fridge.getIngredientAmount(manager.getIngredientByName("Banana")));
-      System.out.println("Amount of Orange in fridge (not added): " + fridge.getIngredientAmount(manager.getIngredientByName("Orange")));
+      System.out
+          .println("Amount of Apple in fridge: " + fridge.getIngredientAmount(manager.getIngredientByName("Apple")));
+      System.out
+          .println("Amount of Banana in fridge: " + fridge.getIngredientAmount(manager.getIngredientByName("Banana")));
+      System.out.println("Amount of Orange in fridge (not added): "
+          + fridge.getIngredientAmount(manager.getIngredientByName("Orange")));
 
     } catch (ParseException e) {
       System.out.println("Error creating ingredients: " + e.getMessage());

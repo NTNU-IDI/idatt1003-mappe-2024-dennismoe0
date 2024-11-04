@@ -12,7 +12,8 @@ public class DateUtility {
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
   /**
-   * Formats a Date object into a string representation using the format "dd-MM-yyyy".
+   * Formats a Date object into a string representation using the format
+   * "dd-MM-yyyy".
    *
    * @param date the Date object to be formatted
    * @return a formatted date string in the "dd-MM-yyyy" format

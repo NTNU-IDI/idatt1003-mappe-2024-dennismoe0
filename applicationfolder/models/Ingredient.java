@@ -19,15 +19,16 @@ public class Ingredient {
   /**
    * Constructor to initialise Ingredient.
    *
-   * @param itemName       Name of the food item/ingredient.
-   * @param itemType       Type of ingredient, i.e. ground meat.
-   * @param itemWeight     Weight of the item.
-   * @param itemMeasuringUnit  Measuring unit of ingredient, i.e. g for grams, or L
-   *                       for
-   *                       liter.
-   * @param expirationDate Expiration date in string format dd-MM-yyyy.
-   * @param costPerItem    Cost per item in NOK, i.e. 400 NOK for 400g of ground
-   *                       beef.
+   * @param itemName          Name of the food item/ingredient.
+   * @param itemType          Type of ingredient, i.e. ground meat.
+   * @param itemWeight        Weight of the item.
+   * @param itemMeasuringUnit Measuring unit of ingredient, i.e. g for grams, or L
+   *                          for
+   *                          liter.
+   * @param expirationDate    Expiration date in string format dd-MM-yyyy.
+   * @param costPerItem       Cost per item in NOK, i.e. 400 NOK for 400g of
+   *                          ground
+   *                          beef.
    * @throws ParseException if the date string is invalid.
    */
   public Ingredient(String itemName, String itemType, int itemWeight,
@@ -62,6 +63,10 @@ public class Ingredient {
     return itemMeasuringUnit;
   }
 
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+
   public int getCostPerItem() {
     return costPerItem;
   }
@@ -78,8 +83,8 @@ public class Ingredient {
   @Override
   public String toString() { // Override to print full String.
     return "Ingredient: " + " itemName = '" + itemName + '\'' + ", itemType = " + itemType
-      + ", itemWeight = " + itemWeight + ", itemAmount = " + ", costPerItem = " + costPerItem
-      + " NOK";
+        + ", itemWeight = " + itemWeight + ", itemAmount = " + ", costPerItem = " + costPerItem
+        + " NOK";
   }
 
   /**
@@ -88,7 +93,7 @@ public class Ingredient {
   public static void main(String[] args) {
     try {
       Ingredient groundChicken = new Ingredient("Ground Chicken", "Ground Meat",
-                                             400, "grams", "15-11-2024", 45);
+          400, "grams", "15-11-2024", 45);
       System.out.println(groundChicken);
     } catch (ParseException e) {
       System.out.println("Invalid date format");

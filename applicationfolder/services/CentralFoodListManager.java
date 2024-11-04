@@ -24,21 +24,21 @@ public class CentralFoodListManager {
   /**
    * Creates a new ingredient and adds it to the CentralFoodList.
    *
-   * @param itemName           Name of the food item/ingredient.
-   * @param itemType           Type of the ingredient (e.g., Ground Meat).
-   * @param itemWeight         Weight of the ingredient.
-   * @param itemMeasuringUnit  Measuring unit (e.g., grams, liters).
-   * @param expirationDate     Expiration date in string format (dd-MM-yyyy).
-   * @param costPerItem        Cost per item in NOK.
-   * @throws ParseException    if the expiration date format is invalid.
+   * @param itemName          Name of the food item/ingredient.
+   * @param itemType          Type of the ingredient (e.g., Ground Meat).
+   * @param itemWeight        Weight of the ingredient.
+   * @param itemMeasuringUnit Measuring unit (e.g., grams, liters).
+   * @param expirationDate    Expiration date in string format (dd-MM-yyyy).
+   * @param costPerItem       Cost per item in NOK.
+   * @throws ParseException if the expiration date format is invalid.
    */
   public void createAndAddIngredient(String itemName, String itemType, int itemWeight,
-                                     String itemMeasuringUnit, String expirationDate, 
-                                     int costPerItem) throws ParseException {
+      String itemMeasuringUnit, String expirationDate,
+      int costPerItem) throws ParseException {
     // Create the new ingredient
     Ingredient newIngredient = new Ingredient(itemName, itemType,
-                                              itemWeight, itemMeasuringUnit,
-                                              expirationDate, costPerItem);
+        itemWeight, itemMeasuringUnit,
+        expirationDate, costPerItem);
 
     // Add the ingredient to the CentralFoodList
     centralFoodList.addIngredient(newIngredient);
