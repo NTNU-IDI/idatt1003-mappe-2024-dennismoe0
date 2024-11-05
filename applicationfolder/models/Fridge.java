@@ -5,6 +5,8 @@ import java.util.HashMap;
 /**
  * Class representing a fridge that stores ingredients and tracks their
  * quantities.
+ * 
+ * @author Dennis Moe
  */
 public class Fridge {
 
@@ -39,4 +41,6 @@ public class Fridge {
   public int getIngredientAmount(String itemName) {
     return fridgeContents.getOrDefault(itemName, 0);
   }
+
+  // Tester in Manager
 }

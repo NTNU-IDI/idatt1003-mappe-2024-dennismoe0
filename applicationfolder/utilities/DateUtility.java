@@ -1,14 +1,17 @@
 package applicationfolder.utilities;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Utility class for handling date formatting and parsing operations.
+ *
+ * @author Dennis Moe
  */
 public class DateUtility {
 
-  // Define the format pattern
+  // Define the format
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
   /**
@@ -29,7 +32,8 @@ public class DateUtility {
    * @return the parsed Date object
    * @throws Exception if the date string is not in the correct format
    */
-  public static Date parseDate(String dateString) throws Exception {
+  // Changed from Exception to ParseException
+  public static Date parseDate(String dateString) throws ParseException {
     return dateFormat.parse(dateString);
   }
 }

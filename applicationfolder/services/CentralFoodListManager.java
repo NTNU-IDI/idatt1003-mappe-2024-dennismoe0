@@ -7,6 +7,8 @@ import java.text.ParseException;
 /**
  * Manager class for handling methods related to the CentralFoodList.
  * This includes creating new ingredients and adding them to the central list.
+ *
+ * @author Dennis Moe
  */
 public class CentralFoodListManager {
 

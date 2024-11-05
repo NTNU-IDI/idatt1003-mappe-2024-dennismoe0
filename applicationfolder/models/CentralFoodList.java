@@ -5,6 +5,8 @@ import java.util.HashMap;
 /**
  * Class representing a central list of all available ingredients.
  * This list serves as a reference for all possible ingredients in the system.
+ * 
+ * @author Dennis Moe
  */
 public class CentralFoodList {
 

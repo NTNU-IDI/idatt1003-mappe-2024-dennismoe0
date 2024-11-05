@@ -4,9 +4,10 @@ Stage 1:
 Models:
  x FoodItem: Represents a food item with name, amount, unit, expiration date, and cost.
  x Fridge: Manages a collection of ingredients stored in the fridge, tracking their quantities.
+ - Changed to that the Fridge holds the amount instead.
 
 Services:
-  FridgeManager: Handles adding/removing ingredients, searching for items, and calculating fridge contents/value, boolean expired.
+  x FridgeManager: Handles adding/removing ingredients, searching for items, and calculating fridge contents/value,  expired.
 
 Utilities:
  x DateUtility: Provides helper methods for date handling (e.g., checking expiration, formatting dates).
@@ -14,6 +15,11 @@ Utilities:
 Stage 2 (with same classes just improved): SJEKK NEDENFOR FØR ENDRINGER
 - Improve preexisting classes.
 - Add new functionality.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! NEED TO ADD FUNCTIONALITY TO USE parts of weight.
+  i.e. Use 400ml of 1L of milk = 600ml left of the milk.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Models:
   FoodItem: Same as stage 1.

@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * Class that represents a food item (ingredient) with name, type, weight,
  * measuring unit, expiration date and cost per item.
+ * 
+ * @author Dennis Moe
  */
 public class Ingredient {
   private final String itemName;
@@ -37,12 +39,8 @@ public class Ingredient {
     this.itemType = itemType;
     this.itemWeight = itemWeight;
     this.itemMeasuringUnit = itemMeasuringUnit;
-    try {
-      // Uses DateUtlity to convert into date object.
-      this.expirationDate = DateUtility.parseDate(expirationDate);
-    } catch (Exception e) {
-      throw new ParseException("Invalid date format", 0);
-    }
+    // Removed try-catch from the Ingredient class
+    this.expirationDate = DateUtility.parseDate(expirationDate);
     this.costPerItem = costPerItem;
   }
 
@@ -96,7 +94,7 @@ public class Ingredient {
           400, "grams", "15-11-2024", 45);
       System.out.println(groundChicken);
     } catch (ParseException e) {
-      System.out.println("Invalid date format");
+      System.out.println("Invalid date format.");
     }
   }
 }

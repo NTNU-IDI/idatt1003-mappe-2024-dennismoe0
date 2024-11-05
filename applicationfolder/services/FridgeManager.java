@@ -3,24 +3,23 @@ package applicationfolder.services;
 import applicationfolder.models.CentralFoodList;
 import applicationfolder.models.Fridge;
 import applicationfolder.models.Ingredient;
-import applicationfolder.utilities.DateUtility;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Manages operations related to the fridge and its contents, including adding
  * ingredients,
  * calculating total value, and retrieving ingredient details.
+ *
+ * @author Dennis Moe
  */
 public class FridgeManager {
 
-  private Fridge fridge;
-  private CentralFoodList centralFoodList;
+  private final Fridge fridge;
+  private final CentralFoodList centralFoodList;
 
   /**
    * Constructor for the FridgeManager class.
@@ -46,7 +45,22 @@ public class FridgeManager {
 
     // Adds the current amount (if any) and the new amount.
     fridge.getFridgeContents().put(itemName, currentAmount + amount);
-    System.out.println(amount + " " + itemName + " has been added to the Fridge");
+    System.out.println(amount + " " + itemName + " has been added to the fridge.");
+  }
+
+  /**
+   * Removes a specified amount of an ingredient from the fridge.
+   *
+   * @param itemName The name of the ingredient to be removed.
+   * @param amount   The amount to be removed.
+   */
+  public void removeIngredientFromFridge(String itemName, int amount) {
+    // Checks if there is a preexisting amount
+    int currentAmount = fridge.getFridgeContents().getOrDefault(this, 0);
+
+    // Removes amount from fridge
+    fridge.getFridgeContents().put(itemName, currentAmount - amount);
+    System.err.println(amount + " " + itemName + " has been removed from the fridge.");
   }
 
   /**
@@ -91,6 +105,7 @@ public class FridgeManager {
 
   /**
    * Searches for an ingredient in the fridge and prints its amount.
+   * Might be replaced with .containsValue or .containsKey (HashMap)
    *
    * @param ingredient The Ingredient object to search for in the fridge.
    */
@@ -142,9 +157,14 @@ public class FridgeManager {
     return expiredItems;
   }
 
-  // Same logic as in findValueOfFridge()
-  // However it uses the findExpiredItems method to find a list instead
-  // of the contents of the fridge.
+  /**
+   * Find the value of all expired ingredients with the same logic as
+   * FindValueOfFridge,
+   * but iterates across the list made by findExpiredItems instead of the entire
+   * fridge.
+   *
+   * @return Total value of expired ingredients in the fridge.
+   */
   public int findValueOfExpiredItems() {
     int expiredValue = 0;
 
@@ -163,4 +183,23 @@ public class FridgeManager {
     return expiredValue;
   }
 
+  public static void main(String[] args) {
+
+    Fridge fridge = new Fridge();
+    CentralFoodList centralFoodList = new CentralFoodList();
+
+    FridgeManager fridgeManager = new FridgeManager(fridge, centralFoodList);
+
+    try {
+      Ingredient wholeMilk = new Ingredient("Whole Milk", "Milk", 1000, "ml", "06-11-2024", 35);
+      Ingredient groundBeef = new Ingredient("Ground Beef", "Meat", 400, "grams", "04-11-2024", 59);
+      Ingredient pastaSheets = new Ingredient("Pasta Sheets", "Pasta",
+          200, "grams", "01-02-2025", 20);
+    } catch (ParseException e) {
+      System.out.println("Invalid date format.");
+    }
+
+    centralFoodList.addIngredient(wholeMilk);
+
+  }
 }
