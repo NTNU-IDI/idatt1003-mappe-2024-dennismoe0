@@ -1,9 +1,11 @@
 package applicationfolder.models;
 
+import java.util.HashMap;
+
 /**
  * Class that represents a recipe with a name, description and instructions
  * for making the recipe.
- * 
+ *
  * @author Dennis Moe
  */
 public class Recipe {
@@ -11,6 +13,7 @@ public class Recipe {
   private final String recipeName;
   private final String recipeDescription;
   private final String recipeInstructions;
+  private HashMap<Ingredient, Integer> ingredientsInRecipe;
 
   /**
    * Constructor to initialize Recipe.
@@ -24,6 +27,7 @@ public class Recipe {
     this.recipeName = recipeName;
     this.recipeDescription = recipeDescription;
     this.recipeInstructions = recipeInstructions;
+    this.ingredientsInRecipe = new HashMap<>();
   }
 
   // Getters
@@ -37,6 +41,10 @@ public class Recipe {
 
   public String getRecipeInstructions() {
     return recipeInstructions;
+  }
+
+  public HashMap<Ingredient, Integer> getIngredientsInRecipe() {
+    return ingredientsInRecipe;
   }
 
   @Override
