@@ -34,9 +34,16 @@ public class CentralFoodListManager {
    * @param costPerItem       Cost per item in NOK.
    * @throws ParseException if the expiration date format is invalid.
    */
-  public void createAndAddIngredient(String itemName, String itemType, int itemWeight,
+  public String createAndAddIngredient(String itemName, String itemType, int itemWeight,
       String itemMeasuringUnit, String expirationDate,
       int costPerItem) throws ParseException {
+
+    Ingredient existingIngredient = centralFoodList.getIngredient(itemName);
+
+    // Checks if the Ingredient already exists and returns boolean
+    if (existingIngredient != null) {
+      return "'" + itemName + "' is already registered. Maybe add to fridge?";
+    }
     // Create the new ingredient
     Ingredient newIngredient = new Ingredient(itemName, itemType,
         itemWeight, itemMeasuringUnit,
@@ -44,6 +51,8 @@ public class CentralFoodListManager {
 
     // Add the ingredient to the CentralFoodList
     centralFoodList.addIngredient(newIngredient);
+
+    return "'" + itemName + "' has been added to the registry.";
   }
 
   /**
