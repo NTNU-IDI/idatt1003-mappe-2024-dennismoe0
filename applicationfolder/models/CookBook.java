@@ -1,6 +1,9 @@
 package applicationfolder.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a CookBook with a name, description, type, and a HashMap
@@ -85,22 +88,14 @@ public class CookBook {
     return cookBookType;
   }
 
-  /**
-   * Gets all recipes and their presence status in the CookBook.
-   *
-   * @return a HashMap of recipes with their inclusion status in the cookbook
-   */
-  public HashMap<Recipe, Boolean> getRecipesInCookBook() {
-    return recipesInCookBook;
-  }
+  public List<Recipe> getAllRecipesInCookBook() {
+    List<Recipe> activeRecipes = new ArrayList<>();
 
-  /**
-   * Returns a string representation of the CookBook, showing only its name.
-   *
-   * @return a string with the name of the cookbook
-   */
-  @Override
-  public String toString() {
-    return "Cook Book: '" + cookBookName + "'";
+    for (Map.Entry<Recipe, Boolean> entry : recipesInCookBook.entrySet()) {
+      if (entry.getValue()) {
+        activeRecipes.add(entry.getKey());
+      }
+    }
+    return activeRecipes;
   }
 }

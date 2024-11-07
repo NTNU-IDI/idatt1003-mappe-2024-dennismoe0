@@ -2,6 +2,8 @@ package applicationfolder.services;
 
 import applicationfolder.models.CentralCookBookList;
 import applicationfolder.models.CookBook;
+import applicationfolder.models.Recipe;
+import java.util.List;
 
 /**
  * Manages the operations for a central list of CookBooks, allowing for
@@ -31,12 +33,14 @@ public class CentralCookBookListManager {
    */
   public String createAndAddCookBook(String cookBookName, String cookBookDescription,
       String cookBookType) {
+    // Check if a CookBook with this name already exists
     CookBook existingCookBook = centralCookBookList.getCookBookByName(cookBookName);
 
     if (existingCookBook != null) {
       return "'" + cookBookName + "' is already registered.";
     }
 
+    // Create and add a new CookBook if it does not exist
     CookBook newCookBook = new CookBook(cookBookName, cookBookDescription, cookBookType);
     centralCookBookList.addCookBook(newCookBook);
 
@@ -51,12 +55,14 @@ public class CentralCookBookListManager {
    * @return a message indicating if the CookBook was removed or not found
    */
   public String removeExistingCookBook(String cookBookName) {
+    // Check if the CookBook exists before removing
     CookBook existingCookBook = centralCookBookList.getCookBookByName(cookBookName);
 
     if (existingCookBook == null) {
       return "There is no cook book with that name.";
     }
 
+    // Proceed with removal if CookBook exists
     centralCookBookList.removeCookBook(existingCookBook);
     return "'" + cookBookName + "' removed from the registry.";
   }
@@ -65,9 +71,43 @@ public class CentralCookBookListManager {
    * Retrieves a CookBook by its name from the central list.
    *
    * @param cookBookName the name of the CookBook to retrieve
-   * @return the CookBook if found; otherwise, null
+   * @return the CookBook if found; otherwise, returns a message if not found
    */
-  public CookBook getCookBookByName(String cookBookName) {
-    return centralCookBookList.getCookBookByName(cookBookName);
+  public String getCookBookByName(String cookBookName) {
+    // Check if the CookBook exists before retrieving
+    CookBook cookBook = centralCookBookList.getCookBookByName(cookBookName);
+    if (cookBook == null) {
+      return "Cook book '" + cookBookName + "' does not exist.";
+    }
+    return cookBook.toString(); // or return cookBook directly if needed
+  }
+
+  /**
+   * Lists all recipes in a specified CookBook.
+   *
+   * @param cookBookName the name of the CookBook
+   * @return a message listing all recipes in the CookBook or indicating if the
+   *         CookBook is empty or does not exist
+   */
+  public String listAllRecipesInCookBook(String cookBookName) {
+    // Retrieve the CookBook by name and check if it exists
+    CookBook targetCookBook = centralCookBookList.getCookBookByName(cookBookName);
+    if (targetCookBook == null) {
+      return "Cook book '" + cookBookName + "' does not exist.";
+    }
+
+    // Retrieve recipes in the CookBook
+    List<Recipe> recipesInCookBook = targetCookBook.getAllRecipesInCookBook();
+
+    // Format the output message based on the existence of recipes
+    if (recipesInCookBook.isEmpty()) {
+      return "Cook book '" + cookBookName + "' is empty.";
+    } else {
+      StringBuilder recipeList = new StringBuilder("Recipes in '" + cookBookName + "':\n");
+      for (Recipe recipe : recipesInCookBook) {
+        recipeList.append(" -> ").append(recipe.getRecipeName()).append("\n");
+      }
+      return recipeList.toString();
+    }
   }
 }

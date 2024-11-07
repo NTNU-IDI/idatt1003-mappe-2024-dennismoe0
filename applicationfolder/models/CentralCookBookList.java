@@ -52,7 +52,7 @@ public class CentralCookBookList {
    *
    * @return a collection of all CookBooks in the list
    */
-  public HashMap<String, CookBook> getAllCookBooks() {
+  public HashMap<String, CookBook> getAllCookBooksInList() {
     return cookBookList;
   }
 }

@@ -45,7 +45,7 @@ public class CookBookManager {
 
   // Lists all cookbooks in the central list
   public List<CookBook> listAllCookBooks() {
-    return centralCookBookList.getAllCookBooks();
+    return new ArrayList<>(centralCookBookList.getAllCookBooksInList().values());
   }
 
   // Adds a recipe to a specific cookbook
@@ -68,12 +68,4 @@ public class CookBookManager {
     return "Removed recipe '" + recipe.getRecipeName() + "' from cookbook '" + cookBookName + "'.";
   }
 
-  // Lists all recipes in a specific cookbook
-  public List<Recipe> listAllRecipesInCookBook(String cookBookName) {
-    CookBook targetCookBook = centralCookBookList.getCookBookByName(cookBookName);
-    if (targetCookBook == null) {
-      return new ArrayList<>();
-    }
-    return targetCookBook.getAllRecipes();
-  }
 }
