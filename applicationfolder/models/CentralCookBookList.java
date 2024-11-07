@@ -46,4 +46,13 @@ public class CentralCookBookList {
   public CookBook getCookBookByName(String cookBookName) {
     return cookBookList.get(cookBookName);
   }
+
+  /**
+   * Retrieves all CookBooks in the central list.
+   *
+   * @return a collection of all CookBooks in the list
+   */
+  public HashMap<String, CookBook> getAllCookBooks() {
+    return cookBookList;
+  }
 }

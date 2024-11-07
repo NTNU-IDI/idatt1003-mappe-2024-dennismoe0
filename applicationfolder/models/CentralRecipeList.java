@@ -51,4 +51,13 @@ public class CentralRecipeList {
   public Recipe getRecipeByName(String recipeName) {
     return recipeList.get(recipeName); // Retrieve the recipe using the recipeName as the key
   }
+
+  /**
+   * Retrieves all recipes in the central recipe list.
+   *
+   * @return A HashMap containing all recipes in the list.
+   */
+  public HashMap<String, Recipe> getAllRecipes() {
+    return recipeList;
+
 }
