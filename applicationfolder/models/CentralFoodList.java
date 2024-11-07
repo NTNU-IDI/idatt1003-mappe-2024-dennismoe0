@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Class representing a central list of all available ingredients.
  * This list serves as a reference for all possible ingredients in the system.
- * 
+ *
  * @author Dennis Moe
  */
 public class CentralFoodList {
@@ -33,16 +33,51 @@ public class CentralFoodList {
   }
 
   /**
-   * Retrieves an ingredient from the central food list by its name.
+   * Removes an ingredient from the list.
    *
-   * @param name the name of the ingredient to search for
-   * @return the Ingredient object if found, or null if not found
+   * @param ingredient Ingredient to be removed.
    */
-  public Ingredient getIngredient(String name) {
-    return foodList.get(name);
+  public void removeIngredient(Ingredient ingredient) {
+    foodList.remove(ingredient.getItemName());
   }
 
+  /**
+   * Gets the name of an Ingredient object in string form.
+   *
+   * @param itemName the string name of an Ingredient.
+   * @return the Ingredient object form the foodList HashMap.
+   */
   public Ingredient getIngredientByName(String itemName) {
     return foodList.get(itemName);
+  }
+
+  /**
+   * Retrieves all information about an ingredient from the CentralFoodList.
+   * This method is static, so it requires a CentralFoodList instance to function
+   * properly.
+   *
+   * @param itemName        The name of the ingredient to search for.
+   * @param centralFoodList An instance of the CentralFoodList to retrieve the
+   *                        ingredient from.
+   * @return A formatted string containing all the details about the ingredient,
+   *         or a message if the ingredient is not found.
+   */
+  public static String getIngredientInfo(String itemName, CentralFoodList centralFoodList) {
+    Ingredient ingredient = centralFoodList.getIngredientByName(itemName);
+    if (ingredient == null) {
+      return "There is not ingredient with that name.";
+    }
+
+    StringBuilder ingredientInfo = new StringBuilder();
+    ingredientInfo.append("Ingredient info:\n\r");
+    ingredientInfo.append("Name: ").append(ingredient.getItemName()).append(".\n");
+    ingredientInfo.append("Type: ").append(ingredient.getItemType()).append(".\n");
+    ingredientInfo.append("Weight: ").append(ingredient.getItemWeight()).append(" ")
+        .append(ingredient.getItemMeasuringUnit()).append(".\n");
+    ingredientInfo.append("Expiration Date: ")
+        .append(ingredient.getFormattedExpirationDate()).append(".\n");
+    ingredientInfo.append("Cost per Item: ").append(ingredient.getCostPerItem()).append(" NOK.");
+
+    return ingredientInfo.toString();
   }
 }

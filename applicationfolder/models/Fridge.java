@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Class representing a fridge that stores ingredients and tracks their
  * quantities.
- * 
+ *
  * @author Dennis Moe
  */
 public class Fridge {

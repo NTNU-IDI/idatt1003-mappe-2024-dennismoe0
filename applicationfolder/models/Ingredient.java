@@ -7,7 +7,9 @@ import java.util.Date;
 /**
  * Class that represents a food item (ingredient) with name, type, weight,
  * measuring unit, expiration date and cost per item.
- * 
+ * I use "item" in the Ingredient class to seperate them from future Ingredient
+ * methods.
+ *
  * @author Dennis Moe
  */
 public class Ingredient {
@@ -80,9 +82,7 @@ public class Ingredient {
 
   @Override
   public String toString() { // Override to print full String.
-    return "Ingredient: " + " itemName = '" + itemName + '\'' + ", itemType = " + itemType
-        + ", itemWeight = " + itemWeight + ", itemAmount = " + ", costPerItem = " + costPerItem
-        + " NOK";
+    return itemName;
   }
 
   /**

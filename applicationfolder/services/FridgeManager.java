@@ -134,27 +134,32 @@ public class FridgeManager {
   public List<String> findExpiredItems() {
     List<String> expiredItems = new ArrayList<>();
 
-    // Get the date today
-    Date todaysDate = new Date();
-
     // Iterates for each item in the fridge by name
     for (String itemName : fridge.getFridgeContents().keySet()) {
-      // Find matching Ingredient object
-      Ingredient ingredient = centralFoodList.getIngredient(itemName);
-
-      // If it exists, gets expiration date
-      if (ingredient != null) {
-        Date expirationDate = ingredient.getExpirationDate();
-
-        // If the expiration date is before todays date it adds it to the list.
-        if (expirationDate.before(todaysDate)) {
-          expiredItems.add(itemName);
-        }
+      // Use the isExpired method to check if the item is expired
+      if (isExpired(itemName)) {
+        expiredItems.add(itemName);
       }
     }
 
-    // Returns list of expired items.
+    // Returns list of expired items
     return expiredItems;
+  }
+
+  // Specific ingredient
+  public boolean isExpired(String itemName) {
+    Ingredient ingredient = centralFoodList.getIngredientByName(itemName);
+    if (ingredient == null) {
+      // If the ingredient does not exist, assume it's not expired
+      return false;
+    }
+    Date expirationDate = ingredient.getExpirationDate();
+    if (expirationDate == null) {
+      // If there's no expiration date, assume it's not expired
+      return false;
+    }
+    Date currentDate = new Date();
+    return currentDate.after(expirationDate);
   }
 
   /**
