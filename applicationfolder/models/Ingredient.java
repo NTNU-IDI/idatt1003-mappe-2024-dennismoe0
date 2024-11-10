@@ -6,15 +6,18 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * Class that represents a food item (ingredient) with name, type, weight,
- * measuring unit, quantity, expiration date, and cost per item.
+ * Class that represents a food item (ingredient) with name, type, original
+ * weight,
+ * measuring unit, expiration date, and cost per item.
+ * Each ingredient can calculate its remaining "packs" based on the original
+ * weight.
  *
  * @author Dennis Moe
  */
 public class Ingredient {
   private final String itemName;
   private final String itemType;
-  private final int itemWeight;
+  private final int itemWeight; // Original weight, used as base for estimating count
   private final String itemMeasuringUnit;
   private double quantity;
   private final Date expirationDate;
@@ -25,10 +28,10 @@ public class Ingredient {
    *
    * @param itemName          Name of the food item/ingredient.
    * @param itemType          Type of ingredient, e.g., ground meat.
-   * @param itemWeight        Weight of the item.
-   * @param itemMeasuringUnit Measuring unit of ingredient, e.g., "g" for grams,
-   *                          or "L" for liters.
-   * @param quantity          Quantity of the ingredient.
+   * @param itemWeight        Original weight of the item in its measuring unit.
+   * @param itemMeasuringUnit Measuring unit of the ingredient, e.g., "g" for
+   *                          grams, "L" for liters.
+   * @param quantity          Initial quantity of the ingredient.
    * @param expirationDate    Expiration date in string format "dd-MM-yyyy".
    * @param costPerItem       Cost per item in NOK.
    * @throws ParseException if the date string is invalid.
@@ -75,12 +78,13 @@ public class Ingredient {
   }
 
   /**
-   * Gets the formatted string of expirationDate.
+   * Calculates the estimated number of "packs" or "units" based on the original
+   * item weight.
    *
-   * @return Expiration date in string format "dd-MM-yyyy".
+   * @return The estimated count as a fraction of the original weight.
    */
-  public String getFormattedExpirationDate() {
-    return DateUtility.formatDate(expirationDate);
+  public double getEstimatedCount() {
+    return quantity / itemWeight;
   }
 
   /**
@@ -91,7 +95,7 @@ public class Ingredient {
    * @return true if the quantity was successfully deducted, false otherwise.
    */
   public boolean deductQuantity(double amount, String measuringUnit) {
-    // Converts the amount to the ingredient's base unit
+    // Convert the amount to the ingredient's base unit
     double amountInBaseUnit = UnitConverter.convertUnit(amount,
         measuringUnit, this.itemMeasuringUnit);
 
@@ -112,27 +116,24 @@ public class Ingredient {
    *                                  or compatible units.
    */
   public void combineQuantity(Ingredient otherIngredient) {
-    // Check if both ingredients have the same name
     if (!this.itemName.equalsIgnoreCase(otherIngredient.getItemName())) {
       throw new IllegalArgumentException("Ingredients must have the same name to combine.");
     }
 
-    // Check if both ingredients have compatible units
     if (!UnitConverter.areUnitsCompatible(this.itemMeasuringUnit,
         otherIngredient.getItemMeasuringUnit())) {
       throw new IllegalArgumentException("Ingredients must have compatible units to combine.");
     }
 
-    // Convert the other ingredient's quantity to this ingredient's unit and add it
     double otherQuantityInBaseUnit = UnitConverter.convertUnit(
-        otherIngredient.getQuantity(),
-        otherIngredient.getItemMeasuringUnit(), this.itemMeasuringUnit);
+        otherIngredient.getQuantity(), otherIngredient.getItemMeasuringUnit(),
+        this.itemMeasuringUnit);
     this.quantity += otherQuantityInBaseUnit;
   }
 
   @Override
   public String toString() {
-    return itemName + ": " + quantity + " " + itemMeasuringUnit
-        + ", expires on " + getFormattedExpirationDate();
+    return itemName + ": " + quantity + " " + itemMeasuringUnit + " (" + getEstimatedCount()
+        + "), expires on " + getExpirationDate();
   }
 }
