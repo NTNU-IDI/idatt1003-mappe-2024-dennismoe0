@@ -1,0 +1,19 @@
+In recipemanager or whater I need to add a method that uses the closest to expiration first.
+
+  / Need method to remove an ingredient if quantity is 0 in Fridge.
+
+  New structure for ingredients/fridge:
+  - Ingredient will store base weight, removing quantity and expiration date.
+  - Fridge will now be responsible for totalQuantity and expiration dates.
+    - Ingredient will be the base ingredient, but when added to the Fridge it becomes a unique instance of the object.
+    - The Fridge will store the amount in it's main unit (i.e grams), to make it possible for recipes to use only parts of the Ingredient.
+    - The Recipe will use the items closest to expiring, 
+       if there is only expired items it will give the user a warning, if one is expired and one is not it will also tell the user.
+
+
+Ingredient -> FoodList -> FridgeItem -> Fridge.
+When being added to the Fridge a FridgeItem will be made, not before.
+
+
+Recipe:
+- If there isnt enough quantity it will say so + the needed amont (170g of beef left, needs 200 = 30g needed)
