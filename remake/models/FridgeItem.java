@@ -4,16 +4,20 @@ import utilities.DateValidation;
 
 /**
  * Represents an instance of an Ingredient in the Fridge.
- * The unique Ingredient can share name, but will be its own to seperate the
- * objects clearly.
+ * The unique Ingredient can share a name, but each instance has its own
+ * properties, such as expiration date and ID.
+ * 
+ * @author Dennis Moe
  */
 public class FridgeItem {
+  private static int idCounter = 1; // Static counter for unique ID assignment.
+  private final int id; // Unique ID for each FridgeItem.
   private final Ingredient ingredient;
   private double quantity;
   private final long expirationDate;
 
   /**
-   * Constructs a new FridgeItem.
+   * Constructs a new FridgeItem with a unique ID.
    *
    * @param ingredient     the ingredient to be added to the Fridge/make a new
    *                       instance.
@@ -22,12 +26,16 @@ public class FridgeItem {
    * @param expirationDate the expiration date of the ingredient.
    */
   public FridgeItem(Ingredient ingredient, double quantity, long expirationDate) {
+    this.id = idCounter++;
     this.ingredient = ingredient;
     this.quantity = ingredient.getIngredientBaseWeight();
     this.expirationDate = expirationDate;
   }
 
   // Getters
+  public int getId() {
+    return id;
+  }
 
   public Ingredient getIngredient() {
     return ingredient;
@@ -46,8 +54,26 @@ public class FridgeItem {
   }
 
   // Setters
-
   public void setQuantity(double quantity) {
     this.quantity = quantity;
+  }
+
+  /**
+   * Adds a specified amount to the current quantity.
+   *
+   * @param amount the amount to add to the current quantity.
+   */
+  public void addQuantity(double amount) {
+    this.quantity += amount;
+  }
+
+  /**
+   * Deducts a specified amount from the current quantity.
+   * Ensures that the quantity does not go below zero.
+   *
+   * @param amount the amount to deduct from the current quantity.
+   */
+  public void deductQuantity(double amount) {
+    this.quantity = Math.max(0, this.quantity - amount);
   }
 }
