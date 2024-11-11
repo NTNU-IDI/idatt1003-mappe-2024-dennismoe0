@@ -50,6 +50,13 @@ public class UnitUtility {
     }
   }
 
+  /**
+   * Checks if the conversion between two measuring units is valid.
+   *
+   * @param fromMeasuringUnit the unit to convert from
+   * @param toMeasuringUnit   the unit to convert to
+   * @return true if the conversion is valid, false otherwise
+   */
   public static boolean isValidCompatability(String fromMeasuringUnit, String toMeasuringUnit) {
     if (fromMeasuringUnit.equals(toMeasuringUnit)) {
       return true;
