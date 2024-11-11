@@ -1,5 +1,7 @@
 package models;
 
+import utilities.DateValidation;
+
 /**
  * Represents an instance of an Ingredient in the Fridge.
  * The unique Ingredient can share name, but will be its own to seperate the
@@ -8,7 +10,7 @@ package models;
 public class FridgeItem {
   private final Ingredient ingredient;
   private double quantity;
-  private final String expirationDate;
+  private final long expirationDate;
 
   /**
    * Constructs a new FridgeItem.
@@ -19,7 +21,7 @@ public class FridgeItem {
    *                       the Fridge, same as the base weight of the ingredient.
    * @param expirationDate the expiration date of the ingredient.
    */
-  public FridgeItem(Ingredient ingredient, double quantity, String expirationDate) {
+  public FridgeItem(Ingredient ingredient, double quantity, long expirationDate) {
     this.ingredient = ingredient;
     this.quantity = ingredient.getIngredientBaseWeight();
     this.expirationDate = expirationDate;
@@ -35,35 +37,17 @@ public class FridgeItem {
     return quantity;
   }
 
-  public String getExpirationDate() {
+  public long getExpirationDate() {
     return expirationDate;
+  }
+
+  public String getFormattedExpirationDate() {
+    return DateValidation.formatDate(expirationDate);
   }
 
   // Setters
 
   public void setQuantity(double quantity) {
     this.quantity = quantity;
-  }
-
-  /**
-   * Deducts the specified amount from the quantity.
-   *
-   * @param amount the amount to deduct
-   */
-  public void deductQuantity(double amount) {
-    if (amount <= quantity) {
-      quantity -= amount;
-    } else {
-      quantity = 0;
-    }
-  }
-
-  /**
-   * Adds the specified amount to the quantity.
-   *
-   * @param amount the amount to add
-   */
-  public void addQuantity(double amount) {
-    quantity += amount;
   }
 }

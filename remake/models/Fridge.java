@@ -30,4 +30,40 @@ public class Fridge {
     fridgeContents = new HashMap<>();
     fridgeQuantities = new HashMap<>();
   }
+
+  /**
+   * Adds a new instance of an Ingredient (FridgeItem) to the Fridge.
+   *
+   * @param fridgeItem the new instance of the Ingredient to add to the Fridge.
+   */
+  public void addFridgeItem(FridgeItem fridgeItem) {
+    String ingredientName = fridgeItem.getIngredient().getIngredientName();
+
+    fridgeContents.computeIfAbsent(ingredientName, k -> new ArrayList<>())
+        .add(fridgeItem); // If ingredient hasnt been added already.
+
+    fridgeQuantities.put(ingredientName, fridgeQuantities.getOrDefault(ingredientName,
+        0.0) + fridgeItem.getQuantity()); // Adds quantity to total quantity.
+  }
+
+  /**
+   * Retrieves all instances of a specific ingredient by its name.
+   *
+   * @param ingredientName the name of the ingredient to retrieve instances for.
+   * @return a list of FridgeItem instances for the specified ingredient.
+   */
+  public List<FridgeItem> getAllIngredientInstancesByName(String ingredientName) {
+    return fridgeContents.getOrDefault(ingredientName, new ArrayList<>());
+  }
+
+  /**
+   * Retrieves the total quantity of a specific ingredient by its name.
+   *
+   * @param ingredientName the name of the ingredient to retrieve the total
+   *                       quantity for.
+   * @return the total quantity of the specified ingredient.
+   */
+  public double getTotalQuantityOfIngredient(String ingredientName) {
+    return fridgeQuantities.getOrDefault(ingredientName, 0.0);
+  }
 }

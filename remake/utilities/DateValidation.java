@@ -2,7 +2,6 @@ package utilities;
 
 /**
  * Utility class for date validation.
- *
  * User input will be Year, Month, then Day.
  * Checks if the given day is valid for the specified month and year and if the
  * entire date is valid.
@@ -85,5 +84,17 @@ public class DateValidation {
   public static boolean isValidDate(int expirationDay, int expirationMonth, int expirationYear) {
     return isValidYear(expirationYear) && isValidMonth(expirationMonth)
         && isValidDay(expirationDay, expirationMonth, expirationYear);
+  }
+
+  /**
+   * Formats the expiration date.
+   * Converts long '25062024' to String "25/06/2024".
+   *
+   * @param expirationDate the expiration date in milliseconds
+   * @return the formatted expiration date
+   */
+  public static String formatDate(long expirationDate) {
+    String date = String.valueOf(expirationDate);
+    return date.substring(6, 8) + "/" + date.substring(4, 6) + "/" + date.substring(0, 4);
   }
 }
