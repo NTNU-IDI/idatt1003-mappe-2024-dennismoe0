@@ -11,8 +11,10 @@ import utilities.DateValidation;
 
 /**
  * FridgeManager provides operations to add, remove, and update items in the
- * Fridge,
- * as well as retrieve sorted lists and specific details about ingredients.
+ * Fridge, as well as retrieve sorted lists and specific details about
+ * ingredients.
+ *
+ * @author Dennis Moe
  */
 public class FridgeManager {
   private final Fridge fridge;
@@ -35,15 +37,17 @@ public class FridgeManager {
    *
    * @param ingredientName the name of the ingredient to add
    * @param expirationDate the expiration date of the new FridgeItem
+   * @return a message indicating the result of the operation
    */
-  public void addToFridge(String ingredientName, long expirationDate) {
+  public String addToFridge(String ingredientName, long expirationDate) {
     Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
     if (ingredient == null) {
-      throw new IllegalArgumentException("Ingredient not found in FoodList.");
+      return "Ingredient not found in FoodList.";
     }
     FridgeItem newItem = new FridgeItem(ingredient,
         ingredient.getIngredientBaseWeight(), expirationDate);
     fridge.addFridgeItem(newItem);
+    return "Ingredient added to fridge successfully.";
   }
 
   /**
@@ -57,10 +61,11 @@ public class FridgeManager {
    * @param cost           the cost per unit of the ingredient
    * @param expirationDate the expiration date of the ingredient to be added to
    *                       the fridge
+   * @return a message indicating the result of the operation
    */
-  public void createAndAddToFridge(String ingredientName, String ingredientType,
-      double baseWeight, String measuringUnit, double cost,
-      long expirationDate) {
+  public String createAndAddToFridge(String ingredientName,
+      String ingredientType, double baseWeight,
+      String measuringUnit, double cost, long expirationDate) {
     Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
     if (ingredient == null) {
       ingredient = new Ingredient(ingredientName, ingredientType, baseWeight, measuringUnit, cost);
@@ -68,16 +73,18 @@ public class FridgeManager {
     }
     FridgeItem newItem = new FridgeItem(ingredient, baseWeight, expirationDate);
     fridge.addFridgeItem(newItem);
+    return "Ingredient created and added to fridge successfully.";
   }
 
   /**
    * Removes a FridgeItem by its ID from the fridge.
    *
    * @param id the unique ID of the FridgeItem to remove
-   * @return true if successfully removed, false otherwise
+   * @return a message indicating the result of the operation
    */
-  public boolean removeFromFridgeById(int id) {
-    return fridge.removeFridgeItemById(id);
+  public String removeFromFridgeById(int id) {
+    boolean removed = fridge.removeFridgeItemById(id);
+    return removed ? "Fridge item removed successfully." : "Fridge item not found.";
   }
 
   /**
@@ -85,10 +92,12 @@ public class FridgeManager {
    *
    * @param id             the ID of the FridgeItem to update
    * @param quantityChange the amount to add or subtract
-   * @return true if successfully updated, false otherwise
+   * @return a message indicating the result of the operation
    */
-  public boolean updateFridgeItemQuantityById(int id, double quantityChange) {
-    return fridge.updateFridgeItemQuantityById(id, quantityChange);
+  public String updateFridgeItemQuantityById(int id, double quantityChange) {
+    boolean updated = fridge.updateFridgeItemQuantityById(id, quantityChange);
+    return updated ? "Fridge item quantity updated successfully."
+        : "Fridge item not found or insufficient quantity.";
   }
 
   /**
@@ -96,38 +105,36 @@ public class FridgeManager {
    *
    * @param id       the ID of the FridgeItem to update
    * @param quantity the new quantity to set
-   * @return true if successfully updated, false otherwise
+   * @return a message indicating the result of the operation
    */
-  public boolean setFridgeItemQuantityById(int id, double quantity) {
+  public String setFridgeItemQuantityById(int id, double quantity) {
     FridgeItem item = fridge.getFridgeItemById(id);
     if (item != null) {
       item.setQuantity(quantity);
-      return true;
+      return "Fridge item quantity set successfully.";
     }
-    return false;
+    return "Fridge item not found.";
   }
 
   /**
-   * Retrieves all FridgeItems sorted by a specified criterion.
+   * Retrieves all FridgeItems sorted by Category, Name, Expiration Date, and
+   * Quantity.
    *
-   * @param sortBy the criterion to sort by ("name", "expiration", "quantity")
    * @return a sorted list of FridgeItems
    */
-  public List<FridgeItem> getAllFridgeItemsSorted(String sortBy) {
+  public List<FridgeItem> getAllFridgeItemsSorted() {
     List<FridgeItem> allItems = fridge.getAllFridgeItems();
 
-    return switch (sortBy.toLowerCase()) {
-      case "name" -> allItems.stream()
-          .sorted(Comparator.comparing(item -> item.getIngredient().getIngredientName()))
-          .collect(Collectors.toList());
-      case "expiration" -> allItems.stream()
-          .sorted(Comparator.comparing(FridgeItem::getExpirationDate))
-          .collect(Collectors.toList());
-      case "quantity" -> allItems.stream()
-          .sorted(Comparator.comparing(FridgeItem::getQuantity))
-          .collect(Collectors.toList());
-      default -> allItems;
-    };
+    // Sort by Quantity
+    allItems.sort(Comparator.comparing(FridgeItem::getQuantity));
+    // Sort by Expiration Date (overrides within the same Quantity order)
+    allItems.sort(Comparator.comparing(FridgeItem::getExpirationDate));
+    // Sort by Name (overrides within the same Expiration Date order)
+    allItems.sort(Comparator.comparing(item -> item.getIngredient().getIngredientName()));
+    // Sort by Type (overrides within the same Name order)
+    allItems.sort(Comparator.comparing(item -> item.getIngredient().getIngredientCategory()));
+
+    return allItems;
   }
 
   /**
@@ -150,7 +157,6 @@ public class FridgeManager {
    */
   public List<FridgeItem> getAllExpiredItems() {
     long todayAsLong = DateValidation.getTodayAsLong();
-
     return fridge.getAllFridgeItems().stream()
         .filter(item -> item.getExpirationDate() < todayAsLong)
         .collect(Collectors.toList());
@@ -159,22 +165,25 @@ public class FridgeManager {
   /**
    * Calculates the total value of all expired items in the fridge.
    *
-   * @return the total value of expired items (double)
+   * @return a message with the total value of expired items
    */
-  public double getExpiredItemsValue() {
-    return getAllExpiredItems().stream()
+  public String getExpiredItemsValue() {
+    double value = getAllExpiredItems().stream()
         .mapToDouble(item -> item.getIngredient().getIngredientCost())
         .sum();
+    return "Total value of expired items: " + value;
   }
 
   /**
-   * Calculates the total value of all items in the fridge.
+   * Calculates the total value of all items in the fridge based on individual
+   * item cost rather than quantity.
    *
-   * @return the total value of items in the fridge (double)
+   * @return a message with the total value of items in the fridge
    */
-  public double getTotalValueOfFridge() {
-    return fridge.getAllFridgeItems().stream()
+  public String getTotalValueOfFridge() {
+    double totalValue = fridge.getAllFridgeItems().stream()
         .mapToDouble(item -> item.getIngredient().getIngredientCost())
         .sum();
+    return "Total value of items in fridge: " + totalValue;
   }
 }
