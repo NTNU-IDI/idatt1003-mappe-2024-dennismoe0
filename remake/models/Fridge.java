@@ -6,25 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class representing the Fridge. All Ingredients will be stored here with
- * FridgeItem instances.
- * The Fridge will contain a Map of Ingredients and their quantities.
+ * Class representing the Fridge. All Ingredients are stored here as FridgeItem
+ * instances.
+ * The Fridge contains a Map of Ingredients and their quantities.
  *
  * @author Dennis Moe
  */
 public class Fridge {
-
-  private final Map<String, List<FridgeItem>> fridgeContents; // Ingredients in Fridge.
-  private final Map<String, Double> fridgeQuantities; // Quantity of each ingredient in Fridge.
+  // Ingredient name -> list of FridgeItems.
+  private final Map<String, List<FridgeItem>> fridgeContents;
+  // Ingredient name -> total quantity.
+  private final Map<String, Double> fridgeQuantities;
 
   /**
-   * Constructs a new Fridge.
-   *
-   * @param fridgeContents   the contents of the fridge. Key = Ingredient name,
-   *                         Value = List of Ingredient instances.
-   * @param fridgeQuantities the quantities of the ingredients in the fridge. Key
-   *                         = Ingredient name, Value = Total quantity of
-   *                         instances.
+   * Constructs a new Fridge instance.
    */
   public Fridge() {
     fridgeContents = new HashMap<>();
@@ -39,17 +34,98 @@ public class Fridge {
   public void addFridgeItem(FridgeItem fridgeItem) {
     String ingredientName = fridgeItem.getIngredient().getIngredientName();
 
-    fridgeContents.computeIfAbsent(ingredientName, k -> new ArrayList<>())
-        .add(fridgeItem); // If ingredient hasnt been added already.
+    // If no list for this item exists, make a new one.
+    fridgeContents.computeIfAbsent(ingredientName, k -> new ArrayList<>()).add(fridgeItem);
 
-    fridgeQuantities.put(ingredientName, fridgeQuantities.getOrDefault(ingredientName,
-        0.0) + fridgeItem.getQuantity()); // Adds quantity to total quantity.
+    // Update the total quantity of this ingredient.
+    fridgeQuantities.put(ingredientName, calculateTotalQuantity(ingredientName));
+  }
+
+  /**
+   * Removes a FridgeItem by its unique ID.
+   * Goes through all FridgeItems in the Fridge and removes the one with the
+   * matching ID.
+   *
+   * @param id the unique ID of the FridgeItem to remove.
+   * @return true if the item was successfully removed, false if not found.
+   */
+  public boolean removeFridgeItemById(int id) {
+    for (Map.Entry<String, List<FridgeItem>> entry : fridgeContents.entrySet()) {
+      List<FridgeItem> items = entry.getValue();
+      for (FridgeItem item : items) {
+        if (item.getId() == id) {
+          items.remove(item);
+
+          fridgeQuantities.put(entry.getKey(), calculateTotalQuantity(entry.getKey()));
+
+          if (items.isEmpty()) {
+            fridgeContents.remove(entry.getKey());
+            fridgeQuantities.remove(entry.getKey());
+          }
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Recalculates the total quantity of a specific ingredient by summing the
+   * quantity of all FridgeItems of that name.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the total quantity of the specified ingredient.
+   */
+  private double calculateTotalQuantity(String ingredientName) {
+    List<FridgeItem> items = fridgeContents.getOrDefault(ingredientName, new ArrayList<>());
+    return items.stream().mapToDouble(FridgeItem::getQuantity).sum();
+  }
+
+  /**
+   * Retrieves a FridgeItem by its unique ID.
+   *
+   * @param id the unique ID of the FridgeItem.
+   * @return the FridgeItem if found, null otherwise.
+   */
+  public FridgeItem getFridgeItemById(int id) {
+    for (List<FridgeItem> items : fridgeContents.values()) {
+      for (FridgeItem item : items) {
+        if (item.getId() == id) {
+          return item;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Updates the quantity of a specific FridgeItem by its ID and recalculates the
+   * total quantity.
+   *
+   * @param id             the ID of the FridgeItem to update.
+   * @param quantityChange the amount to add (positive) or remove (negative).
+   * @return true if the item was found and updated, false otherwise.
+   */
+  public boolean updateFridgeItemQuantityById(int id, double quantityChange) {
+    for (List<FridgeItem> items : fridgeContents.values()) {
+      for (FridgeItem item : items) {
+        if (item.getId() == id) {
+          item.setQuantity(item.getQuantity() + quantityChange);
+
+          // Recalculate the total quantity for this ingredient
+          String ingredientName = item.getIngredient().getIngredientName();
+          fridgeQuantities.put(ingredientName, calculateTotalQuantity(ingredientName));
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**
    * Retrieves all instances of a specific ingredient by its name.
    *
-   * @param ingredientName the name of the ingredient to retrieve instances for.
+   * @param ingredientName the name of the ingredient.
    * @return a list of FridgeItem instances for the specified ingredient.
    */
   public List<FridgeItem> getAllIngredientInstancesByName(String ingredientName) {
@@ -57,13 +133,26 @@ public class Fridge {
   }
 
   /**
-   * Retrieves the total quantity of a specific ingredient by its name.
+   * Gets total quantity of a specific ingredient in the Fridge by name.
    *
-   * @param ingredientName the name of the ingredient to retrieve the total
-   *                       quantity for.
-   * @return the total quantity of the specified ingredient.
+   * @param ingredientName the name of the ingredient.
+   * @return the total quantity of the ingredient in the Fridge.
    */
   public double getTotalQuantityOfIngredient(String ingredientName) {
     return fridgeQuantities.getOrDefault(ingredientName, 0.0);
+  }
+
+  /**
+   * Gets all FridgeItems in the Fridge.
+   * Iterates through all items in the Fridge and adds them to a list.
+   *
+   * @return a list of all FridgeItems in the Fridge.
+   */
+  public List<FridgeItem> getAllFridgeItems() {
+    List<FridgeItem> allItems = new ArrayList<>();
+    for (List<FridgeItem> items : fridgeContents.values()) {
+      allItems.addAll(items);
+    }
+    return allItems;
   }
 }
