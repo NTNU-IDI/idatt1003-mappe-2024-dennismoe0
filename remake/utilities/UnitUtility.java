@@ -25,6 +25,14 @@ public class UnitUtility {
   private static final String[] WEIGHT_UNITS = { "g", "kg" };
   private static final String[] VOLUME_UNITS = { "mL", "cL", "L" };
 
+  /**
+   * Converts a quantity from one measuring unit to another.
+   *
+   * @param quantity          the quantity to convert
+   * @param fromMeasuringUnit the unit to convert from
+   * @param toMeasuringUnit   the unit to convert to
+   * @return the converted quantity, or -1 if the conversion is not possible
+   */
   public static double convertUnit(double quantity,
       String fromMeasuringUnit, String toMeasuringUnit) {
     if (fromMeasuringUnit.equals(toMeasuringUnit)) {
