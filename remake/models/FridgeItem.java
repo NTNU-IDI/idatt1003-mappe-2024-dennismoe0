@@ -6,7 +6,7 @@ import utilities.DateValidation;
  * Represents an instance of an Ingredient in the Fridge.
  * The unique Ingredient can share a name, but each instance has its own
  * properties, such as expiration date and ID.
- * 
+ *
  * @author Dennis Moe
  */
 public class FridgeItem {

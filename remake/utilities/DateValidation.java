@@ -1,5 +1,8 @@
 package utilities;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Utility class for date validation.
  * User input will be Year, Month, then Day.
@@ -96,5 +99,16 @@ public class DateValidation {
   public static String formatDate(long expirationDate) {
     String date = String.valueOf(expirationDate);
     return date.substring(6, 8) + "/" + date.substring(4, 6) + "/" + date.substring(0, 4);
+  }
+
+  /**
+   * Gets today's date as a long in the format ddMMyyyy.
+   *
+   * @return today's date as a long
+   */
+  public static long getTodayAsLong() {
+    LocalDate today = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+    return Long.parseLong(today.format(formatter));
   }
 }

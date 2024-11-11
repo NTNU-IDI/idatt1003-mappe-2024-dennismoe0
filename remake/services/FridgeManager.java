@@ -7,6 +7,7 @@ import models.FoodList;
 import models.Fridge;
 import models.FridgeItem;
 import models.Ingredient;
+import utilities.DateValidation;
 
 /**
  * FridgeManager provides operations to add, remove, and update items in the
@@ -145,35 +146,35 @@ public class FridgeManager {
   /**
    * Retrieves all expired items from the fridge.
    *
-   * @param currentDate the current date to check for expiration
    * @return a list of expired FridgeItems
    */
-  public List<FridgeItem> getAllExpiredItems(long currentDate) {
+  public List<FridgeItem> getAllExpiredItems() {
+    long todayAsLong = DateValidation.getTodayAsLong();
+
     return fridge.getAllFridgeItems().stream()
-        .filter(item -> item.getExpirationDate() < currentDate)
+        .filter(item -> item.getExpirationDate() < todayAsLong)
         .collect(Collectors.toList());
   }
 
   /**
    * Calculates the total value of all expired items in the fridge.
    *
-   * @param currentDate the current date to check for expiration
-   * @return the total value of expired items
+   * @return the total value of expired items (double)
    */
-  public double getExpiredItemsValue(long currentDate) {
-    return getAllExpiredItems(currentDate).stream()
-        .mapToDouble(item -> item.getQuantity() * item.getIngredient().getIngredientCost())
+  public double getExpiredItemsValue() {
+    return getAllExpiredItems().stream()
+        .mapToDouble(item -> item.getIngredient().getIngredientCost())
         .sum();
   }
 
   /**
    * Calculates the total value of all items in the fridge.
    *
-   * @return the total value of items in the fridge
+   * @return the total value of items in the fridge (double)
    */
   public double getTotalValueOfFridge() {
     return fridge.getAllFridgeItems().stream()
-        .mapToDouble(item -> item.getQuantity() * item.getIngredient().getIngredientCost())
+        .mapToDouble(item -> item.getIngredient().getIngredientCost())
         .sum();
   }
 }
