@@ -60,4 +60,5 @@ public class CentralRecipeList {
   public HashMap<String, Recipe> getAllRecipes() {
     return recipeList;
 
+  }
 }
