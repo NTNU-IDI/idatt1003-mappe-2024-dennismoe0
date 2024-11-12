@@ -6,6 +6,8 @@ import models.FoodList;
 import models.Fridge;
 import models.RecipeList;
 import models.Recipe;
+import models.Ingredient;
+import models.FridgeItem;
 import java.util.Scanner;
 
 public class TextBasedClient {
@@ -21,12 +23,66 @@ public class TextBasedClient {
     fridge = new Fridge();
     recipeList = new RecipeList();
     fridgeManager = new FridgeManager(fridge, foodList);
-    recipeManager = new RecipeManager(recipeList, fridge, foodList);
+    recipeManager = new RecipeManager(recipeList, fridge, foodList); // Updated
+    populateData(); // Add example data to test
   }
 
   public static void main(String[] args) {
     TextBasedClient client = new TextBasedClient();
     client.mainMenu();
+  }
+
+  private void populateData() {
+    // Adding example ingredients to the FoodList
+    foodList.addIngredient(new Ingredient("Ground Beef", "Meat", 500, "g", 79.99));
+    foodList.addIngredient(new Ingredient("Carrot", "Vegetable", 100, "g", 10.99));
+    foodList.addIngredient(new Ingredient("Eggs", "Dairy", 60, "g", 15.00));
+    foodList.addIngredient(new Ingredient("Flour", "Baking", 1000, "g", 25.00));
+    foodList.addIngredient(new Ingredient("Butter", "Dairy", 250, "g", 40.00));
+    foodList.addIngredient(new Ingredient("Tomato Sauce", "Condiment", 500, "ml", 19.99));
+    foodList.addIngredient(new Ingredient("Garlic", "Vegetable", 50, "g", 5.00));
+    foodList.addIngredient(new Ingredient("Onion", "Vegetable", 200, "g", 12.99));
+    foodList.addIngredient(new Ingredient("Cheese", "Dairy", 300, "g", 60.00));
+    foodList.addIngredient(new Ingredient("Milk", "Dairy", 1000, "ml", 20.00));
+    foodList.addIngredient(new Ingredient("Yogurt", "Dairy", 500, "ml", 25.00));
+    foodList.addIngredient(new Ingredient("Oats", "Cereal", 500, "g", 15.00));
+    foodList.addIngredient(new Ingredient("Sugar", "Baking", 1000, "g", 10.00));
+    foodList.addIngredient(new Ingredient("Salt", "Baking", 500, "g", 5.00));
+    foodList.addIngredient(new Ingredient("Olive Oil", "Condiment", 500, "ml", 45.00));
+    foodList.addIngredient(new Ingredient("Chicken", "Meat", 1000, "g", 90.00));
+    foodList.addIngredient(new Ingredient("Spinach", "Vegetable", 200, "g", 25.00));
+
+    // Adding some items to the fridge (with expiration dates)
+    fridgeManager.addToFridge("Ground Beef", 25062024);
+    fridgeManager.addToFridge("Carrot", 27062024);
+    fridgeManager.addToFridge("Eggs", 24062024);
+    fridgeManager.addToFridge("Flour", 20062024);
+    fridgeManager.addToFridge("Butter", 29062024);
+    fridgeManager.addToFridge("Tomato Sauce", 01072024);
+    fridgeManager.addToFridge("Garlic", 01072024);
+    fridgeManager.addToFridge("Cheese", 01072024);
+    fridgeManager.addToFridge("Yogurt", 02072024);
+
+    // Adding example recipes
+    Recipe oatmealWithYogurt = new Recipe("Oatmeal with Yogurt", "Breakfast", "A simple breakfast recipe",
+        "Cook oats, then top with yogurt.");
+    oatmealWithYogurt.addIngredient("Oats", 100);
+    oatmealWithYogurt.addIngredient("Yogurt", 150);
+    recipeList.addRecipe(oatmealWithYogurt);
+
+    Recipe lasagnaWithGroundBeef = new Recipe("Lasagna with Ground Beef", "Dinner",
+        "Classic lasagna with ground beef and tomato sauce", "Layer pasta, sauce, ground beef, and cheese.");
+    lasagnaWithGroundBeef.addIngredient("Ground Beef", 400);
+    lasagnaWithGroundBeef.addIngredient("Tomato Sauce", 200);
+    lasagnaWithGroundBeef.addIngredient("Cheese", 300);
+    recipeList.addRecipe(lasagnaWithGroundBeef);
+
+    Recipe carrotCake = new Recipe("Carrot Cake", "Dessert", "A delicious carrot cake",
+        "Mix ingredients, bake, and enjoy!");
+    carrotCake.addIngredient("Carrot", 200);
+    carrotCake.addIngredient("Flour", 250);
+    carrotCake.addIngredient("Eggs", 2);
+    recipeList.addRecipe(carrotCake);
   }
 
   private void mainMenu() {
@@ -90,8 +146,6 @@ public class TextBasedClient {
 
   private void viewFridgeContents() {
     System.out.println("Fridge Contents:");
-
-    // Sorting by type -> name -> expiration date -> quantity
     fridgeManager.getAllFridgeItemsSorted()
         .forEach(item -> System.out.println(item.getIngredient().getIngredientName() +
             " - Quantity: " + item.getQuantity() +
