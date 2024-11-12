@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import models.FoodList;
 import models.Fridge;
@@ -149,5 +151,16 @@ public class RecipeManager {
         recipe -> allRecipes.append(recipe.getRecipeName())
             .append(" - ").append(recipe.getRecipeType()).append("\n"));
     return allRecipes.toString();
+  }
+
+  /**
+   * Suggests recipes to the user based on matches of ingredient categories that
+   * exist in the fridge.
+   * 
+   * @return a list of recipe names that match the ingredient categories in the
+   *         fridge
+   */
+  public List<String> suggestedRecipesBasedOnFridgeContents() {
+    List<String> suggestedRecipes = new ArrayList<>();
   }
 }
