@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Represents a recipe containing ingredients, quantities, instructions, and a
  * type.
- * 
+ *
  * @author Dennis Moe
  */
 public class Recipe {
