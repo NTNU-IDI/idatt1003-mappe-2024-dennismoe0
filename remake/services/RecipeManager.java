@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import models.FoodList;
 import models.Fridge;
 import models.Ingredient;
@@ -156,11 +157,38 @@ public class RecipeManager {
   /**
    * Suggests recipes to the user based on matches of ingredient categories that
    * exist in the fridge.
-   * 
+   *
    * @return a list of recipe names that match the ingredient categories in the
    *         fridge
    */
   public List<String> suggestedRecipesBasedOnFridgeContents() {
     List<String> suggestedRecipes = new ArrayList<>();
+
+    for (Recipe recipe : recipeList.getAllRecipes().values()) {
+      int matchingCategories = 0; // Count of ingredients with sufficient quantity
+      boolean isFullMatch = true; // Indicates if all ingredients match fully
+
+      for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
+        String ingredientName = ingredientEntry.getKey();
+        double requiredQuantity = ingredientEntry.getValue();
+        double availableQuantity = fridge.getTotalQuantityOfIngredient(ingredientName);
+
+        if (availableQuantity >= requiredQuantity) {
+          matchingCategories++;
+        } else {
+          isFullMatch = false;
+        }
+      }
+
+      // If all ingredients match with required quantity
+      if (isFullMatch) {
+        suggestedRecipes.add("Full match: You can make " + recipe.getRecipeName());
+      } else if (matchingCategories >= recipe.getIngredients().size() / 2) {
+        suggestedRecipes.add("Partial match: You have enough ingredients to partially make "
+            + recipe.getRecipeName() + ".");
+      }
+    }
+
+    return suggestedRecipes;
   }
 }
