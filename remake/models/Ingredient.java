@@ -20,7 +20,9 @@ public class Ingredient {
    * @param ingredientName          the name of the ingredient
    * @param ingredientCategory      the category of the ingredient
    * @param ingredientBaseWeight    the base weight of the ingredient
-   * @param ingredientMeasuringUnit the measuring unit of the ingredient
+   * @param ingredientMeasuringUnit the measuring unit of the ingredient. "g",
+   *                                "kg" etc. or specific units like "pieces" for
+   *                                eggs etc.
    * @param ingredientCost          the cost of the ingredient
    */
   public Ingredient(String ingredientName, String ingredientCategory, double ingredientBaseWeight,
