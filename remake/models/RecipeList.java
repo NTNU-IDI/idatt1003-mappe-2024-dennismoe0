@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Represents a list of recipes.
- * 
+ *
  * @author Dennis Moe
  */
 public class RecipeList {
