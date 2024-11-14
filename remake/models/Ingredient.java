@@ -1,8 +1,5 @@
 package models;
 
-import remake.utilities.UnitUtility;
-import remake.utilities.DateValidation;
-
 /**
  * Represents an ingredient with its details such as name, category, base
  * weight, measuring unit, and cost.
