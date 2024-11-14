@@ -2,6 +2,12 @@ package client;
 
 public class SelfMadeClient {
 
+  // Se på krav til javadoc (paragraf + html greier)
+
+  // HUSK Å FIKSE SÅ 1000g eller 1000ml blir 1kg eller 1l
+  // - Change unitconverter
+  // kun for totalquantity, individuelle kan være i gram/ml typ
+
   // Initialize everything
 
   // Datasets
