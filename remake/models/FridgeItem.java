@@ -76,4 +76,11 @@ public class FridgeItem {
   public void deductQuantity(double amount) {
     this.quantity = Math.max(0, this.quantity - amount);
   }
+
+  @Override
+  public String toString() {
+    return "ID: " + id + ", Ingredient: " + ingredient.getIngredientName() + ", Quantity: "
+        + quantity + " " + ingredient.getIngredientMeasuringUnit() + ", Expiration Date: "
+        + getFormattedExpirationDate();
+  }
 }
