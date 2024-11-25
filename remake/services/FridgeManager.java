@@ -188,16 +188,36 @@ public class FridgeManager {
   }
 
   /**
-   * Retrieves the total quantity of a specific ingredient in the fridge.
-   * 
-   * @param ingredientName
-   * @return
+   * Retrieves the total quantity of a specific ingredient
+   * in the fridge using the same method from the Fridge class.
+   *
+   * @param ingredientName the name of the ingredient to sum up.
+   * @return a double of the total quantity of the specified ingredient.
    */
   public double getTotalQuantityOfIngredient(String ingredientName) {
-
+    return fridge.calculateTotalQuantity(ingredientName);
   }
 
-  public double getQuantityListOfIngredientWithID(String ingredientName) {
+  /**
+   * Retrieves a list of quantities for a specific ingredient by name, including
+   * their IDs.
+   *
+   * @param ingredientName the name of the ingredient
+   * @return a string listing the IDs and quantities of the ingredient
+   */
+  public String getQuantityListOfIngredientWithId(String ingredientName) {
+    List<FridgeItem> items = fridge.getAllIngredientInstancesByName(ingredientName);
 
+    if (ingredientName == null) {
+      return "No items found for " + ingredientName;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    for (FridgeItem item : items) {
+      sb.append("ID: ").append(item.getId()).append(", Quantity: ").append(item.getQuantity())
+          .append(item.getExpirationDate()).append("\n");
+    }
+
+    return sb.toString();
   }
 }

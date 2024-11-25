@@ -76,7 +76,7 @@ public class Fridge {
    * @param ingredientName the name of the ingredient.
    * @return the total quantity of the specified ingredient.
    */
-  private double calculateTotalQuantity(String ingredientName) {
+  public double calculateTotalQuantity(String ingredientName) {
     List<FridgeItem> items = fridgeContents.getOrDefault(ingredientName, new ArrayList<>());
     return items.stream().mapToDouble(FridgeItem::getQuantity).sum();
   }
