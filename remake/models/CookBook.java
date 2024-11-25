@@ -30,6 +30,33 @@ public class CookBook {
   }
 
   /**
+   * Gets the namme of the CookBook.
+   *
+   * @return a String with the name of the CookBook.
+   */
+  public String getCookBookName() {
+    return cookBookName;
+  }
+
+  /**
+   * Gets the description of the CookBook.
+   *
+   * @return a String with the description of the CookBook.
+   */
+  public String getCookBookDescription() {
+    return cookBookDescription;
+  }
+
+  /**
+   * Gets the type of the CookBook.
+   *
+   * @return a String with the type of the CookBook.
+   */
+  public String getCookBookType() {
+    return cookBookType;
+  }
+
+  /**
    * Adds a recipe to the CookBook through String name (Key).
    * Recipe object is stored as the value.
    *
