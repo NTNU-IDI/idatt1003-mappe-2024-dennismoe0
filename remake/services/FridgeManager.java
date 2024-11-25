@@ -186,4 +186,18 @@ public class FridgeManager {
         .sum();
     return "Total value of items in fridge: " + totalValue;
   }
+
+  /**
+   * Retrieves the total quantity of a specific ingredient in the fridge.
+   * 
+   * @param ingredientName
+   * @return
+   */
+  public double getTotalQuantityOfIngredient(String ingredientName) {
+
+  }
+
+  public double getQuantityListOfIngredientWithID(String ingredientName) {
+
+  }
 }
