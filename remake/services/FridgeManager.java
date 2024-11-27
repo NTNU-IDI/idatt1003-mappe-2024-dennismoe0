@@ -88,6 +88,21 @@ public class FridgeManager {
   }
 
   /**
+   * Retrieves quantity information about a specific FridgeItem by ID.
+   *
+   * @param id the ID of the FridgeItem to get the quantity of.
+   * @return a message containing the id and current quantity of the FridgeItem.
+   */
+  public String getQuantityInfoById(int id) {
+    FridgeItem item = fridge.getFridgeItemById(id);
+    if (item == null) {
+      return "Fridge item not found.";
+    }
+    return "ID: " + item.getId() + ". Current quantity: "
+        + item.getQuantity() + " " + item.getIngredient().getIngredientMeasuringUnit();
+  }
+
+  /**
    * Updates the quantity of a specific FridgeItem by ID.
    *
    * @param id             the ID of the FridgeItem to update
@@ -95,9 +110,28 @@ public class FridgeManager {
    * @return a message indicating the result of the operation
    */
   public String updateFridgeItemQuantityById(int id, double quantityChange) {
-    boolean updated = fridge.updateFridgeItemQuantityById(id, quantityChange);
-    return updated ? "Fridge item quantity updated successfully."
-        : "Fridge item not found or insufficient quantity.";
+    FridgeItem item = fridge.getFridgeItemById(id);
+    if (item == null) {
+      return "Fridge item not found.";
+    }
+    double newQuantity = item.getQuantity() + quantityChange;
+    if (newQuantity <= 0) {
+      fridge.removeFridgeItemById(id);
+      return "Fridge item removed due to zero or negative quantity.";
+    } else {
+      item.setQuantity(newQuantity);
+      return "Fridge item quantity updated successfully.";
+    }
+  }
+
+  /**
+   * Checks if an ingredient with the specified ID exists in the fridge.
+   *
+   * @param id the ID of the ingredient to check
+   * @return {@code true} if the ingredient exists, {@code false} otherwise
+   */
+  public boolean checkIngredientIdValidity(int id) {
+    return fridge.getFridgeItemById(id) != null;
   }
 
   /**
@@ -111,6 +145,10 @@ public class FridgeManager {
     FridgeItem item = fridge.getFridgeItemById(id);
     if (item != null) {
       item.setQuantity(quantity);
+      if (quantity == 0) {
+        fridge.removeFridgeItemById(id);
+        return "Fridge item removed.";
+      }
       return "Fridge item quantity set successfully.";
     }
     return "Fridge item not found.";
@@ -164,7 +202,9 @@ public class FridgeManager {
 
   /**
    * Calculates the total value of all expired items in the fridge.
-   *
+   * 
+   * This doesnt work, gives same amount as value of all items?
+   * 
    * @return a message with the total value of expired items
    */
   public String getExpiredItemsValue() {
@@ -177,6 +217,8 @@ public class FridgeManager {
   /**
    * Calculates the total value of all items in the fridge based on individual
    * item cost rather than quantity.
+   * 
+   * This doesnt work, gives same amount as value of all items?
    *
    * @return a message with the total value of items in the fridge
    */

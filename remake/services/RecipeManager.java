@@ -192,6 +192,8 @@ public class RecipeManager {
     return suggestedRecipes;
   }
 
+  // IMportant: Need to add method that takes from multiple items!!!!
+
   /**
    * Removes the quantity of ingredients in a recipe from the Fridge.
    *
