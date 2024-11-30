@@ -18,3 +18,6 @@ Report:
 
 Double checking requirements:
 - Go through del 1 - del 3 av mappeinnleveringdokumentene.
+
+Readme:
+- Actually write in it.
