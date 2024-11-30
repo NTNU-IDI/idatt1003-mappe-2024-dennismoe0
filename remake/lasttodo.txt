@@ -1,0 +1,20 @@
+Changes to methods:
+
+
+Changes to client:
+- Split into appropriate files.
+
+- Finish all the menus
+
+
+Changes to data:
+- Implement csv exporting and importing.
+
+Javadoc:
+- Go through requirements for javadoc
+
+Report:
+- Start
+
+Double checking requirements:
+- Go through del 1 - del 3 av mappeinnleveringdokumentene.
