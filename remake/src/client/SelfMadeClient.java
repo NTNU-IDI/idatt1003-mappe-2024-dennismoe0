@@ -436,7 +436,6 @@ public class SelfMadeClient {
         }
         default -> System.out.println("Invalid choice, try again.");
       }
-
     }
   }
 
