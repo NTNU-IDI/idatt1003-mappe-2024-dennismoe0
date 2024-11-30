@@ -91,6 +91,15 @@ public class FridgeManager {
   }
 
   /**
+   * Removes a FridgeItem by its ID from the fridge without returning a message.
+   *
+   * @param id the unique ID of the FridgeItem to remove
+   */
+  public void removeByIdWithoutString(int id) {
+    fridge.removeFridgeItemById(id);
+  }
+
+  /**
    * Retrieves quantity information about a specific FridgeItem by ID.
    *
    * @param id the ID of the FridgeItem to get the quantity of.
