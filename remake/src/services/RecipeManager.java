@@ -9,6 +9,7 @@ import models.FridgeItem;
 import models.Ingredient;
 import models.Recipe;
 import models.RecipeList;
+import utilities.DateValidation;
 
 /**
  * Manages recipes and operations on the RecipeList.
@@ -240,6 +241,64 @@ public class RecipeManager {
       }
     }
     return "Recipe ingredients removed from the fridge.";
+  }
+
+  public String removeMultipleQuantitiesByRecipe(String recipeName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+
+    // Check if recipe exists
+    if (recipe == null) {
+      return "Recipe not found.";
+    }
+
+    // Checks if the quantity is sufficient for removal before iterating through
+    // available items.
+    for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
+      String ingredientName = entry.getKey();
+      double requiredQuantity = entry.getValue();
+
+      // Calculate total available quantity for the ingredient
+      double totalAvailableQuantity = fridge.getAllFridgeItems().stream()
+          .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
+          .mapToDouble(FridgeItem::getQuantity)
+          .sum();
+
+      if (totalAvailableQuantity < requiredQuantity) {
+        return "Insufficient " + ingredientName + " in the Fridge. Needed: "
+            + requiredQuantity + ", Available: " + totalAvailableQuantity;
+      }
+    }
+
+    // Removal process after pre-check
+    for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
+      String ingredientName = entry.getKey();
+      double requiredQuantity = entry.getValue();
+
+      // Gets all items in the fridge sorted by expiration date
+      List<FridgeItem> fridgeItems = fridge.getAllFridgeItems().stream()
+          .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
+          .sorted((item1, item2) -> DateValidation.compareDates(
+              item1.getExpirationDate(), item2.getExpirationDate()))
+          .toList();
+
+      for (FridgeItem fridgeItem : fridgeItems) {
+        double availableQuantity = fridgeItem.getQuantity();
+
+        if (availableQuantity >= requiredQuantity) {
+          fridge.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
+          requiredQuantity = 0.0; // If full removal achieved.
+
+          if (fridgeItem.getQuantity() == 0) {
+            fridge.removeFridgeItemById(fridgeItem.getId()); // removes item if quantity is 0
+          }
+          break;
+        } else {
+          fridge.updateFridgeItemQuantityById(fridgeItem.getId(), -availableQuantity);
+          requiredQuantity -= availableQuantity; // Partial removal
+        }
+      }
+    }
+    return "Recipe ingredients removed from fridge, prioritizing items with earliest expiration.";
   }
 
   /**
