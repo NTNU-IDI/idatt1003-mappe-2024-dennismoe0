@@ -251,6 +251,8 @@ public class RecipeManager {
       return "Recipe not found.";
     }
 
+    long todayAsLong = DateValidation.getTodayAsLong();
+
     // Checks if the quantity is sufficient for removal before iterating through
     // available items.
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
@@ -275,8 +277,11 @@ public class RecipeManager {
       double requiredQuantity = entry.getValue();
 
       // Gets all items in the fridge sorted by expiration date
+      // New version should not use expired items
       List<FridgeItem> fridgeItems = fridge.getAllFridgeItems().stream()
           .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
+          // Excludes expired items from the list
+          .filter(item -> DateValidation.compareDates(item.getExpirationDate(), todayAsLong) >= 0)
           .sorted((item1, item2) -> DateValidation.compareDates(
               item1.getExpirationDate(), item2.getExpirationDate()))
           .toList();
