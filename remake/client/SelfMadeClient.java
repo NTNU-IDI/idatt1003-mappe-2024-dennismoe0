@@ -93,9 +93,6 @@ public class SelfMadeClient {
     // Adds them all to the fridge with expiration dates (non-realistic dates for
     // ease).
 
-    long today = DateValidation.getTodayAsLong(); // Considered using today + 10,
-                                                  // but issues can arise depending on
-                                                  // date.
     fridgeManager.addToFridge("Ground Chicken", 25012025L);
 
     fridgeManager.addToFridge("Ground Beef", 25012025L);
@@ -322,7 +319,7 @@ public class SelfMadeClient {
             System.err.println("An error occurred: " + e.getMessage());
           }
 
-          fridgeManager.getAllFridgeItemsSorted();
+          fridgeManager.printAllFridgeItemsSorted();
 
           System.out.print("\nEnter the ID of the item you want to remove:");
           int id = scanner.nextInt();
@@ -364,7 +361,7 @@ public class SelfMadeClient {
           } catch (InterruptedException e) {
             System.err.println("An error occurred: " + e.getMessage());
           }
-          fridgeManager.getAllFridgeItemsSorted();
+          fridgeManager.printAllFridgeItemsSorted();
 
           System.out.println("Enter the ID of the item you want to change the quantity of:");
           int id = scanner.nextInt();
@@ -379,7 +376,7 @@ public class SelfMadeClient {
           } catch (InterruptedException e) {
             System.err.println("An error occurred: " + e.getMessage());
           }
-          fridgeManager.getAllFridgeItemsSorted();
+          fridgeManager.printAllFridgeItemsSorted();
 
           System.out.println("Enter the ID of the item you want to add to:");
           int id = scanner.nextInt();
@@ -404,7 +401,7 @@ public class SelfMadeClient {
           } catch (InterruptedException e) {
             System.err.println("An error occurred: " + e.getMessage());
           }
-          fridgeManager.getAllFridgeItemsSorted();
+          fridgeManager.printAllFridgeItemsSorted();
 
           System.out.println("Enter the ID of the item you want to subtract from:");
           int id = scanner.nextInt();
@@ -428,7 +425,7 @@ public class SelfMadeClient {
           } catch (InterruptedException e) {
             System.err.println("An error occurred: " + e.getMessage());
           }
-          fridgeManager.getAllFridgeItemsSorted();
+          fridgeManager.printAllFridgeItemsSorted();
 
           System.out.println("Enter the ID of the item you want to remove:");
           int id = scanner.nextInt();
