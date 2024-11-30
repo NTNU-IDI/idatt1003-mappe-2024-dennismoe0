@@ -97,8 +97,8 @@ public class DateValidation {
    * @return the formatted expiration date
    */
   public static String formatDate(long expirationDate) {
-    String date = String.valueOf(expirationDate);
-    return date.substring(6, 8) + "/" + date.substring(4, 6) + "/" + date.substring(0, 4);
+    String date = String.format("%08d", expirationDate);
+    return date.substring(0, 2) + "/" + date.substring(2, 4) + "/" + date.substring(4, 8);
   }
 
   /**
