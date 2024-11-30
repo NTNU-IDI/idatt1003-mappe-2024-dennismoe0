@@ -292,13 +292,12 @@ public class FridgeManager {
     // Add sample ingredients to the FoodList
     foodList.addIngredient(new Ingredient("Cheese", "Dairy", 500, "grams", 50.0));
     foodList.addIngredient(new Ingredient("Meat", "Protein", 1000, "grams", 120.0));
-    foodList.addIngredient(new Ingredient("Apple", "Fruit", 200, "grams", 10.0));
+    foodList.addIngredient(new Ingredient("Apple", "Fruit", 1, "amount", 10.0));
 
     // Add sample FridgeItems with expiration dates
-    long today = DateValidation.getTodayAsLong();
-    manager.addToFridge("Cheese", today - 1); // Expired yesterday
-    manager.addToFridge("Meat", today + 5); // Expires in 5 days
-    manager.addToFridge("Apple", today - 10); // Expired 10 days ago
+    manager.addToFridge("Cheese", 25012025);
+    manager.addToFridge("Meat", 25012025);
+    manager.addToFridge("Apple", 27012024);
 
     // Print all FridgeItems
     System.out.println("All Fridge Items:");
