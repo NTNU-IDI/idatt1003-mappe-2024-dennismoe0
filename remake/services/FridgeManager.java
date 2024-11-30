@@ -44,6 +44,9 @@ public class FridgeManager {
     if (ingredient == null) {
       return "Ingredient not found in FoodList.";
     }
+    if (String.valueOf(expirationDate).length() != 8) {
+      return "Invalid expiration date.";
+    }
     FridgeItem newItem = new FridgeItem(ingredient,
         ingredient.getIngredientBaseWeight(), expirationDate);
     fridge.addFridgeItem(newItem);
@@ -176,6 +179,15 @@ public class FridgeManager {
   }
 
   /**
+   * Prints all FridgeItems sorted by Category, Name, Expiration Date, and
+   * Quantity.
+   */
+  public void printAllFridgeItemsSorted() {
+    List<FridgeItem> sortedItems = getAllFridgeItemsSorted();
+    sortedItems.forEach(item -> System.out.println(item));
+  }
+
+  /**
    * Retrieves all instances of a specific ingredient by name, sorted by
    * expiration date.
    *
@@ -196,8 +208,16 @@ public class FridgeManager {
   public List<FridgeItem> getAllExpiredItems() {
     long todayAsLong = DateValidation.getTodayAsLong();
     return fridge.getAllFridgeItems().stream()
-        .filter(item -> item.getExpirationDate() < todayAsLong)
+        .filter(item -> DateValidation.compareDates(item.getExpirationDate(), todayAsLong) < 0)
         .collect(Collectors.toList());
+  }
+
+  /**
+   * Prints all expired items in the fridge.
+   */
+  public void printAllExpiredItems() {
+    List<FridgeItem> expiredItems = getAllExpiredItems();
+    expiredItems.forEach(item -> System.out.println(item));
   }
 
   /**
@@ -261,5 +281,37 @@ public class FridgeManager {
     }
 
     return sb.toString();
+  }
+
+  public static void main(String[] args) {
+    // Initialize the FoodList and Fridge
+    FoodList foodList = new FoodList();
+    Fridge fridge = new Fridge();
+    FridgeManager manager = new FridgeManager(fridge, foodList);
+
+    // Add sample ingredients to the FoodList
+    foodList.addIngredient(new Ingredient("Cheese", "Dairy", 500, "grams", 50.0));
+    foodList.addIngredient(new Ingredient("Meat", "Protein", 1000, "grams", 120.0));
+    foodList.addIngredient(new Ingredient("Apple", "Fruit", 200, "grams", 10.0));
+
+    // Add sample FridgeItems with expiration dates
+    long today = DateValidation.getTodayAsLong();
+    manager.addToFridge("Cheese", today - 1); // Expired yesterday
+    manager.addToFridge("Meat", today + 5); // Expires in 5 days
+    manager.addToFridge("Apple", today - 10); // Expired 10 days ago
+
+    // Print all FridgeItems
+    System.out.println("All Fridge Items:");
+    fridge.getAllFridgeItems().forEach(System.out::println);
+
+    // Print expired items
+    System.out.println("\nExpired Items:");
+    manager.getAllExpiredItems().forEach(System.out::println);
+
+    // Print total value of expired items
+    System.out.println("\n" + manager.getExpiredItemsValue());
+
+    // Print total value of all items in the fridge
+    System.out.println(manager.getTotalValueOfFridge());
   }
 }
