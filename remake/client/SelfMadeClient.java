@@ -8,6 +8,7 @@ import models.Recipe;
 import models.RecipeList;
 import services.FridgeManager;
 import services.RecipeManager;
+import utilities.DateValidation;
 
 /**
  * Client class for the application.
@@ -22,6 +23,8 @@ import services.RecipeManager;
  *
  * @author Dennis Moe
  */
+
+// Change to accomodate wishes: init og start
 public class SelfMadeClient {
 
   private static final Scanner scanner = new Scanner(System.in);
@@ -89,37 +92,41 @@ public class SelfMadeClient {
 
     // Adds them all to the fridge with expiration dates (non-realistic dates for
     // ease).
-    fridgeManager.addToFridge("Ground Chicken", 25012025);
 
-    fridgeManager.addToFridge("Ground Beef", 25012025);
-    fridgeManager.addToFridge("Ground Beef", 25022025);
-    fridgeManager.addToFridge("Ground Beef", 25012023); // Expired example
+    long today = DateValidation.getTodayAsLong(); // Considered using today + 10,
+                                                  // but issues can arise depending on
+                                                  // date.
+    fridgeManager.addToFridge("Ground Chicken", 25012025L);
 
-    fridgeManager.addToFridge("Pasta Plates", 25012025); // Not enough for recipe.
+    fridgeManager.addToFridge("Ground Beef", 25012025L);
+    fridgeManager.addToFridge("Ground Beef", 25022025L);
+    fridgeManager.addToFridge("Ground Beef", 25012023L); // Expired example
 
-    fridgeManager.addToFridge("Tomato Sauce", 25012025);
-    fridgeManager.addToFridge("Tomato Sauce", 25012022); // Expired
+    fridgeManager.addToFridge("Pasta Plates", 25012025L); // Not enough for recipe.
 
-    fridgeManager.addToFridge("Hermetic Corn", 25012025);
-    fridgeManager.addToFridge("Grated Cheese", 25012025);
-    fridgeManager.addToFridge("Apple", 25012025);
-    fridgeManager.addToFridge("Thousand Island Sauce", 25012025);
-    fridgeManager.addToFridge("Chicken Breast", 25012025);
-    fridgeManager.addToFridge("Kidney Beans", 25012025);
-    fridgeManager.addToFridge("Cooking Butter", 25012025);
-    fridgeManager.addToFridge("Egg 12-pack", 25012025);
-    fridgeManager.addToFridge("Bread Slices", 25012025);
-    fridgeManager.addToFridge("Butter", 25012025);
-    fridgeManager.addToFridge("Cooking Oil", 01012030);
-    fridgeManager.addToFridge("Skimmed Milk", 01012025);
-    fridgeManager.addToFridge("Spinach", 25012025);
-    fridgeManager.addToFridge("Carrots 12-pack", 25012025);
-    fridgeManager.addToFridge("Coca Cola Zero", 25012025);
-    fridgeManager.addToFridge("Monster Energy Drink", 25012026);
-    fridgeManager.addToFridge("Sunflower Seeds", 25012025);
-    fridgeManager.addToFridge("Feta Cheese", 25012025);
-    fridgeManager.addToFridge("Basmati Rice", 25012025);
-    fridgeManager.addToFridge("Taco Sauce", 25012025);
+    fridgeManager.addToFridge("Tomato Sauce", 25012025L);
+    fridgeManager.addToFridge("Tomato Sauce", 25012022L); // Expired
+
+    fridgeManager.addToFridge("Hermetic Corn", 25012025L);
+    fridgeManager.addToFridge("Grated Cheese", 25012025L);
+    fridgeManager.addToFridge("Apple", 25012025L);
+    fridgeManager.addToFridge("Thousand Island Sauce", 25012025L);
+    fridgeManager.addToFridge("Chicken Breast", 25012025L);
+    fridgeManager.addToFridge("Kidney Beans", 25012025L);
+    fridgeManager.addToFridge("Cooking Butter", 25012025L);
+    fridgeManager.addToFridge("Egg 12-pack", 25012025L);
+    fridgeManager.addToFridge("Bread Slices", 25012025L);
+    fridgeManager.addToFridge("Butter", 25012025L);
+    fridgeManager.addToFridge("Cooking Oil", 01012030L);
+    fridgeManager.addToFridge("Skimmed Milk", 01012025L);
+    fridgeManager.addToFridge("Spinach", 25012025L);
+    fridgeManager.addToFridge("Carrots 12-pack", 25012025L);
+    fridgeManager.addToFridge("Coca Cola Zero", 25012025L);
+    fridgeManager.addToFridge("Monster Energy Drink", 25012026L);
+    fridgeManager.addToFridge("Sunflower Seeds", 25012025L);
+    fridgeManager.addToFridge("Feta Cheese", 25012025L);
+    fridgeManager.addToFridge("Basmati Rice", 25012025L);
+    fridgeManager.addToFridge("Taco Sauce", 25012025L);
     // Should maybe change name from fridge to Food Storage bc rice, sauce etc.
 
     // Adds recipes
@@ -211,8 +218,14 @@ public class SelfMadeClient {
 
       int choice = scanner.nextInt();
       switch (choice) {
-        case 1 -> fridgeManager.getAllFridgeItemsSorted();
-        case 2 -> fridgeManager.getAllExpiredItems();
+        case 1 -> {
+          System.out.println("All items in the fridge:");
+          fridgeManager.printAllFridgeItemsSorted();
+        }
+        case 2 -> {
+          System.out.println("All expired items in the fridge:");
+          fridgeManager.printAllExpiredItems();
+        }
         case 3 -> valueMenu();
         case 4 -> manageFridgeMenu();
         case 5 -> {
@@ -234,8 +247,16 @@ public class SelfMadeClient {
 
       switch (choice) {
 
-        case 1 -> System.out.println(fridgeManager.getTotalValueOfFridge());
-        case 2 -> System.out.println(fridgeManager.getExpiredItemsValue());
+        case 1 -> {
+          System.out.println("Total value of fridge:");
+          System.out.print(fridgeManager.getTotalValueOfFridge());
+          System.out.print(" NOK.");
+        }
+        case 2 -> {
+          System.out.println("Total value of fridge:");
+          System.out.print(fridgeManager.getExpiredItemsValue());
+          System.out.print(" NOK.");
+        }
         case 3 -> {
           return;
         }
