@@ -7,8 +7,8 @@ import models.*;
 /**
  * Utility class for reading and writing CSV files.
  * These files will be used to store and retrieve data that
- * the user inputs, changes or deletes.
- * Will be used in FridgeManager, FoodList, RecipeManager and CookBookManager.
+ * the user inputs, changes, or deletes.
+ * Will be used in FridgeManager, FoodList, RecipeManager, and CookBookManager.
  *
  * @author Dennis Moe
  */
@@ -41,7 +41,12 @@ public class CsvUtility {
     List<String[]> data = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
+        if (isFirstLine) {
+          isFirstLine = false;
+          continue;
+        }
         data.add(line.split(",")); // Split by comma
       }
     } catch (IOException e) {
@@ -50,7 +55,7 @@ public class CsvUtility {
     return data;
   }
 
-  // Helper methods for Ingredients, FoodList, RecipeManager and CookBookManager.
+  // Helper methods for Ingredients, FoodList, RecipeManager, and CookBookManager.
 
   // Ingredients / FoodList
 
@@ -62,8 +67,10 @@ public class CsvUtility {
    */
   public static void writeIngredientsToCsv(String filePath, HashMap<String, Ingredient> foodList) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
-      for (Ingredient ingredient : foodList.values()) { // Loop through all ingredients
-        writer.printf("%s,%s,%.2f,%s,%.2f%n", // Format for each row
+      // Write header
+      writer.println("IngredientName,Category,BaseWeight,MeasuringUnit,Cost");
+      for (Ingredient ingredient : foodList.values()) {
+        writer.printf(Locale.US, "%s,%s,%.2f,%s,%.2f%n",
             ingredient.getIngredientName(),
             ingredient.getIngredientCategory(),
             ingredient.getIngredientBaseWeight(),
@@ -79,13 +86,18 @@ public class CsvUtility {
    * Reads ingredients data from a CSV file.
    *
    * @param filePath path of the CSV file to read from.
-   * @return A list of Ingredient objects.
+   * @return A map of Ingredient objects.
    */
   public static Map<String, Ingredient> readIngredientsFromCsv(String filePath) {
     Map<String, Ingredient> foodList = new HashMap<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
+        if (isFirstLine) {
+          isFirstLine = false;
+          continue;
+        }
         String[] parts = line.split(",");
         if (parts.length == 5) {
           Ingredient ingredient = new Ingredient(
@@ -110,8 +122,10 @@ public class CsvUtility {
    */
   public static void writeFridgeItemsToCsv(String filePath, List<FridgeItem> fridgeItems) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+      // Write header
+      writer.println("IngredientName,Quantity,ExpirationDate");
       for (FridgeItem item : fridgeItems) {
-        writer.printf("%s,%.2f,%d%n",
+        writer.printf(Locale.US, "%s,%.2f,%d%n",
             item.getIngredient().getIngredientName(),
             item.getQuantity(),
             item.getExpirationDate());
@@ -132,7 +146,12 @@ public class CsvUtility {
     List<FridgeItem> fridgeItems = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
+        if (isFirstLine) {
+          isFirstLine = false;
+          continue;
+        }
         String[] parts = line.split(",");
         if (parts.length == 3) {
           Ingredient ingredient = foodList.getIngredientFromFoodList(parts[0]);
@@ -158,6 +177,8 @@ public class CsvUtility {
    */
   public static void writeRecipesToCsv(String filePath, List<Recipe> recipes) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+      // Write header
+      writer.println("RecipeName,Description,Instructions,Type,Ingredients");
       for (Recipe recipe : recipes) {
         writer.printf("%s,%s,%s,%s,%s%n",
             recipe.getRecipeName(),
@@ -182,7 +203,12 @@ public class CsvUtility {
     List<Recipe> recipes = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
+        if (isFirstLine) {
+          isFirstLine = false;
+          continue;
+        }
         String[] parts = line.split(",");
         if (parts.length >= 5) {
           Recipe recipe = new Recipe(parts[0], parts[1], parts[2], parts[3]);
@@ -216,13 +242,13 @@ public class CsvUtility {
    */
   public static void writeCookBooksToCsv(String filePath, Map<String, CookBook> cookBooks) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+      // Write header
+      writer.println("CookBookName,Recipes");
       for (Map.Entry<String, CookBook> entry : cookBooks.entrySet()) {
-
         String cookBookName = entry.getKey();
         CookBook cookBook = entry.getValue();
 
         List<Recipe> recipes = new ArrayList<>(cookBook.getRecipesInCookBook().values());
-
         String recipeNames = recipes.stream()
             .map(Recipe::getRecipeName)
             .reduce((a, b) -> a + "," + b)
@@ -249,11 +275,17 @@ public class CsvUtility {
     Map<String, List<Recipe>> cookBooks = new HashMap<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
-        String[] parts = line.split(",");
+        if (isFirstLine) {
+          isFirstLine = false;
+          continue;
+        }
+        String[] parts = line.split(",", 2); // Split into CookBookName and Recipes
         if (parts.length == 2) {
-          String bookName = parts[0];
-          String[] recipeNames = parts[1].replaceAll("[\\[\\]]", "").split(", ");
+          String bookName = parts[0].trim();
+          String[] recipeNames = parts[1].replaceAll("\"", "")
+              .split(", "); // Remove quotes and split
           List<Recipe> bookRecipes = new ArrayList<>();
           for (String recipeName : recipeNames) {
             for (Recipe recipe : recipes) {

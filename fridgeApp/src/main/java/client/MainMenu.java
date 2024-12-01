@@ -1,5 +1,6 @@
 package client;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -22,6 +23,17 @@ import utilities.CsvUtility;
  */
 public class MainMenu {
 
+  // Paths to CSV files
+  private static final String FOODLIST_CSV = "src/main/resources/data/foodlist.csv";
+  private static final String FRIDGEITEMS_CSV = "src/main/resources/data/fridgeitems.csv";
+  private static final String RECIPES_CSV = "src/main/resources/data/recipes.csv";
+  private static final String COOKBOOKS_CSV = "src/main/resources/data/cookbooks.csv";
+
+  private final String foodListPath;
+  private final String fridgeItemsPath;
+  private final String recipesPath;
+  private final String cookBooksPath;
+
   private static final Scanner scanner = new Scanner(System.in);
   private final FoodList foodList;
   private final Fridge fridge;
@@ -30,21 +42,27 @@ public class MainMenu {
   private final RecipeManager recipeManager;
   private final CookBookManager cookBookManager;
 
-  private static final String FOODLIST_CSV = "src/data/foodlist.csv";
-  private static final String FRIDGEITEMS_CSV = "src/data/fridgeitems.csv";
-  private static final String RECIPES_CSV = "src/data/recipes.csv";
-  private static final String COOKBOOKS_CSV = "src/data/cookbooks.csv";
-
   /**
    * Constructs a new MainMenu instance and initializes the managers and lists.
    */
   public MainMenu() {
-    foodList = new FoodList();
-    fridge = new Fridge();
-    recipeList = new RecipeList();
-    fridgeManager = new FridgeManager(fridge, foodList);
-    recipeManager = new RecipeManager(recipeList, fridge, foodList);
-    cookBookManager = new CookBookManager();
+    // Paths
+    this.foodListPath = getFilePath(FOODLIST_CSV);
+    this.fridgeItemsPath = getFilePath(FRIDGEITEMS_CSV);
+    this.recipesPath = getFilePath(RECIPES_CSV);
+    this.cookBooksPath = getFilePath(COOKBOOKS_CSV);
+
+    // Objects
+    this.foodList = new FoodList();
+    this.fridge = new Fridge();
+    this.recipeList = new RecipeList();
+    this.fridgeManager = new FridgeManager(fridge, foodList);
+    this.recipeManager = new RecipeManager(recipeList, fridge, foodList);
+    this.cookBookManager = new CookBookManager();
+  }
+
+  private String getFilePath(String relativePath) {
+    return new File(relativePath).getAbsolutePath();
   }
 
   /**
@@ -118,48 +136,61 @@ public class MainMenu {
    */
   public void importData() {
     try {
-      System.out.println("Importing data...");
+      System.out.println("Starting data import...");
 
       // Import Food List
-      Map<String, Ingredient> ingredients = CsvUtility.readIngredientsFromCsv(FOODLIST_CSV);
+      System.out.println("Importing Food List from: " + foodListPath);
+      Map<String, Ingredient> ingredients = CsvUtility.readIngredientsFromCsv(foodListPath);
       if (ingredients != null && !ingredients.isEmpty()) {
         ingredients.values().forEach(foodList::addIngredient);
+        System.out.println("Food List imported successfully: "
+            + ingredients.size() + " ingredients loaded.");
       } else {
-        System.err.println("No ingredients found in the CSV file.");
+        System.err.println("No ingredients found in the Food List CSV.");
       }
 
       // Import Fridge Items
-      List<FridgeItem> fridgeItems = CsvUtility.readFridgeItemsFromCsv(FRIDGEITEMS_CSV, foodList);
+      System.out.println("Importing Fridge Items from: " + fridgeItemsPath);
+      List<FridgeItem> fridgeItems = CsvUtility.readFridgeItemsFromCsv(fridgeItemsPath, foodList);
       if (fridgeItems != null && !fridgeItems.isEmpty()) {
         fridgeItems.forEach(fridge::addFridgeItem);
+        System.out.println("Fridge Items imported successfully: "
+            + fridgeItems.size() + " items loaded.");
       } else {
-        System.err.println("No fridge items found in the CSV file.");
+        System.err.println("No Fridge Items found in the CSV.");
       }
 
       // Import Recipes
-      List<Recipe> recipes = CsvUtility.readRecipesFromCsv(RECIPES_CSV, foodList);
+      System.out.println("Importing Recipes from: " + recipesPath);
+      List<Recipe> recipes = CsvUtility.readRecipesFromCsv(recipesPath, foodList);
       if (recipes != null && !recipes.isEmpty()) {
         recipes.forEach(recipeList::addRecipe);
+        System.out.println("Recipes imported successfully: "
+            + recipes.size() + " recipes loaded.");
       } else {
-        System.err.println("No recipes found in the CSV file.");
+        System.err.println("No Recipes found in the CSV.");
       }
 
       // Import CookBooks
-      Map<String, List<Recipe>> cookBooks = CsvUtility.readCookBooksFromCsv(COOKBOOKS_CSV, recipes);
+      System.out.println("Importing CookBooks from: " + cookBooksPath);
+      Map<String, List<Recipe>> cookBooks = CsvUtility.readCookBooksFromCsv(cookBooksPath, recipes);
       if (cookBooks != null && !cookBooks.isEmpty()) {
-        cookBooks.forEach((cookBookName, recipesInBook) -> {
+        cookBooks.forEach((cookBookName, recipesInCookBook) -> {
           cookBookManager.createCookBook(cookBookName, "Description", "Type");
-          recipesInBook.forEach(recipe -> cookBookManager.addRecipeToCookBook(
-              cookBookName, recipe.getRecipeName()));
+          recipesInCookBook
+              .forEach(recipe -> cookBookManager.addRecipeToCookBook(cookBookName,
+                  recipe.getRecipeName()));
         });
+        System.out.println("CookBooks imported successfully: "
+            + cookBooks.size() + " cookbooks loaded.");
       } else {
-        System.err.println("No cookbooks found in the CSV file.");
+        System.err.println("No CookBooks found in the CSV.");
       }
 
-      System.out.println("Data imported successfully.");
-
+      System.out.println("Data import completed successfully.");
     } catch (Exception e) {
-      System.err.println("Error importing data: " + e.getMessage());
+      System.err.println("Error during data import: " + e.getMessage());
+      e.printStackTrace();
     }
   }
 
@@ -168,15 +199,34 @@ public class MainMenu {
    */
   public void exportData() {
     try {
-      System.out.println("Exporting data...");
-      CsvUtility.writeIngredientsToCsv(FOODLIST_CSV, foodList.getFoodList());
-      CsvUtility.writeFridgeItemsToCsv(FRIDGEITEMS_CSV, fridge.getAllFridgeItems());
-      CsvUtility.writeRecipesToCsv(RECIPES_CSV,
+      System.out.println("Starting data export...");
+
+      // Export Food List
+      System.out.println("Exporting Food List to: " + foodListPath);
+      CsvUtility.writeIngredientsToCsv(foodListPath, foodList.getFoodList());
+      System.out.println("Food List exported successfully.");
+
+      // Export Fridge Items
+      System.out.println("Exporting Fridge Items to: " + fridgeItemsPath);
+      CsvUtility.writeFridgeItemsToCsv(fridgeItemsPath, fridge.getAllFridgeItems());
+      System.out.println("Fridge Items exported successfully.");
+
+      // Export Recipes
+      System.out.println("Exporting Recipes to: " + recipesPath);
+      CsvUtility.writeRecipesToCsv(recipesPath,
           recipeList.getAllRecipes().values().stream().toList());
-      CsvUtility.writeCookBooksToCsv(COOKBOOKS_CSV, cookBookManager.getAllCookBooks());
-      System.out.println("Data exported successfully.");
+      System.out.println("Recipes exported successfully.");
+
+      // Export CookBooks
+      System.out.println("Exporting CookBooks to: " + cookBooksPath);
+      CsvUtility.writeCookBooksToCsv(cookBooksPath, cookBookManager.getAllCookBooks());
+      System.out.println("CookBooks exported successfully.");
+
+      System.out.println("Data export completed successfully.");
     } catch (Exception e) {
-      System.err.println("Error exporting data: " + e.getMessage());
+      System.err.println("Error during data export: " + e.getMessage());
+      e.printStackTrace();
     }
   }
+
 }
