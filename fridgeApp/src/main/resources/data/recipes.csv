@@ -1,5 +1,16 @@
 RecipeName,Description,Instructions,Type,Ingredients
-Chicken Salad,Salad made with spinach, cut chicken breast, corn,{}
-Bread with Eggs,Bread with eggs and butter.,Do this mate.,Breakfast,{}
-Beef Lasagna,Lasagna made with beef, milk, cheese,{}
-Rice with Chicken and Beans,Rice with chicken breast, kidney beans, basmati rice and taco sauce.,{}
+Cheesy Pasta,A pasta dish with cheesy flavor,"Boil pasta, mix with cheese sauce.",Dinner,"Pasta Plates=200,Feta Cheese=150,Tomato Sauce=150"
+Chicken Stir Fry,A simple stir-fry with chicken and vegetables,"Stir fry chicken and vegetables in a wok.",Dinner,"Chicken Breast=300,Spinach=150,Sunflower Seeds=50,Cooking Oil=50"
+Vegetable Soup,A hearty soup with fresh vegetables,"Boil vegetables in stock until soft.",Lunch,"Carrots 12-pack=4,Spinach=100,Tomato Sauce=100,Skimmed Milk=0.5"
+Breakfast Burrito,A tasty breakfast wrap,"Scramble eggs, add to wrap with salsa.",Breakfast,"Egg 12-pack=2,Basmati Rice=50,Tomato Sauce=50,Grated Cheese=100"
+Salmon Salad,A refreshing salmon and spinach salad,"Mix salmon with spinach and dressing.",Lunch,"Salmon Fillet=200,Spinach=150,Feta Cheese=100"
+Tuna Pasta,A simple tuna pasta dish,"Boil pasta, add tuna and sauce.",Dinner,"Pasta Plates=150,Tomato Sauce=150,Sunflower Seeds=30"
+Bacon Omelette,A breakfast omelette with crispy bacon,"Cook bacon, add whisked eggs.",Breakfast,"Bacon=100,Skimmed Milk=0.2,Butter=20"
+Chicken Tacos,Soft tacos with seasoned chicken,"Cook chicken, serve with taco sauce.",Dinner,"Ground Chicken=400,Taco Sauce=100,Skimmed Milk=0.5"
+Feta Spinach Wrap,A healthy spinach and feta cheese wrap,"Mix spinach and feta, wrap in bread.",Lunch,"Spinach=100,Feta Cheese=100,Bread Slices=2"
+Vegetarian Lasagna,A lasagna with a vegetarian twist,"Layer vegetables, pasta, and tomato sauce.",Dinner,"Pasta Plates=200,Spinach=150,Tomato Sauce=200"
+Chicken Caesar Salad,A classic caesar salad,"Grill chicken, mix with greens and dressing.",Lunch,"Chicken Breast=300,Grated Cheese=50,Bread Slices=2"
+Sweet Corn Salad,A sweet and fresh salad,"Mix corn, sunflower seeds, and spinach.",Lunch,"Hermetic Corn=100,Sunflower Seeds=30,Spinach=100"
+Coca Cola Chicken,Chicken cooked with a cola twist,"Cook chicken with cola and sauce.",Dinner,"Chicken Breast=400,Coca Cola Zero=0.5,Taco Sauce=50"
+Garlic Butter Rice,A buttery garlic rice dish,"Cook rice with garlic and butter.",Side,"Basmati Rice=150,Butter=50,Cooking Oil=20"
+Classic Burger,A delicious classic burger,"Grill beef patties, assemble with buns.",Dinner,"Ground Beef=400,Tomato Sauce=50,Bread Slices=2"

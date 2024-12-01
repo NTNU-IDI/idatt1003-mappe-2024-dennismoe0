@@ -1,25 +1,86 @@
 IngredientName,Category,BaseWeight,MeasuringUnit,Cost
-Grated Cheese,Cheese,200.00,g,59.00
-Cooking Butter,Butter,500.00,g,39.00
-Carrots 12-pack,Vegetable,12.00,amount,39.00
-Pasta Plates,Pasta,100.00,g,49.00
-Bread Slices,Bread,12.00,amount,19.00
-Butter,Butter,400.00,g,39.00
-Monster Energy Drink,Energy Drink,500.00,mL,24.00
-Taco Sauce,Sauce,250.00,g,29.00
-Basmati Rice,Rice,750.00,g,29.00
-Tomato Sauce,Sauce,200.00,g,49.00
-Feta Cheese,Cheese,200.00,g,59.00
-Ground Beef,Meat,400.00,g,59.00
-Hermetic Corn,Vegetable,120.00,g,20.00
-Apple,Fruit,1.00,amount,10.00
-Thousand Island Sauce,Sauce,250.00,mL,49.00
-Coca Cola Zero,Soda,1.50,L,39.00
-Cooking Oil,Oil,500.00,mL,59.00
-Skimmed Milk,Milk,1.75,L,0.00
-Sunflower Seeds,Seeds,200.00,g,29.00
-Kidney Beans,Vegetable,220.00,g,9.00
-Ground Chicken,Meat,400.00,g,45.00
-Egg 12-pack,Eggs,12.00,amount,49.00
-Spinach,Vegetable,200.00,g,39.00
-Chicken Breast,Meat,1.20,kg,179.00
+Ground Chicken,Meat,400,g,45
+Ground Beef,Meat,400,g,59
+Pasta Plates,Pasta,100,g,49
+Tomato Sauce,Sauce,200,g,49
+Hermetic Corn,Vegetable,120,g,20
+Grated Cheese,Cheese,200,g,59
+Apple,Fruit,1,amount,10
+Thousand Island Sauce,Sauce,250,mL,49
+Chicken Breast,Meat,1.2,kg,179
+Kidney Beans,Vegetable,220,g,9
+Cooking Butter,Butter,500,g,39
+Egg 12-pack,Eggs,12,amount,49
+Bread Slices,Bread,12,amount,19
+Butter,Butter,400,g,39
+Cooking Oil,Oil,500,mL,59
+Skimmed Milk,Milk,1.75,L,0
+Spinach,Vegetable,200,g,39
+Carrots 12-pack,Vegetable,12,amount,39
+Coca Cola Zero,Soda,1.5,L,39
+Monster Energy Drink,Energy Drink,500,mL,24
+Sunflower Seeds,Seeds,200,g,29
+Feta Cheese,Cheese,200,g,59
+Basmati Rice,Rice,750,g,29
+Taco Sauce,Sauce,250,g,29
+Parmesan Cheese,Cheese,250,g,85
+Bacon,Meat,300,g,120
+Baby Spinach,Vegetable,100,g,30
+Salmon Fillet,Fish,200,g,150
+Greek Yogurt,Dairy,500,g,50
+Brown Sugar,Sugar,1,kg,30
+White Flour,Flour,1,kg,20
+Pineapple,Fruit,1,amount,25
+Banana,Fruit,1,amount,5
+Orange,Fruit,1,amount,7
+Almond Milk,Dairy-Free Milk,1,L,25
+Oats,Grain,500,g,20
+Honey,Sweetener,500,g,60
+Maple Syrup,Sweetener,250,mL,80
+Strawberries,Fruit,500,g,70
+Blueberries,Fruit,250,g,50
+Cashews,Nuts,200,g,90
+Almonds,Nuts,200,g,85
+Peanut Butter,Spread,500,g,40
+Chicken Wings,Meat,1,kg,150
+Whole Wheat Pasta,Pasta,500,g,40
+Tomato Paste,Sauce,140,g,12
+Pickles,Vegetable,300,g,20
+Beef Steak,Meat,300,g,180
+Turkey Breast,Meat,1,kg,150
+Shrimp,Fish,1,kg,250
+Tilapia,Fish,1,kg,200
+Cucumber,Vegetable,1,amount,10
+Red Pepper,Vegetable,1,amount,15
+Green Pepper,Vegetable,1,amount,15
+Yellow Pepper,Vegetable,1,amount,15
+White Onion,Vegetable,1,amount,10
+Garlic Clove,Spice,1,amount,5
+Olive Oil,Oil,1,L,80
+Sunflower Oil,Oil,1,L,60
+Raspberries,Fruit,250,g,70
+Whole Grain Bread,Bread,10,amount,30
+Bagels,Bread,5,amount,20
+Croissant,Pastry,5,amount,50
+Plain Yogurt,Dairy,500,g,40
+Sweet Corn,Vegetable,300,g,15
+Pork Belly,Meat,1,kg,200
+Cream Cheese,Cheese,250,g,40
+Mozzarella Cheese,Cheese,250,g,55
+Cheddar Cheese,Cheese,250,g,60
+Iceberg Lettuce,Vegetable,1,amount,15
+Avocado,Fruit,1,amount,20
+Whole Wheat Flour,Flour,1,kg,25
+Rice Noodles,Pasta,500,g,35
+Soy Sauce,Condiment,500,mL,25
+Worcestershire Sauce,Condiment,250,mL,30
+Black Pepper,Spice,100,g,20
+Salt,Spice,500,g,10
+Cumin,Spice,100,g,25
+Cinnamon,Spice,100,g,30
+Paprika,Spice,100,g,20
+Nutmeg,Spice,100,g,40
+Ginger Root,Spice,1,amount,10
+Frozen Peas,Vegetable,500,g,25
+Chickpeas,Legume,500,g,20
+Coconut Milk,Dairy-Free Milk,400,mL,35

@@ -113,6 +113,7 @@ public class FridgeMenu {
             case 2 -> {
               System.out.println("Enter ingredient name: ");
               String name = scanner.next();
+              scanner.nextLine();
 
               System.out.println("Enter category: ");
               String category = scanner.next();
@@ -122,6 +123,7 @@ public class FridgeMenu {
 
               System.out.println("Enter unit ('g', 'mL', 'L' etc.): ");
               String unit = scanner.next();
+              scanner.nextLine();
 
               System.out.println("Enter cost in NOK (i.e. '79'): ");
               double cost = scanner.nextDouble();
