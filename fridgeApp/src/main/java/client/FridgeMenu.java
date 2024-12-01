@@ -95,12 +95,49 @@ public class FridgeMenu {
       int choice = scanner.nextInt();
       switch (choice) {
         case 1 -> {
-          System.out.print("Enter ingredient name: ");
-          String name = scanner.next();
-          System.out.print("Enter expiration date (yyyymmdd): ");
-          long expirationDate = scanner.nextLong();
-          String result = fridgeManager.addToFridge(name, expirationDate);
-          System.out.println(result);
+          System.out.println("Choose an action:");
+          System.out.println("1. Add a new ingredient to the fridge.");
+          System.out.println("2. Create a new ingredient and add to the fridge.");
+          System.out.println("3. Go back to manage fridge menu.");
+
+          int createChoice = scanner.nextInt();
+          switch (createChoice) {
+            case 1 -> {
+              System.out.print("Enter ingredient name: ");
+              String name = scanner.next();
+              System.out.print("Enter expiration date (ddmmyyyy): ");
+              long expirationDate = scanner.nextLong();
+              String result = fridgeManager.addToFridge(name, expirationDate);
+              System.out.println(result);
+            }
+            case 2 -> {
+              System.out.println("Enter ingredient name: ");
+              String name = scanner.next();
+
+              System.out.println("Enter category: ");
+              String category = scanner.next();
+
+              System.out.println("Enter base weight/volume (i.e. 400): ");
+              double baseWeight = scanner.nextDouble();
+
+              System.out.println("Enter unit ('g', 'mL', 'L' etc.): ");
+              String unit = scanner.next();
+
+              System.out.println("Enter cost in NOK (i.e. '79'): ");
+              double cost = scanner.nextDouble();
+
+              System.out.println("Enter expiration date (ddmmyyyy): ");
+              long expirationDate = scanner.nextLong();
+
+              String result = fridgeManager.createAndAddToFridge(name, category,
+                  baseWeight, unit, cost, expirationDate);
+              System.out.println(result);
+            }
+            case 3 -> {
+              return;
+            }
+            default -> System.out.println("Invalid choice. Please try again.");
+          }
         }
         case 2 -> {
           System.out.println("A list of all items in the fridge:");
