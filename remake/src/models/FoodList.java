@@ -8,6 +8,8 @@ import java.util.HashMap;
  * This is more similar to a representation of the Ingredients information when
  * you buy it
  * at the store.
+ * Also has assorted methods for adding, removing and getting info from the
+ * ingredients.
  *
  * @author Dennis Moe
  */

@@ -1,14 +1,14 @@
 package services;
 
+import java.util.HashMap;
+import java.util.Map;
 import models.CookBook;
 import models.Recipe;
 import models.RecipeList;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Stores all CookBooks and manages everything related to CookBooks.
- * 
+ *
  * @author Dennis Moe
  */
 public class CookBookManager {
@@ -130,5 +130,9 @@ public class CookBookManager {
       }
       return allRecipesInCookBook;
     }
+  }
+
+  public Map<String, CookBook> getAllCookBooks() {
+    return cookBooks;
   }
 }
