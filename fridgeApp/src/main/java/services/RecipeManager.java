@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import models.FoodList;
-import models.Fridge;
 import models.FridgeItem;
 import models.Ingredient;
 import models.Recipe;
@@ -17,21 +16,20 @@ import utilities.DateValidation;
  * @author Dennis Moe
  */
 public class RecipeManager {
-  private final RecipeList recipeList; // Add RecipeList to manage recipes
-  private final Fridge fridge; // Add Fridge to check ingredient availability
-  private final FoodList foodList; // Add FoodList to access ingredient prices and details
+  private final RecipeList recipeList;
+  private final FridgeManager fridgeManager;
+  private final FoodList foodList;
 
   /**
    * Constructs a new RecipeManager.
    *
-   * @param recipeList the RecipeList instance to manage
-   * @param fridge     the Fridge instance for ingredient availability
-   * @param foodList   the FoodList instance for ingredient details
+   * @param recipeList    the RecipeList instance to manage
+   * @param fridgeManager the FridgeManager instance to manage fridge operations
    */
-  public RecipeManager(RecipeList recipeList, Fridge fridge, FoodList foodList) {
+  public RecipeManager(RecipeList recipeList, FridgeManager fridgeManager) {
     this.recipeList = recipeList;
-    this.fridge = fridge;
-    this.foodList = foodList; // Initialize FoodList
+    this.fridgeManager = fridgeManager;
+    this.foodList = fridgeManager.getFoodList();
   }
 
   /**
@@ -73,7 +71,13 @@ public class RecipeManager {
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
-      double availableQuantity = fridge.getTotalQuantityOfIngredient(ingredientName);
+
+      // IDK IF THIS WILL WORK
+      String ingredientUnit = foodList.getIngredientFromFoodList(ingredientName)
+          .getIngredientMeasuringUnit();
+      double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
+          ingredientUnit);
+      //
 
       if (availableQuantity < requiredQuantity) {
         return "Insufficient " + ingredientName + " in the Fridge. Needed: "
@@ -133,9 +137,13 @@ public class RecipeManager {
     if (recipe == null) {
       return "Recipe not found.";
     }
-    return "Recipe: " + recipe.getRecipeName() + "\nDescription: " + recipe.getRecipeDescription() +
-        "\nInstructions: " + recipe.getInstructions() +
-        "\nEstimated Cost: " + calculateRecipeCost(recipe);
+    return "Recipe: " + recipe.getRecipeName() + "\nDescription: " + recipe.getRecipeDescription()
+        + "\nInstructions: " + recipe.getInstructions()
+        + "\nEstimated Cost: " + calculateRecipeCost(recipe);
+  }
+
+  public Recipe getRecipeObject(String recipeName) {
+    return recipeList.getRecipe(recipeName);
   }
 
   /**
@@ -155,94 +163,99 @@ public class RecipeManager {
     return allRecipes.toString();
   }
 
+  // Check if this one still works with new methods iterating over multiple items
+  // + unit conversion
+
+  // Probably need to make methods that prints the lists, probably same issue
+  // as with the fridge list.
+
   /**
-   * Suggests recipes to the user based on matches of ingredient categories that
+   * Suggests recipes to the user based on matches of ingredient quantities that
    * exist in the fridge.
    *
-   * @return a list of recipe names that match the ingredient categories in the
-   *         fridge
+   * @return a list of recipe suggestions indicating full or partial matches
    */
   public List<String> suggestedRecipesBasedOnFridgeContents() {
     List<String> suggestedRecipes = new ArrayList<>();
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
-      int matchingCategories = 0; // Count of ingredients with sufficient quantity
+      int matchingIngredients = 0; // Count of ingredients with sufficient quantity
       boolean isFullMatch = true; // Indicates if all ingredients match fully
 
       for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
         String ingredientName = ingredientEntry.getKey();
         double requiredQuantity = ingredientEntry.getValue();
-        double availableQuantity = fridge.getTotalQuantityOfIngredient(ingredientName);
 
+        // Use FridgeManager to calculate total available quantity with unit conversion
+        String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
+            .getIngredientMeasuringUnit();
+        double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
+            requiredUnit);
+
+        // Check if the available quantity is sufficient
         if (availableQuantity >= requiredQuantity) {
-          matchingCategories++;
+          matchingIngredients++;
         } else {
           isFullMatch = false;
         }
       }
 
-      // If all ingredients match with required quantity
+      // Add to suggestions based on match type
       if (isFullMatch) {
         suggestedRecipes.add("Full match: You can make " + recipe.getRecipeName());
-      } else if (matchingCategories >= recipe.getIngredients().size() / 2) {
+      } else if (matchingIngredients >= recipe.getIngredients().size() / 2) {
         suggestedRecipes.add("Partial match: You have enough ingredients to partially make "
-            + recipe.getRecipeName() + ".");
+            + recipe.getRecipeName());
       }
     }
 
     return suggestedRecipes;
   }
 
-  // IMportant: Need to add method that takes from multiple items!!!!
-
   /**
-   * Removes the quantity of ingredients in a recipe from the Fridge.
+   * Retrieves a list of recipes that can be fully fulfilled
+   * based on the ingredients available in the fridge.
    *
-   * @param recipeName the name of the recipe to remove ingredients for
-   * @return a message indicating the outcome of the operation
+   * @return a list of recipe names that are fully fulfilled
    */
-  public String removeQuantityByRecipe(String recipeName) {
+  public List<String> fullyFulfilledRecipes() {
+    List<String> fullyFulfilled = new ArrayList<>();
 
-    Recipe recipe = recipeList.getRecipe(recipeName);
+    for (Recipe recipe : recipeList.getAllRecipes().values()) {
+      boolean isFullMatch = true; // Tracks if all ingredients match fully
 
-    // Check if recipe exists
-    if (recipe == null) {
-      return "Recipe not found.";
-    }
+      for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
+        String ingredientName = ingredientEntry.getKey();
+        double requiredQuantity = ingredientEntry.getValue();
 
-    // Iterates through all ingredients in the recipe
-    for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
+        // Get the required unit from the FoodList
+        String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
+            .getIngredientMeasuringUnit();
+        double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
+            requiredUnit);
 
-      String ingredientName = entry.getKey();
-      double requiredQuantity = entry.getValue();
-
-      // Gets all specific instances of an ingredient in the fridge
-      List<FridgeItem> fridgeItems = fridge.getAllFridgeItems().stream()
-          .filter(item -> item.getIngredient().getIngredientName()
-              .equals(ingredientName))
-          .toList();
-
-      boolean itemFound = false; // Tracks if an item was found
-
-      // Iterates through all instances of the ingredient.
-      for (FridgeItem fridgeItem : fridgeItems) {
-        double availableQuantity = fridgeItem.getQuantity();
-
-        if (availableQuantity >= requiredQuantity) {
-          fridge.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
-          itemFound = true;
+        // If any ingredient doesn't meet the required quantity, break out
+        if (availableQuantity < requiredQuantity) {
+          isFullMatch = false;
           break;
         }
       }
-      if (!itemFound) {
-        return "Insufficient " + ingredientName + " in the Fridge. Needed: "
-            + requiredQuantity + ", Available: "
-            + fridge.getTotalQuantityOfIngredient(ingredientName);
+
+      // Add recipe to the list if fully fulfilled
+      if (isFullMatch) {
+        fullyFulfilled.add(recipe.getRecipeName());
       }
     }
-    return "Recipe ingredients removed from the fridge.";
+
+    return fullyFulfilled;
   }
 
+  /**
+   * Removes the quantities of ingredients required for a recipe from the fridge.
+   *
+   * @param recipeName the name of the recipe whose ingredients are to be removed
+   * @return a message indicating the outcome of the operation
+   */
   public String removeMultipleQuantitiesByRecipe(String recipeName) {
     Recipe recipe = recipeList.getRecipe(recipeName);
 
@@ -260,7 +273,7 @@ public class RecipeManager {
       double requiredQuantity = entry.getValue();
 
       // Calculate total available quantity for the ingredient
-      double totalAvailableQuantity = fridge.getAllFridgeItems().stream()
+      double totalAvailableQuantity = fridgeManager.getAllFridgeItems().stream()
           .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
           .mapToDouble(FridgeItem::getQuantity)
           .sum();
@@ -278,7 +291,7 @@ public class RecipeManager {
 
       // Gets all items in the fridge sorted by expiration date
       // New version should not use expired items
-      List<FridgeItem> fridgeItems = fridge.getAllFridgeItems().stream()
+      List<FridgeItem> fridgeItems = fridgeManager.getAllFridgeItems().stream()
           .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
           // Excludes expired items from the list
           .filter(item -> DateValidation.compareDates(item.getExpirationDate(), todayAsLong) >= 0)
@@ -290,87 +303,21 @@ public class RecipeManager {
         double availableQuantity = fridgeItem.getQuantity();
 
         if (availableQuantity >= requiredQuantity) {
-          fridge.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
-          requiredQuantity = 0.0; // If full removal achieved.
+          fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
+          requiredQuantity = 0; // If full removal achieved.
 
           if (fridgeItem.getQuantity() == 0) {
-            fridge.removeFridgeItemById(fridgeItem.getId()); // removes item if quantity is 0
+            // removes item if quantity is 0
+            fridgeManager.removeByIdWithoutString(fridgeItem.getId());
           }
           break;
         } else {
-          fridge.updateFridgeItemQuantityById(fridgeItem.getId(), -availableQuantity);
+          fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -availableQuantity);
           requiredQuantity -= availableQuantity; // Partial removal
         }
       }
     }
     return "Recipe ingredients removed from fridge, prioritizing items with earliest expiration.";
-  }
-
-  /**
-   * Tester for the RecipeManager and related classes.
-   */
-  public static void main(String[] args) {
-    // Initialize required objects
-    FoodList foodList = new FoodList();
-    Fridge fridge = new Fridge();
-    FridgeManager fridgeManager = new FridgeManager(fridge, foodList);
-    RecipeList recipeList = new RecipeList();
-    RecipeManager recipeManager = new RecipeManager(recipeList, fridge, foodList);
-
-    // Add ingredients to FoodList
-    foodList.addIngredient(new Ingredient("Tomato", "Vegetable", 200.0, "g", 5.0));
-    foodList.addIngredient(new Ingredient("Cheese", "Dairy", 200.0, "g", 15.0));
-    foodList.addIngredient(new Ingredient("Chicken", "Meat", 500.0, "g", 50.0));
-
-    // Add sufficient quantities of FridgeItems to Fridge
-    fridge.addFridgeItem(new FridgeItem(foodList.getIngredientFromFoodList("Tomato"),
-        300.0, 25062024));
-    fridge.addFridgeItem(new FridgeItem(foodList.getIngredientFromFoodList("Cheese"),
-        100.0, 15072024));
-    fridge.addFridgeItem(new FridgeItem(foodList.getIngredientFromFoodList("Chicken"),
-        200.0, 10082024));
-
-    // Create and add a recipe
-    Recipe recipe = new Recipe("Chicken Salad", "A healthy chicken salad.",
-        "Mix ingredients.", "Lunch");
-    recipe.addIngredient("Tomato", 120.0);
-    recipe.addIngredient("Chicken", 200.0);
-    recipe.addIngredient("Cheese", 50.0);
-    recipeManager.addRecipe(recipe);
-
-    // Test checkIngredientsAvailability
-    System.out.println(recipeManager.checkIngredientsAvailability(recipe));
-
-    // Test calculateRecipeCost
-    System.out.println("Total cost of recipe: " + recipeManager.calculateRecipeCost(recipe));
-
-    // Test suggestedRecipesBasedOnFridgeContents
-    System.out.println("Suggested Recipes: " +
-        recipeManager.suggestedRecipesBasedOnFridgeContents());
-
-    // Display Fridge Items sorted before removing quantities
-    List<FridgeItem> fridgeItemsSortedBefore = fridgeManager.getAllFridgeItemsSorted();
-    System.out.println("Fridge items sorted before recipe test:");
-    for (FridgeItem item : fridgeItemsSortedBefore) {
-      System.out.println(item.getIngredient().getIngredientName() + " - "
-          + item.getIngredient().getIngredientCategory() + " - Expiration: "
-          + item.getExpirationDate() + " - Quantity: " + item.getQuantity());
-    }
-
-    // Test removeQuantityByRecipe
-    System.out.println(recipeManager.removeQuantityByRecipe("Chicken Salad"));
-
-    // Display Fridge Items sorted after removing quantities
-    List<FridgeItem> fridgeItemsSortedAfter = fridgeManager.getAllFridgeItemsSorted();
-    System.out.println("Fridge items sorted after recipe test:");
-    for (FridgeItem item : fridgeItemsSortedAfter) {
-      System.out.println(item.getIngredient().getIngredientName() + " - "
-          + item.getIngredient().getIngredientCategory() + " - Expiration: "
-          + item.getExpirationDate() + " - Quantity: " + item.getQuantity());
-    }
-
-    // Test getAllRecipes
-    System.out.println(recipeManager.getAllRecipes());
   }
 
 }
