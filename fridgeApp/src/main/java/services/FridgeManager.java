@@ -8,6 +8,7 @@ import models.Fridge;
 import models.FridgeItem;
 import models.Ingredient;
 import utilities.DateValidation;
+import utilities.UnitUtility;
 
 /**
  * FridgeManager provides operations to add, remove, and update items in the
@@ -51,6 +52,11 @@ public class FridgeManager {
         ingredient.getIngredientBaseWeight(), expirationDate);
     fridge.addFridgeItem(newItem);
     return "Ingredient added to fridge successfully.";
+  }
+
+  // gets foodlist
+  public FoodList getFoodList() {
+    return foodList;
   }
 
   /**
@@ -137,6 +143,47 @@ public class FridgeManager {
   }
 
   /**
+   * Removes the specified quantity of an ingredient from the fridge,
+   * prioritizing items with the earliest expiration date.
+   *
+   * @param ingredientName   the name of the ingredient to remove
+   * @param requiredQuantity the quantity to remove
+   * @param requiredUnit     the unit of the required quantity
+   * @return a message indicating the outcome of the operation
+   */
+  public String removeIngredient(String ingredientName,
+      double requiredQuantity, String requiredUnit) {
+    List<FridgeItem> sortedItems = fridge.getAllIngredientInstancesByName(ingredientName).stream()
+        .sorted(Comparator.comparing(FridgeItem::getExpirationDate))
+        .toList();
+
+    double remainingQuantity = requiredQuantity;
+
+    for (FridgeItem item : sortedItems) {
+      String itemUnit = item.getIngredient().getIngredientMeasuringUnit();
+      double availableQuantity = UnitUtility.convertUnit(item.getQuantity(),
+          itemUnit, requiredUnit);
+
+      if (availableQuantity >= remainingQuantity) {
+        double quantityToRemove = UnitUtility.convertUnit(remainingQuantity,
+            requiredUnit, itemUnit);
+        fridge.updateFridgeItemQuantityById(item.getId(), -quantityToRemove);
+        remainingQuantity = 0;
+        break;
+      } else {
+        double quantityToRemove = UnitUtility.convertUnit(availableQuantity,
+            requiredUnit, itemUnit);
+        fridge.updateFridgeItemQuantityById(item.getId(), -quantityToRemove);
+        remainingQuantity -= availableQuantity;
+      }
+    }
+
+    return remainingQuantity == 0
+        ? "Ingredient removed successfully."
+        : "Insufficient quantity to fulfill request.";
+  }
+
+  /**
    * Checks if an ingredient with the specified ID exists in the fridge.
    *
    * @param id the ID of the ingredient to check
@@ -187,6 +234,10 @@ public class FridgeManager {
     return allItems;
   }
 
+  public List<FridgeItem> getAllFridgeItems() {
+    return fridge.getAllFridgeItems();
+  }
+
   /**
    * Prints all FridgeItems sorted by Category, Name, Expiration Date, and
    * Quantity.
@@ -231,9 +282,7 @@ public class FridgeManager {
 
   /**
    * Calculates the total value of all expired items in the fridge.
-   * 
-   * This doesnt work, gives same amount as value of all items?
-   * 
+   *
    * @return a message with the total value of expired items
    */
   public String getExpiredItemsValue() {
@@ -246,8 +295,6 @@ public class FridgeManager {
   /**
    * Calculates the total value of all items in the fridge based on individual
    * item cost rather than quantity.
-   * 
-   * This doesnt work, gives same amount as value of all items?
    *
    * @return a message with the total value of items in the fridge
    */
@@ -259,14 +306,20 @@ public class FridgeManager {
   }
 
   /**
-   * Retrieves the total quantity of a specific ingredient
-   * in the fridge using the same method from the Fridge class.
+   * Retrieves the total quantity of a specific ingredient in the fridge,
+   * converting units to the target unit if necessary.
    *
-   * @param ingredientName the name of the ingredient to sum up.
-   * @return a double of the total quantity of the specified ingredient.
+   * @param ingredientName the name of the ingredient
+   * @param targetUnit     the desired unit for the quantity
+   * @return the total quantity of the ingredient in the specified unit
    */
-  public double getTotalQuantityOfIngredient(String ingredientName) {
-    return fridge.calculateTotalQuantity(ingredientName);
+  public double getTotalQuantityOfIngredient(String ingredientName, String targetUnit) {
+    return fridge.getAllIngredientInstancesByName(ingredientName).stream()
+        .mapToDouble(item -> {
+          String itemUnit = item.getIngredient().getIngredientMeasuringUnit();
+          return UnitUtility.convertUnit(item.getQuantity(), itemUnit, targetUnit);
+        })
+        .sum();
   }
 
   /**
