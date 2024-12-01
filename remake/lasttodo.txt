@@ -1,3 +1,9 @@
+JUnit testing:
+- Lag tester for alle metoder....
+  - Beskrivende navn som dokumenterer hva testene gjør.
+  - Positive og negative tilfeller (Success vs failure/error)
+- Arrange-Act-Assert.
+
 Changes to methods:
 
 

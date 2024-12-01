@@ -1,0 +1,120 @@
+/**
+   * Populates the FoodList with ingredients and adds them to the fridge.
+   * 
+   * <p>
+   * Also adds some recipes to the RecipeList and CookBooks.
+   * </p>
+   */
+  public void populateData() {
+    // Adds ingredients to the FoodList that can be put in the fridge.
+    foodList.addIngredient(new Ingredient("Ground Chicken", "Meat", 400, "g", 45));
+    foodList.addIngredient(new Ingredient("Ground Beef", "Meat", 400, "g", 59));
+    foodList.addIngredient(new Ingredient("Pasta Plates", "Pasta", 100, "g", 49));
+    foodList.addIngredient(new Ingredient("Tomato Sauce", "Sauce", 200, "g", 49));
+    foodList.addIngredient(new Ingredient("Hermetic Corn", "Vegetable", 120, "g", 20));
+    foodList.addIngredient(new Ingredient("Grated Cheese", "Cheese", 200, "g", 59));
+    foodList.addIngredient(new Ingredient("Apple", "Fruit", 1, "amount", 10));
+    foodList.addIngredient(new Ingredient("Thousand Island Sauce", "Sauce", 250, "mL", 49));
+    foodList.addIngredient(new Ingredient("Chicken Breast", "Meat", 1.2, "kg", 179));
+    foodList.addIngredient(new Ingredient("Kidney Beans", "Vegetable", 220, "g", 9));
+    foodList.addIngredient(new Ingredient("Cooking Butter", "Butter", 500, "g", 39));
+    foodList.addIngredient(new Ingredient("Egg 12-pack", "Eggs", 12, "amount", 49));
+    foodList.addIngredient(new Ingredient("Bread Slices", "Bread", 12, "amount", 19));
+    foodList.addIngredient(new Ingredient("Butter", "Butter", 400, "g", 39));
+    foodList.addIngredient(new Ingredient("Cooking Oil", "Oil", 500, "mL", 59));
+    foodList.addIngredient(new Ingredient("Skimmed Milk", "Milk", 1.75, "L", 0));
+    foodList.addIngredient(new Ingredient("Spinach", "Vegetable", 200, "g", 39));
+    foodList.addIngredient(new Ingredient("Carrots 12-pack", "Vegetable", 12, "amount", 39));
+    foodList.addIngredient(new Ingredient("Coca Cola Zero", "Soda", 1.5, "L", 39));
+    foodList.addIngredient(new Ingredient("Monster Energy Drink", "Energy Drink", 500, "mL", 24));
+    foodList.addIngredient(new Ingredient("Sunflower Seeds", "Seeds", 200, "g", 29));
+    foodList.addIngredient(new Ingredient("Feta Cheese", "Cheese", 200, "g", 59));
+    foodList.addIngredient(new Ingredient("Basmati Rice", "Rice", 750, "g", 29));
+    foodList.addIngredient(new Ingredient("Taco Sauce", "Sauce", 250, "g", 29));
+
+    // Adds them all to the fridge with expiration dates (non-realistic dates for
+    // ease).
+
+    fridgeManager.addToFridge("Ground Chicken", 25012025L);
+
+    fridgeManager.addToFridge("Ground Beef", 25012025L);
+    fridgeManager.addToFridge("Ground Beef", 25022025L);
+    fridgeManager.addToFridge("Ground Beef", 25012023L); // Expired example
+
+    fridgeManager.addToFridge("Pasta Plates", 25012025L); // Not enough for recipe.
+
+    fridgeManager.addToFridge("Tomato Sauce", 25012025L);
+    fridgeManager.addToFridge("Tomato Sauce", 25012022L); // Expired
+
+    fridgeManager.addToFridge("Hermetic Corn", 25012025L);
+    fridgeManager.addToFridge("Grated Cheese", 25012025L);
+    fridgeManager.addToFridge("Apple", 25012025L);
+    fridgeManager.addToFridge("Thousand Island Sauce", 25012025L);
+    fridgeManager.addToFridge("Chicken Breast", 25012025L);
+    fridgeManager.addToFridge("Kidney Beans", 25012025L);
+    fridgeManager.addToFridge("Cooking Butter", 25012025L);
+    fridgeManager.addToFridge("Egg 12-pack", 25012025L);
+    fridgeManager.addToFridge("Bread Slices", 25012025L);
+    fridgeManager.addToFridge("Butter", 25012025L);
+    fridgeManager.addToFridge("Cooking Oil", 01012030L);
+    fridgeManager.addToFridge("Skimmed Milk", 01012025L);
+    fridgeManager.addToFridge("Spinach", 25012025L);
+    fridgeManager.addToFridge("Carrots 12-pack", 25012025L);
+    fridgeManager.addToFridge("Coca Cola Zero", 25012025L);
+    fridgeManager.addToFridge("Monster Energy Drink", 25012026L);
+    fridgeManager.addToFridge("Sunflower Seeds", 25012025L);
+    fridgeManager.addToFridge("Feta Cheese", 25012025L);
+    fridgeManager.addToFridge("Basmati Rice", 25012025L);
+    fridgeManager.addToFridge("Taco Sauce", 25012025L);
+    // Should maybe change name from fridge to Food Storage bc rice, sauce etc.
+
+    // Adds recipes
+    // Doesnt work yet, need to implement RecipeManager method that uses multiple
+    // ingredients/fridgeItems.
+
+    Recipe beefLasagna = new Recipe(
+        "Beef Lasagna",
+        "Lasagna made with beef, milk, cheese, pasta plates and corn.",
+        "Do this mate.",
+        "Dinner");
+    beefLasagna.addIngredient("Ground Beef", 750);
+    beefLasagna.addIngredient("Skimmed Milk", 1);
+    beefLasagna.addIngredient("Grated Cheese", 200);
+    beefLasagna.addIngredient("Pasta Plates", 200);
+    beefLasagna.addIngredient("Hermetic Corn", 120);
+    beefLasagna.addIngredient("Tomato Sauce", 200);
+    recipeList.addRecipe(beefLasagna);
+
+    Recipe chickenSalad = new Recipe(
+        "Chicken Salad",
+        "Salad made with spinach, cut chicken breast, corn, sunflower seeds and feta cheese.",
+        "Do this mate.",
+        "Lunch");
+    chickenSalad.addIngredient("Spinach", 100);
+    chickenSalad.addIngredient("Chicken Breast", 200);
+    chickenSalad.addIngredient("Hermetic Corn", 50);
+    chickenSalad.addIngredient("Sunflower Seeds", 50);
+    chickenSalad.addIngredient("Feta Cheese", 100);
+    recipeList.addRecipe(chickenSalad);
+
+    Recipe riceWithChickenAndBeans = new Recipe(
+        "Rice with Chicken and Beans",
+        "Rice with chicken breast, kidney beans, basmati rice and taco sauce.",
+        "Do this mate.",
+        "Dinner");
+    riceWithChickenAndBeans.addIngredient("Chicken Breast", 200);
+    riceWithChickenAndBeans.addIngredient("Kidney Beans", 100);
+    riceWithChickenAndBeans.addIngredient("Basmati Rice", 75);
+    riceWithChickenAndBeans.addIngredient("Taco Sauce", 150);
+    recipeList.addRecipe(riceWithChickenAndBeans);
+
+    Recipe breadWithEggs = new Recipe(
+        "Bread with Eggs",
+        "Bread with eggs and butter.",
+        "Do this mate.",
+        "Breakfast");
+    breadWithEggs.addIngredient("Bread Slices", 2);
+    breadWithEggs.addIngredient("Egg 12-pack", 2);
+    breadWithEggs.addIngredient("Butter", 40);
+    recipeList.addRecipe(breadWithEggs);
+  }
