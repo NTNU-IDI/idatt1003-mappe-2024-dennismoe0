@@ -57,7 +57,7 @@ public class MainMenu {
     this.fridge = new Fridge();
     this.recipeList = new RecipeList();
     this.fridgeManager = new FridgeManager(fridge, foodList);
-    this.recipeManager = new RecipeManager(recipeList, fridge, foodList);
+    this.recipeManager = new RecipeManager(recipeList, fridgeManager);
     this.cookBookManager = new CookBookManager();
   }
 
@@ -118,7 +118,7 @@ public class MainMenu {
       switch (choice) {
         case 1 -> new FridgeMenu(fridgeManager, scanner).display();
         // case 2 -> new FoodListMenu(foodList, scanner).display();
-        // case 3 -> new RecipeMenu(recipeManager, scanner).display();
+        case 3 -> new RecipeMenu(recipeManager, scanner).display();
         // case 4 -> new CookBookMenu(cookBookManager, scanner).display();
         // case 5 -> new InfoMenu().display();
         case 6 -> {
