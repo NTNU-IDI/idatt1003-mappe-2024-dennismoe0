@@ -1,5 +1,21 @@
 RecipeName,Description,Instructions,Type,Ingredients
-Chicken Salad,Salad made with spinach, cut chicken breast, corn,{}
-Bread with Eggs,Bread with eggs and butter.,Do this mate.,Breakfast,{}
-Beef Lasagna,Lasagna made with beef, milk, cheese,{}
-Rice with Chicken and Beans,Rice with chicken breast, kidney beans, basmati rice and taco sauce.,{}
+"Chicken Salad","A healthy mix of chicken, feta cheese, spinach, and Thousand Island sauce.","Cook chicken, mix with feta, spinach, and Thousand Island sauce.","Dinner","{Chicken Breast=200.0, Feta Cheese=200.0, Spinach=50.0, Thousand Island Sauce=100.0}"
+"Spaghetti Bolognese","A classic spaghetti dish with ground beef, tomato sauce, and pasta plates.","Cook ground beef, mix with tomato sauce, and serve over pasta plates.","Lunch","{Ground Beef=400.0, Tomato Sauce=200.0, Pasta Plates=100.0}"
+"Cheesy Taco Bowl","A taco-inspired bowl with ground chicken, grated cheese, and taco sauce.","Cook ground chicken, mix with taco sauce, and top with grated cheese.","Dinner","{Ground Chicken=400.0, Grated Cheese=200.0, Taco Sauce=150.0}"
+"Butter Rice Delight","Simple buttered basmati rice served with corn and chicken breast.","Cook basmati rice with butter, add chicken and corn on the side.","Dinner","{Basmati Rice=200.0, Cooking Butter=50.0, Chicken Breast=150.0}"
+"Grilled Salmon Plate","A salmon fillet served with spinach and Thousand Island sauce.","Grill salmon, serve with fresh spinach and Thousand Island sauce.","Dinner","{Salmon Fillet=200.0, Spinach=50.0, Thousand Island Sauce=50.0}"
+"Egg & Rice Breakfast","A hearty breakfast with eggs, butter, and basmati rice.","Cook eggs, mix with basmati rice, and butter for flavor.","Breakfast","{Egg 12-pack=2.0, Basmati Rice=100.0, Cooking Butter=25.0}"
+"Vegetarian Taco Bowl","A vegetarian taco bowl with kidney beans, spinach, and taco sauce.","Mix taco sauce with kidney beans and fresh spinach.","Dinner","{Kidney Beans=200.0, Spinach=50.0, Taco Sauce=100.0}"
+"Beef & Corn Stir Fry","Ground beef stir-fried with hermetic corn and butter.","Cook ground beef, add corn, and stir-fry with butter.","Lunch","{Ground Beef=400.0, Hermetic Corn=120.0, Cooking Butter=25.0}"
+"Apple & Cheese Delight","A fresh snack with sliced apples and feta cheese.","Slice apples and serve with crumbled feta cheese.","Snack","{Apple=1.0, Feta Cheese=50.0, Cooking Butter=10.0}"
+"Spinach & Cheese Sandwich","A sandwich filled with spinach, grated cheese, and Thousand Island sauce.","Layer bread with spinach, grated cheese, and Thousand Island sauce.","Lunch","{Bread Slices=2.0, Spinach=30.0, Grated Cheese=50.0, Thousand Island Sauce=20.0}"
+"Bacon & Eggs","A classic breakfast with bacon and eggs.","Cook bacon and eggs, serve warm.","Breakfast",{Bacon=100.0, Egg 12-pack=2.0, Cooking Butter=10.0}"
+"Tomato Rice Delight","Basmati rice cooked with tomato sauce and spinach.","Mix cooked rice with tomato sauce and fresh spinach.","Dinner","{Basmati Rice=200.0, Tomato Sauce=200.0, Spinach=30.0}"
+"Butter Corn Rice","Basmati rice with sweet corn and butter.","Cook basmati rice, mix with corn and butter.","Lunch","{Basmati Rice=200.0, Sweet Corn=100.0, Cooking Butter=25.0}"
+"Chicken Stir Fry","Stir-fried chicken breast with spinach and Thousand Island sauce.","Cook chicken, stir-fry with spinach, and add Thousand Island sauce.","Dinner","{Chicken Breast=200.0, Spinach=50.0, Thousand Island Sauce=50.0}"
+"Salmon & Corn Plate","Grilled salmon fillet served with sweet corn and Thousand Island sauce.","Grill salmon, add sweet corn and Thousand Island sauce.","Lunch","{Salmon Fillet=200.0, Sweet Corn=100.0, Thousand Island Sauce=50.0}"
+"Grilled Cheese Sandwich","A warm sandwich with grated cheese and butter.","Grill bread slices with grated cheese and butter.","Snack","{Bread Slices=2.0, Grated Cheese=50.0, Cooking Butter=10.0}"
+"Spinach & Corn Wrap","A wrap filled with spinach, corn, and Thousand Island sauce.","Fill bread slices with spinach, corn, and Thousand Island sauce.","Lunch","{Bread Slices=2.0, Spinach=30.0, Sweet Corn=50.0, Thousand Island Sauce=20.0}"
+"Tomato Pasta Delight","Pasta plates mixed with tomato sauce and butter.","Cook pasta plates, mix with tomato sauce and butter.","Dinner","{Pasta Plates=100.0, Tomato Sauce=200.0, Cooking Butter=25.0}"
+"Rice & Cheese Bowl","A cheesy rice bowl with basmati rice and grated cheese.","Mix cooked rice with grated cheese.","Lunch","{Basmati Rice=200.0, Grated Cheese=50.0, Cooking Butter=10.0}"
+"Ground Beef Salad","A fresh salad with ground beef, spinach, and Thousand Island sauce.","Cook ground beef, mix with spinach, and add Thousand Island sauce.","Dinner","{Ground Beef=400.0, Spinach=50.0, Thousand Island Sauce=50.0}"

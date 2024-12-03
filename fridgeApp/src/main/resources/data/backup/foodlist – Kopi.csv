@@ -1,26 +1,86 @@
 IngredientName,Category,BaseWeight,MeasuringUnit,Cost
 Grated Cheese,Cheese,200.00,g,59.00
+Greek Yogurt,Dairy,500.00,g,50.00
+Garlic Clove,Spice,1.00,amount,5.00
+Cashews,Nuts,200.00,g,90.00
+Nutmeg,Spice,100.00,g,40.00
 Carrots 12-pack,Vegetable,12.00,amount,39.00
+Plain Yogurt,Dairy,500.00,g,40.00
+Raspberries,Fruit,250.00,g,70.00
 Bread Slices,Bread,12.00,amount,19.00
-Monster Energy Drink,Energy Drink,500.00,mL,24.00
+Chickpeas,Legume,500.00,g,20.00
 Taco Sauce,Sauce,250.00,g,29.00
-Feta Cheese,Cheese,200.00,g,59.00
+Bacon,Meat,300.00,g,120.00
+Orange,Fruit,1.00,amount,7.00
+Worcestershire Sauce,Condiment,250.00,mL,30.00
 Thousand Island Sauce,Sauce,250.00,mL,49.00
-Coca Cola Zero,Soda,1.50,L,39.00
-Cooking Oil,Oil,500.00,mL,59.00
+Paprika,Spice,100.00,g,20.00
 Skimmed Milk,Milk,1.75,L,0.00
-Sunflower Seeds,Seeds,200.00,g,29.00
 Ground Chicken,Meat,400.00,g,45.00
-Spinach,Vegetable,200.00,g,39.00
-Testing,TestCategory,4219421.00,g,1.00
+Black Pepper,Spice,100.00,g,20.00
+Cinnamon,Spice,100.00,g,30.00
+Shrimp,Fish,1.00,kg,250.00
 Cooking Butter,Butter,500.00,g,39.00
-Pasta Plates,Pasta,100.00,g,49.00
-Butter,Butter,400.00,g,39.00
-Basmati Rice,Rice,750.00,g,29.00
+Pork Belly,Meat,1.00,kg,200.00
+Rice Noodles,Pasta,500.00,g,35.00
+Whole Grain Bread,Bread,10.00,amount,30.00
+Tilapia,Fish,1.00,kg,200.00
 Tomato Sauce,Sauce,200.00,g,49.00
+Banana,Fruit,1.00,amount,5.00
+Ginger Root,Spice,1.00,amount,10.00
 Ground Beef,Meat,400.00,g,59.00
 Hermetic Corn,Vegetable,120.00,g,20.00
-Apple,Fruit,1.00,amount,10.00
+Honey,Sweetener,500.00,g,60.00
+Strawberries,Fruit,500.00,g,70.00
+Beef Steak,Meat,300.00,g,180.00
+Whole Wheat Pasta,Pasta,500.00,g,40.00
+Sweet Corn,Vegetable,300.00,g,15.00
+Avocado,Fruit,1.00,amount,20.00
 Kidney Beans,Vegetable,220.00,g,9.00
-Egg 12-pack,Eggs,12.00,amount,49.00
 Chicken Breast,Meat,1.20,kg,179.00
+Cucumber,Vegetable,1.00,amount,10.00
+Chicken Wings,Meat,1.00,kg,150.00
+Almonds,Nuts,200.00,g,85.00
+Croissant,Pastry,5.00,amount,50.00
+Salmon Fillet,Fish,200.00,g,150.00
+Monster Energy Drink,Energy Drink,500.00,mL,24.00
+Olive Oil,Oil,1.00,L,80.00
+Frozen Peas,Vegetable,500.00,g,25.00
+Tomato Paste,Sauce,140.00,g,12.00
+Yellow Pepper,Vegetable,1.00,amount,15.00
+Feta Cheese,Cheese,200.00,g,59.00
+Salt,Spice,500.00,g,10.00
+Parmesan Cheese,Cheese,250.00,g,85.00
+Iceberg Lettuce,Vegetable,1.00,amount,15.00
+Almond Milk,Dairy-Free Milk,1.00,L,25.00
+Oats,Grain,500.00,g,20.00
+Coca Cola Zero,Soda,1.50,L,39.00
+Cooking Oil,Oil,500.00,mL,59.00
+Cream Cheese,Cheese,250.00,g,40.00
+Sunflower Seeds,Seeds,200.00,g,29.00
+Pineapple,Fruit,1.00,amount,25.00
+Spinach,Vegetable,200.00,g,39.00
+Maple Syrup,Sweetener,250.00,mL,80.00
+Red Pepper,Vegetable,1.00,amount,15.00
+Cheddar Cheese,Cheese,250.00,g,60.00
+Brown Sugar,Sugar,1.00,kg,30.00
+Peanut Butter,Spread,500.00,g,40.00
+Bagels,Bread,5.00,amount,20.00
+Pasta Plates,Pasta,100.00,g,49.00
+Cumin,Spice,100.00,g,25.00
+Butter,Butter,400.00,g,39.00
+Coconut Milk,Dairy-Free Milk,400.00,mL,35.00
+White Flour,Flour,1.00,kg,20.00
+Basmati Rice,Rice,750.00,g,29.00
+Mozzarella Cheese,Cheese,250.00,g,55.00
+Apple,Fruit,1.00,amount,10.00
+Sunflower Oil,Oil,1.00,L,60.00
+Baby Spinach,Vegetable,100.00,g,30.00
+Whole Wheat Flour,Flour,1.00,kg,25.00
+White Onion,Vegetable,1.00,amount,10.00
+Green Pepper,Vegetable,1.00,amount,15.00
+Soy Sauce,Condiment,500.00,mL,25.00
+Egg 12-pack,Eggs,12.00,amount,49.00
+Turkey Breast,Meat,1.00,kg,150.00
+Blueberries,Fruit,250.00,g,50.00
+Pickles,Vegetable,300.00,g,20.00
