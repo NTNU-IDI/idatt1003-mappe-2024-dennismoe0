@@ -118,7 +118,7 @@ public class MainMenu {
       switch (choice) {
         case 1 -> new FridgeMenu(fridgeManager, scanner).display();
         // case 2 -> new FoodListMenu(foodList, scanner).display();
-        case 3 -> new RecipeMenu(recipeManager, scanner).display();
+        case 3 -> new RecipeMenu(recipeManager, scanner, foodList).display();
         // case 4 -> new CookBookMenu(cookBookManager, scanner).display();
         // case 5 -> new InfoMenu().display();
         case 6 -> {
@@ -151,43 +151,42 @@ public class MainMenu {
 
       // Import Fridge Items
       System.out.println("Importing Fridge Items from: " + fridgeItemsPath);
-      List<FridgeItem> fridgeItems = CsvUtility.readFridgeItemsFromCsv(fridgeItemsPath, foodList);
-      if (fridgeItems != null && !fridgeItems.isEmpty()) {
-        fridgeItems.forEach(fridge::addFridgeItem);
-        System.out.println("Fridge Items imported successfully: "
-            + fridgeItems.size() + " items loaded.");
-      } else {
-        System.err.println("No Fridge Items found in the CSV.");
+
+      try {
+        int[] stats = CsvUtility.readFridgeItemsFromCsv(fridgeItemsPath, fridgeManager);
+
+        System.out.println("Import Summary:");
+        System.out.println("Items successfully added: " + stats[0]);
+        System.out.println("Items failed to import: " + stats[1]);
+      } catch (Exception e) {
+        System.err.println("Error during fridge items import: " + e.getMessage());
       }
 
       // Import Recipes
       System.out.println("Importing Recipes from: " + recipesPath);
-      List<Recipe> recipes = CsvUtility.readRecipesFromCsv(recipesPath, foodList);
-      if (recipes != null && !recipes.isEmpty()) {
-        recipes.forEach(recipeList::addRecipe);
+      int[] resultRecipeImport = CsvUtility.readRecipesFromCsv(recipesPath, recipeManager);
+      if (resultRecipeImport[0] > 0) {
         System.out.println("Recipes imported successfully: "
-            + recipes.size() + " recipes loaded.");
+            + resultRecipeImport[0] + " recipes loaded.");
       } else {
-        System.err.println("No Recipes found in the CSV.");
+        System.err.println("No recipes imported. Failed to add "
+            + resultRecipeImport[1] + " recipes.");
       }
 
       // Import CookBooks
       System.out.println("Importing CookBooks from: " + cookBooksPath);
-      Map<String, List<Recipe>> cookBooks = CsvUtility.readCookBooksFromCsv(cookBooksPath, recipes);
-      if (cookBooks != null && !cookBooks.isEmpty()) {
-        cookBooks.forEach((cookBookName, recipesInCookBook) -> {
-          cookBookManager.createCookBook(cookBookName, "Description", "Type");
-          recipesInCookBook
-              .forEach(recipe -> cookBookManager.addRecipeToCookBook(cookBookName,
-                  recipe.getRecipeName()));
-        });
+      int[] resultCookBooksImport = CsvUtility.readCookBooksFromCsv(cookBooksPath,
+          cookBookManager, recipeManager);
+      if (resultCookBooksImport[0] > 0) {
         System.out.println("CookBooks imported successfully: "
-            + cookBooks.size() + " cookbooks loaded.");
+            + resultCookBooksImport[0] + " cookbooks loaded.");
       } else {
-        System.err.println("No CookBooks found in the CSV.");
+        System.err.println("No CookBooks imported. Failed to add "
+            + resultCookBooksImport[1] + " recipes.");
       }
 
       System.out.println("Data import completed successfully.");
+
     } catch (Exception e) {
       System.err.println("Error during data import: " + e.getMessage());
       e.printStackTrace();
