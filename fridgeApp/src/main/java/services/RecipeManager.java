@@ -93,6 +93,25 @@ public class RecipeManager {
   }
 
   /**
+   * Removes a specific ingredient from a recipe.
+   *
+   * @param recipeName     the name of the recipe
+   * @param ingredientName the name of the ingredient to remove
+   * @return a message indicating the outcome of the operation
+   */
+  public String removeIngredientFromRecipe(String recipeName, String ingredientName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      return "Recipe not found.";
+    }
+    if (!recipe.getIngredients().containsKey(ingredientName)) {
+      return "Ingredient " + ingredientName + " not found in the recipe.";
+    }
+    recipe.removeIngredient(ingredientName);
+    return ingredientName + " removed from recipe.";
+  }
+
+  /**
    * Checks if all ingredients in a recipe are available in the Fridge.
    *
    * @param recipe the recipe to check
@@ -159,7 +178,7 @@ public class RecipeManager {
   }
 
   /**
-   * Retrieves a recipe by its name from the RecipeList.
+   * Retrieves a recipe with info by its name from the RecipeList.
    *
    * @param recipeName the name of the recipe to retrieve
    * @return a message with recipe details, or an error message if not found
@@ -174,6 +193,50 @@ public class RecipeManager {
         + "\nEstimated Cost: " + calculateRecipeCost(recipe);
   }
 
+  /**
+   * Retrieves the ingredients and their quantities for a specified recipe.
+   *
+   * @param recipeName the name of the recipe to retrieve ingredients for
+   * @return a formatted string of ingredients and their quantities, or an error
+   *         message if not found
+   */
+  public String getIngredientsInRecipe(String recipeName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      return "Recipe not found.";
+    }
+    Map<String, Double> ingredients = recipe.getIngredients();
+
+    StringBuilder ingredientList = new StringBuilder();
+
+    for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
+      String ingredientName = entry.getKey();
+      double quantity = entry.getValue();
+
+      Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
+      if (ingredient == null) {
+        return "Ingredient " + ingredientName + " not found in the FoodList.";
+      }
+
+      String measuringUnit = ingredient.getIngredientMeasuringUnit();
+
+      ingredientList.append(ingredientName).append(" -> ")
+          .append(quantity).append(" ").append(measuringUnit).append("\n");
+    }
+
+    if (ingredientList.length() > 0) {
+      ingredientList.setLength(ingredientList.length() - 2);
+    }
+
+    return ingredientList.toString();
+  }
+
+  /**
+   * Retrieves a Recipe object by its name from the RecipeList.
+   *
+   * @param recipeName the name of the recipe to retrieve
+   * @return the Recipe object, or null if not found
+   */
   public Recipe getRecipeObject(String recipeName) {
     return recipeList.getRecipe(recipeName);
   }
@@ -352,4 +415,10 @@ public class RecipeManager {
     return "Recipe ingredients removed from fridge, prioritizing items with earliest expiration.";
   }
 
+  /**
+   * Prints all recipes in the RecipeList.
+   */
+  public void printAllRecipes() {
+    recipeList.getAllRecipes().values().forEach(recipe -> System.out.println(recipe));
+  }
 }
