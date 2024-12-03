@@ -33,6 +33,38 @@ public class RecipeManager {
   }
 
   /**
+   * Creates a new recipe with the specified ingredients.
+   *
+   * @param recipeName        the name of the recipe
+   * @param recipeDescription the description of the recipe
+   * @param instructions      the instructions for the recipe
+   * @param recipeType        the type of the recipe
+   * @param ingredients       the ingredients for the recipe with their quantities
+   * @return a message indicating the outcome of the operation
+   */
+  public String createNewRecipeWithIngredients(String recipeName, String recipeDescription,
+      String instructions, String recipeType, Map<String, Double> ingredients) {
+
+    if (recipeList.getRecipe(recipeName) != null) {
+      return "A recipe already exists with that name. Delete it or use another name.";
+    }
+
+    Recipe recipe = new Recipe(recipeName, recipeDescription, instructions, recipeType);
+    for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
+      String ingredientName = entry.getKey();
+      double quantity = entry.getValue();
+
+      if (foodList.getIngredientFromFoodList(ingredientName) == null) {
+        return "Ingredient " + ingredientName + " not found in the FoodList. Create it first.";
+      }
+
+      recipe.addIngredient(ingredientName, quantity);
+    }
+    recipeList.addRecipe(recipe);
+    return "Succesfully created the recipe.";
+  }
+
+  /**
    * Adds a new recipe to the RecipeList.
    *
    * @param recipe the recipe to add
