@@ -62,6 +62,20 @@ public class FoodList {
   }
 
   /**
+   * Prints the FoodList.
+   *
+   * @return a String representation of the FoodList
+   */
+  public String printFoodList() {
+    StringBuilder foodListString = new StringBuilder();
+    foodListString.append("Food list:\n\r");
+    for (String ingredientName : foodList.keySet()) {
+      foodListString.append(ingredientName).append("\n");
+    }
+    return foodListString.toString();
+  }
+
+  /**
    * Gets the information of an Ingredient from the FoodList.
    *
    * @param ingredientName the name of the Ingredient to get information for
