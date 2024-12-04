@@ -113,14 +113,16 @@ public class RecipeManager {
 
   /**
    * Retrieves a Recipe object by its name from the RecipeList.
+   * With checks.
    *
    * @param recipeName the name of the recipe to retrieve
    * @return the Recipe object, or null if not found
    */
   public Recipe getRecipeObjectByName(String recipeName) {
+    System.out.println("Getting recipe: " + recipeName);
     Recipe recipe = recipeList.getRecipe(recipeName);
     if (recipe == null) {
-      return null;
+      System.out.println("Recipe not found: " + recipeName);
     }
     return recipe;
   }
@@ -133,16 +135,18 @@ public class RecipeManager {
    *         required quantities
    */
   public String checkIngredientsAvailability(Recipe recipe) {
+    if (recipe == null) {
+      return "Error: Recipe is null.";
+    }
+
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
 
-      // IDK IF THIS WILL WORK
       String ingredientUnit = foodList.getIngredientFromFoodList(ingredientName)
           .getIngredientMeasuringUnit();
       double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
           ingredientUnit);
-      //
 
       if (availableQuantity < requiredQuantity) {
         return "Insufficient " + ingredientName + " in the Fridge. Needed: "
@@ -407,34 +411,29 @@ public class RecipeManager {
 
     long todayAsLong = DateValidation.getTodayAsLong();
 
-    // Checks if the quantity is sufficient for removal before iterating through
-    // available items.
+    // Pre-check: Ensure sufficient quantity exists for all ingredients
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
 
-      // Calculate total available quantity for the ingredient
       double totalAvailableQuantity = fridgeManager.getAllFridgeItems().stream()
           .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
           .mapToDouble(FridgeItem::getQuantity)
           .sum();
 
       if (totalAvailableQuantity < requiredQuantity) {
-        return "Insufficient " + ingredientName + " in the Fridge. Needed: "
+        return "Insufficient " + ingredientName + " in the fridge. Needed: "
             + requiredQuantity + ", Available: " + totalAvailableQuantity;
       }
     }
 
-    // Removal process after pre-check
+    // Removal process
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
 
-      // Gets all items in the fridge sorted by expiration date
-      // New version should not use expired items
       List<FridgeItem> fridgeItems = fridgeManager.getAllFridgeItems().stream()
           .filter(item -> item.getIngredient().getIngredientName().equals(ingredientName))
-          // Excludes expired items from the list
           .filter(item -> DateValidation.compareDates(item.getExpirationDate(), todayAsLong) >= 0)
           .sorted((item1, item2) -> DateValidation.compareDates(
               item1.getExpirationDate(), item2.getExpirationDate()))
@@ -444,20 +443,30 @@ public class RecipeManager {
         double availableQuantity = fridgeItem.getQuantity();
 
         if (availableQuantity >= requiredQuantity) {
+          // Full removal
           fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
-          requiredQuantity = 0; // If full removal achieved.
+          requiredQuantity = 0;
 
-          if (fridgeItem.getQuantity() == 0) {
-            // removes item if quantity is 0
+          if (fridgeItem.getQuantity() - requiredQuantity <= 0) {
             fridgeManager.removeByIdWithoutString(fridgeItem.getId());
           }
           break;
         } else {
+          // Partial removal
           fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -availableQuantity);
-          requiredQuantity -= availableQuantity; // Partial removal
+          requiredQuantity -= availableQuantity;
+
+          if (availableQuantity == 0) {
+            fridgeManager.removeByIdWithoutString(fridgeItem.getId());
+          }
         }
       }
+
+      if (requiredQuantity > 0) {
+        System.out.println("Error: Could not remove full quantity for " + ingredientName);
+      }
     }
+
     return "Recipe ingredients removed from fridge, prioritizing items with earliest expiration.";
   }
 
