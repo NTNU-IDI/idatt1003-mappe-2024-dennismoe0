@@ -107,20 +107,20 @@ public class MainMenu {
     boolean running = true;
     while (running) {
       System.out.println("Main Menu:");
-      System.out.println("1. Manage Fridge");
-      System.out.println("2. Manage Food List");
-      System.out.println("3. Manage Recipes");
-      System.out.println("4. Manage CookBooks");
+      System.out.println("1. Manage Fridge (View, ddd, remove items from the fridge).");
+      System.out.println("2. Manage Food List (Add, remove, view ingredients registered).");
+      System.out.println("3. Manage Recipes (View, add, remove recipes).");
+      System.out.println("4. Manage CookBooks (View, add, remove cookbooks).");
       System.out.println("5. Application Info (What does it do?)");
       System.out.println("6. Quit");
 
       int choice = scanner.nextInt();
       switch (choice) {
-        case 1 -> new FridgeMenu(fridgeManager, scanner).display();
-        // case 2 -> new FoodListMenu(foodList, scanner).display();
+        case 1 -> new FridgeMenu(fridgeManager, scanner, foodList).display();
+        case 2 -> new FoodListMenu(foodList, scanner).display();
         case 3 -> new RecipeMenu(recipeManager, scanner, foodList).display();
         // case 4 -> new CookBookMenu(cookBookManager, scanner).display();
-        // case 5 -> new InfoMenu().display();
+        case 5 -> new InfoMenu(scanner).display();
         case 6 -> {
           System.out.println("Exiting application.");
           exportData();
