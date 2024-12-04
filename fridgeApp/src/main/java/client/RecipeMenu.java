@@ -45,10 +45,10 @@ public class RecipeMenu {
       System.out.println("6. Back to main menu.");
 
       int choice = scanner.nextInt();
+      scanner.nextLine(); // Consume the newline character
 
       switch (choice) {
         case 1 -> {
-          // Need to add @override, all prints are memory addresses.
           System.out.println("All recipes:");
           recipeManager.printAllRecipes();
         }
@@ -60,18 +60,18 @@ public class RecipeMenu {
           try {
             Thread.sleep(2000);
           } catch (InterruptedException e) {
+            e.printStackTrace();
           }
           recipeManager.printAllRecipes();
 
           System.out.println("Enter the name of the recipe to consume the ingredients of:");
           System.out.println("""
               This will remove the ingredients from the fridge.
-              I.e. if if the recipe needs 200g of Ground Beef, it will remove this amount.""");
+              I.e. if the recipe needs 200g of Ground Beef, it will remove this amount.""");
 
-          String recipeName = scanner.next();
           scanner.nextLine(); // Consume the newline character
+          String recipeName = scanner.nextLine();
 
-          recipeManager.removeMultipleQuantitiesByRecipe(recipeName);
           String result = recipeManager.removeMultipleQuantitiesByRecipe(recipeName);
           System.out.println(result);
         }
@@ -83,9 +83,6 @@ public class RecipeMenu {
     }
   }
 
-  // In the create menu list all items in the foodlist when entering ingredients.
-  // Maybe refer to the foodlist menu for creating an ingredient for user
-  // convenience.
   private void manageRecipesMenu() {
     while (true) {
       System.out.println("Manage recipes:");
@@ -96,69 +93,69 @@ public class RecipeMenu {
       System.out.println("5. Back to recipe menu.");
 
       int choice = scanner.nextInt();
+      scanner.nextLine(); // Consume the newline character
 
       switch (choice) {
         case 1 -> {
-          System.out.println("Generating a list of currently registred ingredients...");
+          System.out.println("Generating a list of currently registered ingredients...");
           try {
             Thread.sleep(2000);
           } catch (InterruptedException e) {
+            e.printStackTrace();
           }
-          // This does not print anything
           foodList.printFoodList();
 
           System.out.println("Enter the name of the recipe:");
-          String recipeName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String recipeName = scanner.nextLine();
 
           System.out.println("Enter the description of the recipe:");
-          String description = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String description = scanner.nextLine();
 
           System.out.println("Enter the instructions/how-to for the recipe:");
-          String instructions = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String instructions = scanner.nextLine();
 
-          System.out.println("Enter the type of the recipe (Dinner, breakfast etc.):");
-          String type = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          System.out.println("Enter the type of the recipe (Dinner, Breakfast, etc.):");
+          String type = scanner.nextLine();
 
           System.out.println("Ingredient choice:");
           System.out.println("1. Add ingredients to the recipe.");
           System.out.println("2. Finish recipe creation (empty if no ingredients added).");
 
           int ingredientChoice = scanner.nextInt();
+          scanner.nextLine(); // Consume the newline character
 
           switch (ingredientChoice) {
             case 1 -> {
               Map<String, Double> ingredientsToAdd = new HashMap<>();
               boolean addingIngredients = true;
 
-              System.out.println("Generating a list of currently registred ingredients...");
+              System.out.println("Generating a list of currently registered ingredients...");
               try {
                 Thread.sleep(2000);
               } catch (InterruptedException e) {
+                e.printStackTrace();
               }
 
               while (addingIngredients) {
                 System.out.println("Enter the name of the ingredient to add:");
-                String ingredient = scanner.next();
-                scanner.nextLine(); // Consume the newline character
+                String ingredient = scanner.nextLine();
 
                 System.out.println(
                     "Enter the quantity of the ingredient needed (do not include the unit):");
                 double quantity = scanner.nextDouble();
+                scanner.nextLine(); // Consume the newline character
 
                 ingredientsToAdd.put(ingredient, quantity);
 
-                System.out.println("Add another ingredient? (yes/no)");
+                System.out.println("Add another ingredient? (1 for Yes, 2 for No)");
                 int answer = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
 
                 if (answer == 2) {
                   addingIngredients = false;
 
                   String result = recipeManager.createNewRecipeWithIngredients(
-                      recipeName, description, instructions, recipeName, ingredientsToAdd);
+                      recipeName, description, instructions, type, ingredientsToAdd);
 
                   System.out.println(result);
                 }
@@ -171,69 +168,67 @@ public class RecipeMenu {
             }
             default -> System.out.println("Invalid choice. Please try again.");
           }
-
         }
         case 2 -> {
-
-          System.out.println("Generating a list of all recipes");
+          System.out.println("Generating a list of all recipes...");
           try {
             Thread.sleep(2000);
           } catch (InterruptedException e) {
+            e.printStackTrace();
           }
           recipeManager.printAllRecipes();
 
           System.out.println("Enter the name of the recipe to delete:");
-          String recipeName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
-          recipeManager.removeRecipe(recipeName);
+          String recipeName = scanner.nextLine();
+
           String result = recipeManager.removeRecipe(recipeName);
           System.out.println(result);
         }
         case 3 -> {
-          System.out.println("Generating a list of all recipes");
+          System.out.println("Generating a list of all recipes...");
           try {
             Thread.sleep(2000);
           } catch (InterruptedException e) {
+            e.printStackTrace();
           }
           recipeManager.printAllRecipes();
 
           System.out.println("Enter the name of the recipe to add/remove ingredients from:");
-          String recipeName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String recipeName = scanner.nextLine();
+
           System.out.println("Ingredients in the recipe:");
           recipeManager.getIngredientsInRecipe(recipeName); // Prints the ingredients
 
           System.out.println("Enter the name of the ingredient to modify:");
-          String ingredientName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
-          recipeManager.removeIngredientFromRecipe(recipeName, ingredientName);
+          String ingredientName = scanner.nextLine();
+
           String result = recipeManager.removeIngredientFromRecipe(recipeName, ingredientName);
           System.out.println(result);
         }
         case 4 -> {
-          System.out.println("Generating a list of all recipes");
+          System.out.println("Generating a list of all recipes...");
           try {
             Thread.sleep(2000);
           } catch (InterruptedException e) {
+            e.printStackTrace();
           }
           recipeManager.printAllRecipes();
 
           System.out.println(
               "Enter the name of the recipe to change the quantity of an ingredient in:");
-          String recipeName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String recipeName = scanner.nextLine();
+
           System.out.println("Ingredients in the recipe with quantities:");
           recipeManager.getIngredientsInRecipe(recipeName); // Prints the ingredients
 
           System.out.println("Enter the name of the ingredient to modify:");
-          String ingredientName = scanner.next();
-          scanner.nextLine(); // Consume the newline character
+          String ingredientName = scanner.nextLine();
+
           System.out.println("Enter the new quantity of the ingredient:");
           double quantity = scanner.nextDouble();
+          scanner.nextLine(); // Consume the newline character
 
-          recipeManager.updateRecipeIngredient(recipeName, ingredientName, quantity);
-          String result = recipeManager.updateRecipeIngredient(
-              recipeName, ingredientName, quantity);
+          String result = recipeManager.updateRecipeIngredient(recipeName, ingredientName, quantity);
           System.out.println(result);
         }
         case 5 -> {
@@ -252,31 +247,31 @@ public class RecipeMenu {
     System.out.println("4. Return to recipe menu.");
 
     int choice = scanner.nextInt();
+    scanner.nextLine(); // Consume the newline character
 
     switch (choice) {
       case 1 -> {
-        System.out.println("Generating a list of all recipes");
+        System.out.println("Generating a list of all recipes...");
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
+          e.printStackTrace();
         }
         recipeManager.printAllRecipes();
 
-        System.out.println("Enter the name of the recipe to check fulfilment:");
-        String recipeName = scanner.next();
-        scanner.nextLine(); // Consume the newline character
+        System.out.println("Enter the name of the recipe to check fulfillment:");
+        String recipeName = scanner.nextLine();
 
-        recipeManager.checkIngredientsAvailability(recipeManager.getRecipeObjectByName(recipeName));
         String result = recipeManager.checkIngredientsAvailability(
             recipeManager.getRecipeObjectByName(recipeName));
         System.out.println(result);
-
       }
       case 2 -> {
-        System.out.println("Generating a list of all fulfilled recipes");
+        System.out.println("Generating a list of all fulfilled recipes...");
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
+          e.printStackTrace();
         }
         System.out.println(recipeManager.fullyFulfilledRecipes());
       }
@@ -287,9 +282,9 @@ public class RecipeMenu {
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
+          e.printStackTrace();
         }
         System.out.println(recipeManager.suggestedRecipesBasedOnFridgeContents());
-
       }
       case 4 -> {
         return;
@@ -302,38 +297,34 @@ public class RecipeMenu {
     System.out.println("Value menu:");
     System.out.println("""
         1. Get the value of a recipe.
-        Meaning the value of the quantity of each ingredient in the recipe.""");
+          - Both the cost of the ingredients you need to
+            use and the cost of buying the full items.""");
     System.out.println("2. Return to recipe menu.");
 
     int choice = scanner.nextInt();
+    scanner.nextLine(); // Consume the newline character
 
     switch (choice) {
       case 1 -> {
-        System.out.println("Generating a list of all recipes");
+        System.out.println("Generating a list of all recipes...");
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
+          e.printStackTrace();
         }
         recipeManager.printAllRecipes();
 
         System.out.println("Enter the name of the recipe to get the value of:");
-        scanner.nextLine(); // Consume the newline character
         String recipeName = scanner.nextLine();
 
         System.out.println("Cost of the quantities in the recipe:");
         double partialCost = recipeManager.costOfQuantitiesInRecipe(recipeName);
-        System.out.println(partialCost);
+        System.out.println(partialCost + " NOK.");
 
         System.out.println("Total cost of the recipe:");
-        double fullCost = recipeManager.calculateRecipeCost(recipeManager.getRecipeObject(recipeName));
-        System.out.println(fullCost);
-        /**
-         * System.out.println("Recipe ingredients debugging:");
-         * Recipe recipe = recipeManager.getRecipeObjectByName(recipeName);
-         * for (String name : recipe.getIngredients().keySet()) {
-         * System.out.println(name);
-         * }
-         */
+        double fullCost = recipeManager
+            .calculateRecipeCost(recipeManager.getRecipeObject(recipeName));
+        System.out.println(fullCost + " NOK.");
       }
       case 2 -> {
         return;
@@ -341,5 +332,4 @@ public class RecipeMenu {
       default -> System.out.println("Invalid choice. Please try again.");
     }
   }
-
 }
