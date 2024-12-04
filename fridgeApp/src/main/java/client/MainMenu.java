@@ -111,7 +111,7 @@ public class MainMenu {
       System.out.println("2. Manage Food List");
       System.out.println("3. Manage Recipes");
       System.out.println("4. Manage CookBooks");
-      System.out.println("5. Application Info");
+      System.out.println("5. Application Info (What does it do?)");
       System.out.println("6. Quit");
 
       int choice = scanner.nextInt();
