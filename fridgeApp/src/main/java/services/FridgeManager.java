@@ -45,8 +45,9 @@ public class FridgeManager {
     if (ingredient == null) {
       return "Ingredient not found in FoodList.";
     }
-    if (String.valueOf(expirationDate).length() != 8) {
-      return "Invalid expiration date.";
+    int length = String.valueOf(expirationDate).length();
+    if (length != 8 && length != 7) {
+      return "Invalid expiration date, the date is too short.";
     }
     FridgeItem newItem = new FridgeItem(ingredient,
         ingredient.getIngredientBaseWeight(), expirationDate);
