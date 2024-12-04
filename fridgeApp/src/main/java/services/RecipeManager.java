@@ -112,6 +112,20 @@ public class RecipeManager {
   }
 
   /**
+   * Retrieves a Recipe object by its name from the RecipeList.
+   *
+   * @param recipeName the name of the recipe to retrieve
+   * @return the Recipe object, or null if not found
+   */
+  public Recipe getRecipeObjectByName(String recipeName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      return null;
+    }
+    return recipe;
+  }
+
+  /**
    * Checks if all ingredients in a recipe are available in the Fridge.
    *
    * @param recipe the recipe to check
@@ -154,6 +168,41 @@ public class RecipeManager {
         totalCost += ingredient.getIngredientCost();
       }
     }
+    return totalCost;
+  }
+
+  /**
+   * Calculates the total cost of the quantities of ingredients in a recipe.
+   *
+   * @param recipeName The name of the recipe to calculate the cost for.
+   * @return The total cost of the recipe's ingredients.
+   */
+  public double costOfQuantitiesInRecipe(String recipeName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      throw new IllegalArgumentException("Recipe not found: " + recipeName);
+    }
+
+    double totalCost = 0.0;
+
+    for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
+      String ingredientName = entry.getKey();
+      double requiredQuantity = entry.getValue();
+
+      Ingredient ingredient = fridgeManager.getFoodList().getIngredientFromFoodList(ingredientName);
+      if (ingredient == null) {
+        System.out.println("Ingredient not found: " + ingredientName);
+        continue;
+      }
+
+      double ingredientCost = ingredient.getIngredientCost();
+      double baseWeight = ingredient.getIngredientBaseWeight();
+
+      // Adjust the cost for the required quantity
+      double costForIngredient = (requiredQuantity / baseWeight) * ingredientCost;
+      totalCost += costForIngredient;
+    }
+
     return totalCost;
   }
 
@@ -260,9 +309,6 @@ public class RecipeManager {
 
   // Check if this one still works with new methods iterating over multiple items
   // + unit conversion
-
-  // Probably need to make methods that prints the lists, probably same issue
-  // as with the fridge list.
 
   /**
    * Suggests recipes to the user based on matches of ingredient quantities that
@@ -419,6 +465,51 @@ public class RecipeManager {
    * Prints all recipes in the RecipeList.
    */
   public void printAllRecipes() {
-    recipeList.getAllRecipes().values().forEach(recipe -> System.out.println(recipe));
+    if (recipeList.getAllRecipes().isEmpty()) {
+      System.out.println("No recipes found.");
+      return;
+    }
+
+    System.out.println("All Recipes:");
+    for (Recipe recipe : recipeList.getAllRecipes().values()) {
+      System.out.println(getFormattedRecipeDetails(recipe.getRecipeName()));
+      System.out.println("---------------------------------------------------");
+    }
   }
+
+  /**
+   * Retrieves the formatted details of a recipe by its name.
+   *
+   * @param recipeName the name of the recipe to retrieve details for
+   * @return a formatted string with the recipe details, or an error message if
+   *         not found
+   */
+  public String getFormattedRecipeDetails(String recipeName) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      return "Recipe not found: " + recipeName;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("Recipe Name: ").append(recipe.getRecipeName()).append("\n");
+    sb.append("Description: ").append(recipe.getRecipeDescription()).append("\n");
+    sb.append("Ingredients:\n");
+
+    for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
+      String ingredientName = entry.getKey();
+      double quantity = entry.getValue();
+
+      // Fetch ingredient details from FoodList
+      Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
+      String unit = (ingredient != null) ? ingredient.getIngredientMeasuringUnit()
+          : "Unit not found";
+
+      sb.append("- ").append(ingredientName)
+          .append(": ").append(quantity).append(" ").append(unit).append("\n");
+    }
+
+    sb.append("Instructions: ").append(recipe.getInstructions()).append("\n");
+    return sb.toString();
+  }
+
 }
