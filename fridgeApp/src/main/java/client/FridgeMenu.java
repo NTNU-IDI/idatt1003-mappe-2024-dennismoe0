@@ -112,17 +112,17 @@ public class FridgeMenu {
             }
             case 2 -> {
               System.out.println("Enter ingredient name: ");
-              String name = scanner.next();
               scanner.nextLine();
+              String name = scanner.nextLine();
 
               System.out.println("Enter category: ");
-              String category = scanner.next();
+              String category = scanner.nextLine();
 
               System.out.println("Enter base weight/volume (i.e. 400): ");
               double baseWeight = scanner.nextDouble();
 
               System.out.println("Enter unit ('g', 'mL', 'L' etc.): ");
-              String unit = scanner.next();
+              String unit = scanner.nextLine();
               scanner.nextLine();
 
               System.out.println("Enter cost in NOK (i.e. '79'): ");
