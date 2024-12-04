@@ -60,6 +60,21 @@ public class FridgeManager {
   }
 
   /**
+   * Retrieves the cost of an ingredient from the FoodList.
+   * Returns -1 if the ingredient is not found.
+   *
+   * @param ingredientName the name of the ingredient
+   * @return the cost of the ingredient
+   */
+  public double getIngredientCost(String ingredientName) {
+    Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
+    if (ingredient == null) {
+      return -1;
+    }
+    return ingredient.getIngredientCost();
+  }
+
+  /**
    * Creates a new Ingredient if it doesn't exist in FoodList, then adds it to the
    * fridge.
    *
@@ -75,11 +90,18 @@ public class FridgeManager {
   public String createAndAddToFridge(String ingredientName,
       String ingredientType, double baseWeight,
       String measuringUnit, double cost, long expirationDate) {
+
+    System.out.println("Attempting to retrieve ingredient: " + ingredientName);
     Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
+
     if (ingredient == null) {
+      System.out.println("Ingredient not found, creating new ingredient...");
       ingredient = new Ingredient(ingredientName, ingredientType, baseWeight, measuringUnit, cost);
+      System.out.println("Created ingredient: " + ingredient.getIngredientName());
       foodList.addIngredient(ingredient);
     }
+
+    System.out.println("Adding ingredient to fridge: " + ingredient.getIngredientName());
     FridgeItem newItem = new FridgeItem(ingredient, baseWeight, expirationDate);
     fridge.addFridgeItem(newItem);
     return "Ingredient created and added to fridge successfully.";
