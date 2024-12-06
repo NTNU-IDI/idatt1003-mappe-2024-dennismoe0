@@ -325,7 +325,6 @@ public class RecipeManager {
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
       int matchingIngredients = 0; // Count of ingredients with sufficient quantity
-      boolean isFullMatch = true; // Indicates if all ingredients match fully
 
       for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
         String ingredientName = ingredientEntry.getKey();
@@ -340,15 +339,10 @@ public class RecipeManager {
         // Check if the available quantity is sufficient
         if (availableQuantity >= requiredQuantity) {
           matchingIngredients++;
-        } else {
-          isFullMatch = false;
         }
       }
 
-      // Add to suggestions based on match type
-      if (isFullMatch) {
-        suggestedRecipes.add("Full match: You can make " + recipe.getRecipeName());
-      } else if (matchingIngredients >= recipe.getIngredients().size() / 2) {
+      if (matchingIngredients >= recipe.getIngredients().size() / 2) {
         suggestedRecipes.add("Partial match: You have enough ingredients to partially make "
             + recipe.getRecipeName());
       }
