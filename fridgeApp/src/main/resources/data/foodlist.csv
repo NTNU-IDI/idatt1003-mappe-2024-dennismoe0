@@ -20,9 +20,12 @@ Ground Chicken,Meat,400.00,g,45.00
 Black Pepper,Spice,100.00,g,20.00
 Cinnamon,Spice,100.00,g,30.00
 Shrimp,Fish,1.00,kg,250.00
+Testing,Test,1000.00,L,1999.00
 Cooking Butter,Butter,500.00,g,39.00
 Pork Belly,Meat,1.00,kg,200.00
+Testing Name,Test Category,200.00,,100.00
 Rice Noodles,Pasta,500.00,g,35.00
+Hermatic Corn,Corn,200.00,,29.00
 Whole Grain Bread,Bread,10.00,amount,30.00
 Tilapia,Fish,1.00,kg,200.00
 Tomato Sauce,Sauce,200.00,g,49.00
@@ -83,4 +86,3 @@ Soy Sauce,Condiment,500.00,mL,25.00
 Egg 12-pack,Eggs,12.00,amount,49.00
 Turkey Breast,Meat,1.00,kg,150.00
 Blueberries,Fruit,250.00,g,50.00
-Pickles,Vegetable,300.00,g,20.00

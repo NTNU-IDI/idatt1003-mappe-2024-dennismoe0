@@ -55,7 +55,7 @@ public class MainMenu {
     this.recipeList = new RecipeList();
     this.fridgeManager = new FridgeManager(fridge, foodList);
     this.recipeManager = new RecipeManager(recipeList, fridgeManager);
-    this.cookBookManager = new CookBookManager();
+    this.cookBookManager = new CookBookManager(recipeList);
   }
 
   private String getFilePath(String relativePath) {
@@ -173,7 +173,7 @@ public class MainMenu {
       // Import CookBooks
       System.out.println("Importing CookBooks from: " + cookBooksPath);
       int[] resultCookBooksImport = CsvUtility.readCookBooksFromCsv(cookBooksPath,
-          cookBookManager, recipeManager);
+          cookBookManager);
       if (resultCookBooksImport[0] > 0) {
         System.out.println("CookBooks imported successfully: "
             + resultCookBooksImport[0] + " cookbooks loaded.");

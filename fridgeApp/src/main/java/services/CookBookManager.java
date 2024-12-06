@@ -18,8 +18,8 @@ public class CookBookManager {
   /**
    * Constructor for a new CookBookManager.
    */
-  public CookBookManager() {
-    this.recipeList = new RecipeList();
+  public CookBookManager(RecipeList recipeList) {
+    this.recipeList = recipeList;
     this.cookBooks = new HashMap<>();
   }
 
@@ -67,8 +67,7 @@ public class CookBookManager {
       return "CookBook not found!";
     }
 
-    // Retrieve the recipe name from the Recipe object
-    Recipe recipe = recipeList.getRecipe(recipeName);
+    Recipe recipe = recipeList.getRecipe(recipeName.trim().toLowerCase());
     if (recipe == null) {
       return "Recipe not found! Create it first, or check your spelling.";
     }

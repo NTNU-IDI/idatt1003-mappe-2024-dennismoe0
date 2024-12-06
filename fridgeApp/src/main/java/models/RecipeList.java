@@ -24,7 +24,7 @@ public class RecipeList {
    * @param recipe the recipe to add
    */
   public void addRecipe(Recipe recipe) {
-    recipes.put(recipe.getRecipeName(), recipe);
+    recipes.put(recipe.getRecipeName().trim().toLowerCase(), recipe);
   }
 
   /**
@@ -43,7 +43,7 @@ public class RecipeList {
    * @return the recipe, or null if it does not exist
    */
   public Recipe getRecipe(String recipeName) {
-    return recipes.get(recipeName);
+    return recipes.get(recipeName.trim().toLowerCase());
   }
 
   /**

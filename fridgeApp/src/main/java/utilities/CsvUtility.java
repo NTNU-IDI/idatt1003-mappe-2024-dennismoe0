@@ -365,7 +365,6 @@ public class CsvUtility {
    *
    * @param filePath        the path of the CSV file to read from
    * @param cookBookManager the CookBookManager instance to manage cookbooks
-   * @param recipeManager   the RecipeManager instance used to get recipes for
    *                        cookbooks
    * @return an array of ints where index 0 is the count of successfully added
    *         cookbooks,
@@ -373,15 +372,14 @@ public class CsvUtility {
    *         index 2 is the count of successfully added recipes,
    *         and index 3 is the count of failed recipes
    */
-  public static int[] readCookBooksFromCsv(String filePath, CookBookManager cookBookManager,
-      RecipeManager recipeManager) {
+  public static int[] readCookBooksFromCsv(String filePath, CookBookManager cookBookManager) {
     int cookBooksAdded = 0;
     int cookBooksFailed = 0;
     int recipesAdded = 0;
     int recipesFailed = 0;
 
     try {
-      List<String[]> rows = readFromCsv(filePath);
+      List<String[]> rows = readFromCsv(filePath); // Reads data from CSV
       for (String[] row : rows) {
         if (row.length == 2) { // Ensure valid data format (cookbook name, recipes)
           String cookBookName = row[0];
@@ -389,56 +387,31 @@ public class CsvUtility {
 
           // Remove enclosing brackets and split recipes
           recipeData = recipeData.replaceAll("[\\{\\}]", "");
-          String[] recipeNames = recipeData.split(", ");
+          String[] recipeNames = recipeData.split(",\\s*");
 
-          List<Recipe> bookRecipes = new ArrayList<>();
-          for (String recipeName : recipeNames) {
-            Recipe recipe = recipeManager.getRecipeObject(recipeName.trim());
-            if (recipe != null) {
-              bookRecipes.add(recipe);
-              recipesAdded++;
-            } else {
-              System.err.println("Recipe not found: " + recipeName);
-              recipesFailed++;
-            }
-          }
-
-          if (!bookRecipes.isEmpty()) {
-            // Add the cookbook with its recipes to the manager
-            String createResult = cookBookManager.createCookBook(cookBookName,
-                "Description for " + cookBookName,
-                "Type for " + cookBookName);
-            if (createResult.equals("CookBook created successfully!")) {
-              for (Recipe recipe : bookRecipes) {
-                String addResult = cookBookManager.addRecipeToCookBook(cookBookName,
-                    recipe.getRecipeName());
-                if (addResult.equals("Recipe added to CookBook!")) {
-                  // Count recipe added success inside the loop
-                } else {
-                  System.err.println("Error adding recipe: " + recipe.getRecipeName());
-                  recipesFailed++;
-                }
+          // Create the cookbook
+          String creationResult = cookBookManager.createCookBook(cookBookName, "Description", "Type");
+          if (creationResult.contains("CookBook created successfully!")) {
+            cookBooksAdded++;
+            for (String recipeName : recipeNames) {
+              String result = cookBookManager.addRecipeToCookBook(cookBookName, recipeName);
+              if (result.contains("Recipe added to CookBook!")) {
+                recipesAdded++;
+              } else {
+                System.out.println("Failed to add recipe to cookbook: " + recipeName + " -> " + result);
+                recipesFailed++;
               }
-              cookBooksAdded++;
-            } else {
-              System.err.println("Error creating CookBook: " + cookBookName);
-              cookBooksFailed++;
             }
           } else {
-            System.err.println("No valid recipes found for " + cookBookName);
+            System.out.println("Failed to create cookbook: " + cookBookName + " -> " + creationResult);
             cookBooksFailed++;
           }
-        } else {
-          System.err.println("Invalid row in CSV file: " + String.join(",", row));
-          cookBooksFailed++;
         }
       }
     } catch (Exception e) {
-      System.err.println("Error reading cookbooks from CSV: " + e.getMessage());
+      e.printStackTrace();
     }
 
-    // Return values: [cookbooks added, cookbooks failed, recipes added, recipes
-    // failed]
     return new int[] { cookBooksAdded, cookBooksFailed, recipesAdded, recipesFailed };
   }
 
