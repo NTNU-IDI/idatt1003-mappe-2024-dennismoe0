@@ -311,54 +311,73 @@ public class RecipeManager {
     return allRecipes.toString();
   }
 
-  // Check if this one still works with new methods iterating over multiple items
-  // + unit conversion
-
   /**
    * Suggests recipes to the user based on matches of ingredient quantities that
-   * exist in the fridge.
+   * exist in the fridge and includes missing ingredients (name only).
    *
-   * @return a list of recipe suggestions indicating full or partial matches
+   * @return a formatted string with recipe suggestions for partial matches only.
    */
-  public List<String> suggestedRecipesBasedOnFridgeContents() {
-    List<String> suggestedRecipes = new ArrayList<>();
+  public String suggestedRecipesBasedOnFridgeContents() {
+    StringBuilder suggestions = new StringBuilder();
+    suggestions.append("Suggested Recipes Based on Fridge Contents (Partial Matches Only):\n");
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
       int matchingIngredients = 0; // Count of ingredients with sufficient quantity
+      List<String> missingIngredients = new ArrayList<>();
 
       for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
         String ingredientName = ingredientEntry.getKey();
         double requiredQuantity = ingredientEntry.getValue();
-
-        // Use FridgeManager to calculate total available quantity with unit conversion
         String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
             .getIngredientMeasuringUnit();
-        double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
-            requiredUnit);
 
-        // Check if the available quantity is sufficient
-        if (availableQuantity >= requiredQuantity) {
+        // Get available quantity in the same unit as required
+        double availableQuantityInRequiredUnit = fridgeManager
+            .getTotalQuantityOfIngredient(ingredientName,
+                requiredUnit);
+
+        // Check if available quantity is sufficient
+        if (availableQuantityInRequiredUnit >= requiredQuantity) {
           matchingIngredients++;
+        } else {
+          // Add the ingredient name to the missing list
+          missingIngredients.add(ingredientName);
         }
       }
 
-      if (matchingIngredients >= recipe.getIngredients().size() / 2) {
-        suggestedRecipes.add("Partial match: You have enough ingredients to partially make "
-            + recipe.getRecipeName());
+      int totalIngredients = recipe.getIngredients().size();
+      if (matchingIngredients > 0 && matchingIngredients < totalIngredients) {
+        suggestions.append("---------------------------------------------------\n")
+            .append("You can partially make ")
+            .append(recipe.getRecipeName())
+            .append(" (")
+            .append(matchingIngredients)
+            .append("/")
+            .append(totalIngredients)
+            .append(" ingredients available).\n");
+
+        // Append missing ingredient names
+        if (!missingIngredients.isEmpty()) {
+          suggestions.append("You need to buy/add: ")
+              .append(String.join(", ", missingIngredients))
+              .append(".\n");
+        }
       }
     }
 
-    return suggestedRecipes;
+    return suggestions.toString();
   }
 
   /**
    * Retrieves a list of recipes that can be fully fulfilled
    * based on the ingredients available in the fridge.
    *
-   * @return a list of recipe names that are fully fulfilled
+   * @return a formatted string with recipe names and a message for fully
+   *         fulfilled recipes
    */
-  public List<String> fullyFulfilledRecipes() {
-    List<String> fullyFulfilled = new ArrayList<>();
+  public String fullyFulfilledRecipes() {
+    StringBuilder suggestions = new StringBuilder();
+    suggestions.append("Recipes You Can Fully Make Based on Fridge Contents:\n");
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
       boolean isFullMatch = true; // Tracks if all ingredients match fully
@@ -370,8 +389,8 @@ public class RecipeManager {
         // Get the required unit from the FoodList
         String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
             .getIngredientMeasuringUnit();
-        double availableQuantity = fridgeManager.getTotalQuantityOfIngredient(ingredientName,
-            requiredUnit);
+        double availableQuantity = fridgeManager
+            .getTotalQuantityOfIngredient(ingredientName, requiredUnit);
 
         // If any ingredient doesn't meet the required quantity, break out
         if (availableQuantity < requiredQuantity) {
@@ -380,13 +399,21 @@ public class RecipeManager {
         }
       }
 
-      // Add recipe to the list if fully fulfilled
+      // Add recipe details to suggestions if fully fulfilled
       if (isFullMatch) {
-        fullyFulfilled.add(recipe.getRecipeName());
+        suggestions.append("--------------------------\n")
+            .append("You can fully make ")
+            .append(recipe.getRecipeName())
+            .append("\n");
       }
     }
 
-    return fullyFulfilled;
+    // If no recipes are fully fulfilled, provide a default message
+    if (suggestions.toString().trim().equals("Recipes You Can Fully Make Based on Fridge Contents:")) {
+      suggestions.append("No recipes can be fully made with the current fridge contents.\n");
+    }
+
+    return suggestions.toString();
   }
 
   /**
