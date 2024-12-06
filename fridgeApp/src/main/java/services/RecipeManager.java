@@ -93,6 +93,25 @@ public class RecipeManager {
   }
 
   /**
+   * Adds an ingredient to a recipe.
+   *
+   * @param recipeName     the name of the recipe to add to.
+   * @param ingredientName the name of the ingredient to add.
+   * @return a message indicating the outcome of the operation.
+   */
+  public String addIngredientToRecipe(String recipeName, String ingredientName, double quantity) {
+    Recipe recipe = recipeList.getRecipe(recipeName);
+    if (recipe == null) {
+      return "Recipe not found.";
+    }
+    if (recipe.getIngredients().containsKey(ingredientName)) {
+      return "Ingredient " + ingredientName + " already exists in the recipe.";
+    }
+    recipe.addIngredient(ingredientName, quantity);
+    return "Ingredient " + ingredientName + " added to recipe.";
+  }
+
+  /**
    * Removes a specific ingredient from a recipe.
    *
    * @param recipeName     the name of the recipe
