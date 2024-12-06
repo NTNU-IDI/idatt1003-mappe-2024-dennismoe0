@@ -131,6 +131,39 @@ public class CookBookManager {
     }
   }
 
+  /**
+   * Builds a formatted String with all CookBooks and their recipes.
+   *
+   * @return a formatted StringBuilder with all CookBooks and their recipes.
+   */
+  public StringBuilder listAllCookBooksWithRecipes() {
+    StringBuilder allCookBooks = new StringBuilder();
+
+    for (Map.Entry<String, CookBook> entry : cookBooks.entrySet()) {
+      String cookBookName = entry.getKey();
+      CookBook cookBook = entry.getValue();
+
+      allCookBooks.append("CookBook: ").append(cookBookName).append("\n");
+      allCookBooks.append("Recipes:\n");
+
+      if (cookBook.getRecipesInCookBook().isEmpty()) {
+        allCookBooks.append("  No recipes in this CookBook.\n");
+      } else {
+        for (Map.Entry<String, Recipe> recipeEntry : cookBook.getRecipesInCookBook().entrySet()) {
+          allCookBooks.append("  - ").append(recipeEntry.getKey()).append("\n");
+        }
+      }
+
+      allCookBooks.append("\n"); // Add a blank line between cookbooks
+    }
+
+    if (allCookBooks.length() == 0) {
+      allCookBooks.append("No CookBooks available.\n");
+    }
+
+    return allCookBooks;
+  }
+
   public Map<String, CookBook> getAllCookBooks() {
     return cookBooks;
   }
