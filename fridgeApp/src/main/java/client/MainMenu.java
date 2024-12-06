@@ -1,14 +1,11 @@
 package client;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import models.FoodList;
 import models.Fridge;
-import models.FridgeItem;
 import models.Ingredient;
-import models.Recipe;
 import models.RecipeList;
 import services.CookBookManager;
 import services.FridgeManager;
