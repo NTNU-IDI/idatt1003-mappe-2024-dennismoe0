@@ -54,7 +54,15 @@ public class FridgeItem {
   }
 
   // Setters
+  /**
+   * Sets the quantity of the ingredient and prints a logging statement.
+   *
+   * @param quantity the new quantity of the ingredient.
+   */
   public void setQuantity(double quantity) {
+    System.out
+        .println("Updating quantity for" + ingredient.getIngredientName()
+            + ": " + this.quantity + " -> " + quantity);
     this.quantity = quantity;
   }
 
