@@ -61,7 +61,7 @@ public class FridgeItem {
    */
   public void setQuantity(double quantity) {
     System.out
-        .println("Updating quantity for" + ingredient.getIngredientName()
+        .println("Updating quantity for " + ingredient.getIngredientName()
             + ": " + this.quantity + " -> " + quantity);
     this.quantity = quantity;
   }
