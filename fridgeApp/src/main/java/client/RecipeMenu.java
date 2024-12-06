@@ -69,7 +69,6 @@ public class RecipeMenu {
               This will remove the ingredients from the fridge.
               I.e. if the recipe needs 200g of Ground Beef, it will remove this amount.""");
 
-          scanner.nextLine(); // Consume the newline character
           String recipeName = scanner.nextLine();
 
           String result = recipeManager.removeMultipleQuantitiesByRecipe(recipeName);
@@ -228,7 +227,8 @@ public class RecipeMenu {
           double quantity = scanner.nextDouble();
           scanner.nextLine(); // Consume the newline character
 
-          String result = recipeManager.updateRecipeIngredient(recipeName, ingredientName, quantity);
+          String result = recipeManager.updateRecipeIngredient(recipeName,
+              ingredientName, quantity);
           System.out.println(result);
         }
         case 5 -> {
