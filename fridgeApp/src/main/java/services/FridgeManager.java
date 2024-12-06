@@ -367,35 +367,4 @@ public class FridgeManager {
 
     return sb.toString();
   }
-
-  public static void main(String[] args) {
-    // Initialize the FoodList and Fridge
-    FoodList foodList = new FoodList();
-    Fridge fridge = new Fridge();
-    FridgeManager manager = new FridgeManager(fridge, foodList);
-
-    // Add sample ingredients to the FoodList
-    foodList.addIngredient(new Ingredient("Cheese", "Dairy", 500, "grams", 50.0));
-    foodList.addIngredient(new Ingredient("Meat", "Protein", 1000, "grams", 120.0));
-    foodList.addIngredient(new Ingredient("Apple", "Fruit", 1, "amount", 10.0));
-
-    // Add sample FridgeItems with expiration dates
-    manager.addToFridge("Cheese", 25012025);
-    manager.addToFridge("Meat", 25012025);
-    manager.addToFridge("Apple", 27012024);
-
-    // Print all FridgeItems
-    System.out.println("All Fridge Items:");
-    fridge.getAllFridgeItems().forEach(System.out::println);
-
-    // Print expired items
-    System.out.println("\nExpired Items:");
-    manager.getAllExpiredItems().forEach(System.out::println);
-
-    // Print total value of expired items
-    System.out.println("\n" + manager.getExpiredItemsValue());
-
-    // Print total value of all items in the fridge
-    System.out.println(manager.getTotalValueOfFridge());
-  }
 }
