@@ -1,0 +1,5 @@
+If the files havent been compiled into the folder "out" in \fridgeApp please run the command from the fridgeApp folder
+
+javac -d out src/main/java/client/*.java src/main/java/models/*.java src/main/java/services/*.java src/main/java/utilities/*.java
+
+Potentially add the path to src before the path if you dont want to open the CMD in the fridgeApp folder

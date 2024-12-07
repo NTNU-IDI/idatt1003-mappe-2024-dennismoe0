@@ -1,0 +1,7 @@
+Compile your project with JUnit included:
+
+
+javac -cp "libs/*;src" -d out src/main/java/**/*.java
+Run tests with JUnit included:
+
+java -cp "libs/*;out" org.junit.runner.JUnitCore <TestClassName>
