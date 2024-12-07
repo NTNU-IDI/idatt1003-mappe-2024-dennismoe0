@@ -1,6 +1,7 @@
 package client;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import models.FoodList;
@@ -96,14 +97,6 @@ public class RecipeMenu {
 
       switch (choice) {
         case 1 -> {
-          System.out.println("Generating a list of currently registered ingredients...");
-          try {
-            Thread.sleep(2000);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-          foodList.printFoodList();
-
           System.out.println("Enter the name of the recipe:");
           String recipeName = scanner.nextLine();
 
@@ -134,21 +127,47 @@ public class RecipeMenu {
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
+              foodList.printFoodList();
 
               while (addingIngredients) {
                 System.out.println("Enter the name of the ingredient to add:");
                 String ingredient = scanner.nextLine();
 
-                System.out.println(
-                    "Enter the quantity of the ingredient needed (do not include the unit):");
-                double quantity = scanner.nextDouble();
-                scanner.nextLine(); // Consume the newline character
+                double quantity = 0;
+                while (true) { // Loop to ensure valid quantity input
+                  System.out.println("Enter the quantity of the ingredient "
+                      + "needed (do not include the unit):");
+                  String input = scanner.nextLine();
+                  try {
+                    quantity = Double.parseDouble(input);
+                    if (quantity <= 0) {
+                      System.out.println("Quantity must be greater than zero. Please try again.");
+                      continue;
+                    }
+                    break; // Exit the loop on valid input
+                  } catch (InputMismatchException e) {
+                    System.out.println("Invalid quantity. Please enter a numeric value.");
+                  }
+                }
 
                 ingredientsToAdd.put(ingredient, quantity);
 
                 System.out.println("Add another ingredient? (1 for Yes, 2 for No)");
-                int answer = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                int answer = 0;
+                while (true) { // Loop to ensure valid choice input
+                  try {
+                    answer = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
+                    if (answer == 1 || answer == 2) {
+                      break; // Valid choice
+                    } else {
+                      System.out.println("Invalid choice. Enter 1 for Yes or 2 for No.");
+                    }
+                  } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter 1 for Yes or 2 for No.");
+                    scanner.nextLine(); // Clear the invalid input
+                  }
+                }
 
                 if (answer == 2) {
                   addingIngredients = false;
@@ -184,25 +203,75 @@ public class RecipeMenu {
           System.out.println(result);
         }
         case 3 -> {
-          System.out.println("Generating a list of all recipes...");
-          try {
-            Thread.sleep(2000);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
+          System.out.println("Do you want to add or remove ingredients from a recipe?");
+          System.out.println("1. Add ingredient.");
+          System.out.println("2. Remove ingredients.");
+          System.out.println("3. Return to recipe menu.");
+
+          int addOrRemove = scanner.nextInt();
+          scanner.nextLine(); // Consume the newline character
+          switch (addOrRemove) {
+            case 1 -> {
+              System.out.println("Generating a list of all recipes...");
+              try {
+                Thread.sleep(2000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              recipeManager.printAllRecipes();
+
+              System.out.println("Enter the name of the recipe to add an ingredient to:");
+              String recipeName = scanner.nextLine();
+
+              System.out.println("Generating a list of all ingredients...");
+              try {
+                Thread.sleep(2000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              foodList.printFoodList();
+
+              System.out.println("---------------\nIngredients in the recipe:");
+              System.out.println(recipeManager
+                  .getIngredientsInRecipe(recipeName)); // Prints the ingredients
+
+              System.out.println("Enter the name of the ingredient to add:");
+              String ingredientName = scanner.nextLine();
+
+              System.out.println("Enter the quantity of the ingredient:");
+              double quantity = scanner.nextDouble();
+              scanner.nextLine(); // Consume the newline character
+
+              System.out.println(recipeManager.addIngredientToRecipe(recipeName,
+                  ingredientName, quantity));
+            }
+            case 2 -> {
+              System.out.println("Generating a list of all recipes...");
+              try {
+                Thread.sleep(2000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              recipeManager.printAllRecipes();
+
+              System.out.println("Enter the name of the recipe to remove ingredients from:");
+              String recipeName = scanner.nextLine();
+
+              System.out.println("---------------\nIngredients in the recipe:");
+              System.out.println(recipeManager
+                  .getIngredientsInRecipe(recipeName)); // Prints the ingredients
+
+              System.out.println("Enter the name of the ingredient to remove:");
+              String ingredientName = scanner.nextLine();
+
+              String result = recipeManager.removeIngredientFromRecipe(recipeName, ingredientName);
+              System.out.println(result);
+            }
+            case 3 -> {
+              return;
+            }
+            default -> System.out.println("Invalid choice. Please try again.");
           }
-          recipeManager.printAllRecipes();
-
-          System.out.println("Enter the name of the recipe to add/remove ingredients from:");
-          String recipeName = scanner.nextLine();
-
-          System.out.println("Ingredients in the recipe:");
-          recipeManager.getIngredientsInRecipe(recipeName); // Prints the ingredients
-
-          System.out.println("Enter the name of the ingredient to modify:");
-          String ingredientName = scanner.nextLine();
-
-          String result = recipeManager.removeIngredientFromRecipe(recipeName, ingredientName);
-          System.out.println(result);
         }
         case 4 -> {
           System.out.println("Generating a list of all recipes...");
