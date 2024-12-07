@@ -107,7 +107,7 @@ public class CookBookManager {
   public StringBuilder listAllCookBooks() {
     StringBuilder allCookBooks = new StringBuilder();
     for (Map.Entry<String, CookBook> entry : cookBooks.entrySet()) {
-      allCookBooks.append(entry.getKey()).append("\n");
+      allCookBooks.append("-----------\n").append(entry.getKey()).append("\n");
     }
     return allCookBooks;
   }
@@ -125,7 +125,7 @@ public class CookBookManager {
       return allRecipesInCookBook.append("CookBook not found!");
     } else {
       for (Map.Entry<String, Recipe> entry : cookBook.getRecipesInCookBook().entrySet()) {
-        allRecipesInCookBook.append(entry.getKey()).append("\n");
+        allRecipesInCookBook.append("--------------\n").append(entry.getKey()).append("\n");
       }
       return allRecipesInCookBook;
     }
@@ -143,7 +143,8 @@ public class CookBookManager {
       String cookBookName = entry.getKey();
       CookBook cookBook = entry.getValue();
 
-      allCookBooks.append("CookBook: ").append(cookBookName).append("\n");
+      allCookBooks.append("-------------\n")
+          .append("CookBook: ").append(cookBookName).append("\n");
       allCookBooks.append("Recipes:\n");
 
       if (cookBook.getRecipesInCookBook().isEmpty()) {
