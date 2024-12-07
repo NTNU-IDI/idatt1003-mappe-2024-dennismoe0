@@ -1,6 +1,7 @@
 package client;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import models.FoodList;
@@ -68,6 +69,8 @@ public class MainMenu {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
+    Locale.setDefault(Locale.US);
+
     MainMenu mainMenu = new MainMenu();
     mainMenu.init();
     mainMenu.start();
@@ -116,7 +119,8 @@ public class MainMenu {
         case 1 -> new FridgeMenu(fridgeManager, scanner, foodList).display();
         case 2 -> new FoodListMenu(foodList, scanner).display();
         case 3 -> new RecipeMenu(recipeManager, scanner, foodList).display();
-        // case 4 -> new CookBookMenu(cookBookManager, scanner).display();
+        // case 4 -> new CookBookMenu(cookBookManager, recipeManager,
+        // scanner).display();
         case 5 -> new InfoMenu(scanner).display();
         case 6 -> {
           System.out.println("Exiting application.");
