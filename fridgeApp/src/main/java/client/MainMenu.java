@@ -1,7 +1,6 @@
 package client;
 
 import java.io.File;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import models.FoodList;
@@ -69,7 +68,6 @@ public class MainMenu {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Locale.setDefault(Locale.US);
 
     MainMenu mainMenu = new MainMenu();
     mainMenu.init();
