@@ -119,8 +119,7 @@ public class MainMenu {
         case 1 -> new FridgeMenu(fridgeManager, scanner, foodList).display();
         case 2 -> new FoodListMenu(foodList, scanner).display();
         case 3 -> new RecipeMenu(recipeManager, scanner, foodList).display();
-        // case 4 -> new CookBookMenu(cookBookManager, recipeManager,
-        // scanner).display();
+        case 4 -> new CookBookMenu(cookBookManager, recipeManager, scanner).display();
         case 5 -> new InfoMenu(scanner).display();
         case 6 -> {
           System.out.println("Exiting application.");
