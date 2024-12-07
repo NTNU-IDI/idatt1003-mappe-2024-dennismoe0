@@ -1,24 +1,37 @@
 package client;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import models.CookBook;
 import services.CookBookManager;
 import services.RecipeManager;
 
+/**
+ * This class represents the menu for managing cookbooks.
+ * It provides options to list, create, delete, and manage recipes within
+ * cookbooks.
+ */
 public class CookBookMenu {
 
   private final CookBookManager cookBookManager;
   private final RecipeManager recipeManager;
   private final Scanner scanner;
 
-  public CookBookMenu(CookBookManager cookBookManager, RecipeManager recipeManager, Scanner scanner) {
+  /**
+   * Constructs a new CookBookMenu.
+   *
+   * @param cookBookManager the manager for cookbooks.
+   * @param recipeManager   the manager for recipes.
+   * @param scanner         the scanner for user input.
+   */
+  public CookBookMenu(CookBookManager cookBookManager,
+      RecipeManager recipeManager, Scanner scanner) {
     this.cookBookManager = cookBookManager;
     this.recipeManager = recipeManager;
     this.scanner = scanner;
   }
 
+  /**
+   * Displays the cookbook menu and handles user input.
+   */
   public void display() {
     while (true) {
       System.out.println("Cookbook menu:");
@@ -31,8 +44,8 @@ public class CookBookMenu {
       scanner.nextLine(); // Clear newline
 
       switch (choice) {
-        case 1 -> cookBookManager.listAllCookBooks();
-        case 2 -> cookBookManager.listAllCookBooksWithRecipes();
+        case 1 -> System.out.println(cookBookManager.listAllCookBooks());
+        case 2 -> System.out.println(cookBookManager.listAllCookBooksWithRecipes());
         case 3 -> manageCookBooksMenu();
         case 4 -> {
           return;
@@ -42,6 +55,10 @@ public class CookBookMenu {
     }
   }
 
+  /**
+   * Menu for managing cookbooks.
+   * Provides options to create, delete, add, and remove recipes from cookbooks.
+   */
   private void manageCookBooksMenu() {
     while (true) {
       System.out.println("Manage cookbooks:");
@@ -65,6 +82,7 @@ public class CookBookMenu {
           System.out.println(cookBookManager.createCookBook(name, description, type));
         }
         case 2 -> {
+          System.out.println(cookBookManager.listAllCookBooks());
           System.out.println("Enter the name of the cookbook to delete:");
           String name = scanner.nextLine();
           System.out.println(cookBookManager.deleteCookBook(name));
@@ -72,25 +90,25 @@ public class CookBookMenu {
         case 3 -> {
           System.out.println("Generating a list of all recipes...");
 
-          try {
-            Thread.sleep(2000);
-          } catch (InterruptedException e) {
-          }
-
           recipeManager.printAllRecipes();
-
+          System.out.println(cookBookManager.listAllCookBooks());
           System.out.println("Enter the name of the cookbook to add the recipe to:");
           String cookBookName = scanner.nextLine();
           System.out.println("Enter the name of the recipe to add to the cookbook:");
           String recipeName = scanner.nextLine();
           System.out.println(cookBookManager.addRecipeToCookBook(cookBookName, recipeName));
-
-          while (addingRecipes) {
-
-          }
         }
         case 4 -> {
 
+          System.out.println(cookBookManager.listAllCookBooksWithRecipes());
+
+          System.out.println("Enter the name of the cookbook to remove the recipe from:");
+          String cookBookName = scanner.nextLine();
+          System.out.println(cookBookManager.listAllRecipesInCookBook(cookBookName));
+
+          System.out.println("Enter the name of the recipe to remove from the cookbook:");
+          String recipeName = scanner.nextLine();
+          System.out.println(cookBookManager.removeRecipeFromCookBook(cookBookName, recipeName));
         }
         case 5 -> {
           return;
