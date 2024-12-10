@@ -14,7 +14,7 @@ public class Recipe {
   private final String recipeDescription;
   private final String instructions;
   private final String recipeType;
-  private final Map<String, Double> ingredients; // Ingredient name and required quantity
+  private final Map<String, Double> ingredients;
 
   /**
    * Constructs a new Recipe.
@@ -30,10 +30,10 @@ public class Recipe {
     this.recipeDescription = recipeDescription;
     this.instructions = instructions;
     this.recipeType = recipeType;
-    this.ingredients = new HashMap<>(); // The ingredients in the Recipe
+    this.ingredients = new HashMap<>();
   }
 
-  // Getters
+  
   public String getRecipeName() {
     return recipeName;
   }

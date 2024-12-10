@@ -20,7 +20,6 @@ import utilities.CsvUtility;
  */
 public class MainMenu {
 
-  // Paths to CSV files
   private static final String FOODLIST_CSV = "src/main/resources/data/foodlist.csv";
   private static final String FRIDGEITEMS_CSV = "src/main/resources/data/fridgeitems.csv";
   private static final String RECIPES_CSV = "src/main/resources/data/recipes.csv";
@@ -43,13 +42,13 @@ public class MainMenu {
    * Constructs a new MainMenu instance and initializes the managers and lists.
    */
   public MainMenu() {
-    // Paths
+
     this.foodListPath = getFilePath(FOODLIST_CSV);
     this.fridgeItemsPath = getFilePath(FRIDGEITEMS_CSV);
     this.recipesPath = getFilePath(RECIPES_CSV);
     this.cookBooksPath = getFilePath(COOKBOOKS_CSV);
 
-    // Objects
+
     this.foodList = new FoodList();
     this.fridge = new Fridge();
     this.recipeList = new RecipeList();
@@ -80,7 +79,7 @@ public class MainMenu {
   public void init() {
     try {
       System.out.println("Initializing application...");
-      // Import data from CSV files
+
       importData();
       System.out.println("Initialization complete.");
     } catch (Exception e) {
@@ -94,7 +93,7 @@ public class MainMenu {
   public void start() {
     try {
       System.out.println("Starting application...");
-      // Start the main menu loop
+
       mainMenuLoop();
     } catch (Exception e) {
       System.err.println("Error during start: " + e.getMessage());
@@ -136,7 +135,7 @@ public class MainMenu {
     try {
       System.out.println("Starting data import...");
 
-      // Import Food List
+
       System.out.println("Importing Food List from: " + foodListPath);
       Map<String, Ingredient> ingredients = CsvUtility.readIngredientsFromCsv(foodListPath);
       if (ingredients != null && !ingredients.isEmpty()) {
@@ -147,7 +146,7 @@ public class MainMenu {
         System.err.println("No ingredients found in the Food List CSV.");
       }
 
-      // Import Fridge Items
+
       System.out.println("Importing Fridge Items from: " + fridgeItemsPath);
 
       try {
@@ -160,7 +159,7 @@ public class MainMenu {
         System.err.println("Error during fridge items import: " + e.getMessage());
       }
 
-      // Import Recipes
+
       System.out.println("Importing Recipes from: " + recipesPath);
       int[] resultRecipeImport = CsvUtility.readRecipesFromCsv(recipesPath, recipeManager);
       if (resultRecipeImport[0] > 0) {
@@ -171,7 +170,7 @@ public class MainMenu {
             + resultRecipeImport[1] + " recipes.");
       }
 
-      // Import CookBooks
+
       System.out.println("Importing CookBooks from: " + cookBooksPath);
       int[] resultCookBooksImport = CsvUtility.readCookBooksFromCsv(cookBooksPath,
           cookBookManager);
@@ -187,7 +186,6 @@ public class MainMenu {
 
     } catch (Exception e) {
       System.err.println("Error during data import: " + e.getMessage());
-      e.printStackTrace();
     }
   }
 
@@ -198,23 +196,23 @@ public class MainMenu {
     try {
       System.out.println("Starting data export...");
 
-      // Export Food List
+
       System.out.println("Exporting Food List to: " + foodListPath);
       CsvUtility.writeIngredientsToCsv(foodListPath, foodList.getFoodList());
       System.out.println("Food List exported successfully.");
 
-      // Export Fridge Items
+
       System.out.println("Exporting Fridge Items to: " + fridgeItemsPath);
       CsvUtility.writeFridgeItemsToCsv(fridgeItemsPath, fridge.getAllFridgeItems());
       System.out.println("Fridge Items exported successfully.");
 
-      // Export Recipes
+
       System.out.println("Exporting Recipes to: " + recipesPath);
       CsvUtility.writeRecipesToCsv(recipesPath,
           recipeList.getAllRecipes().values().stream().toList());
       System.out.println("Recipes exported successfully.");
 
-      // Export CookBooks
+
       System.out.println("Exporting CookBooks to: " + cookBooksPath);
       CsvUtility.writeCookBooksToCsv(cookBooksPath, cookBookManager.getAllCookBooks());
       System.out.println("CookBooks exported successfully.");
@@ -222,8 +220,6 @@ public class MainMenu {
       System.out.println("Data export completed successfully.");
     } catch (Exception e) {
       System.err.println("Error during data export: " + e.getMessage());
-      e.printStackTrace();
     }
   }
-
 }

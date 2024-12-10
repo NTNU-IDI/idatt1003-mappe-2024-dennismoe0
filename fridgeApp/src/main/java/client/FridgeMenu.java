@@ -40,7 +40,7 @@ public class FridgeMenu {
       System.out.println("5. Back to main menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine(); // Clear newline
+      scanner.nextLine();
       switch (choice) {
         case 1 -> {
           System.out.println("All items in the fridge:");
@@ -68,7 +68,7 @@ public class FridgeMenu {
       System.out.println("3. Exit value menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine(); // Clear newline
+      scanner.nextLine();
 
       switch (choice) {
         case 1 -> {
@@ -98,7 +98,7 @@ public class FridgeMenu {
       System.out.println("4. Go back to fridge menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine(); // Clear newline
+      scanner.nextLine();
       switch (choice) {
         case 1 -> {
           System.out.println("Choose an action:");
@@ -107,15 +107,12 @@ public class FridgeMenu {
           System.out.println("3. Go back to manage fridge menu.");
 
           int createChoice = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           switch (createChoice) {
             case 1 -> {
 
               System.out.println("Generating a list of all registered ingredients...");
-              try {
-                Thread.sleep(2000);
-              } catch (InterruptedException e) {
-              }
+
               foodList.printFoodList();
 
               System.out.print("Enter ingredient name to add to the fridge: ");
@@ -133,14 +130,14 @@ public class FridgeMenu {
 
               System.out.println("Enter base weight/volume (i.e. 400): ");
               double baseWeight = scanner.nextDouble();
-              scanner.nextLine(); // Clear newline
+              scanner.nextLine();
 
               System.out.println("Enter unit ('g', 'mL', 'L' etc.): ");
               String unit = scanner.nextLine();
 
               System.out.println("Enter cost in NOK (i.e. '79'): ");
               double cost = scanner.nextDouble();
-              scanner.nextLine(); // Clear newline
+              scanner.nextLine();
 
               System.out.println("Enter expiration date (ddmmyyyy): ");
               long expirationDate = scanner.nextLong();
@@ -160,7 +157,7 @@ public class FridgeMenu {
           fridgeManager.printAllFridgeItemsSorted();
           System.out.print("\nEnter the ID of the item you want to remove: ");
           int id = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           String result = fridgeManager.removeFromFridgeById(id);
           System.out.println(result);
         }
@@ -183,43 +180,43 @@ public class FridgeMenu {
       System.out.println("5. Go back to fridge menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine(); // Clear newline
+      scanner.nextLine();
 
       switch (choice) {
         case 1 -> {
           System.out.print("Enter the ID of the item you want to change: ");
           int id = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           System.out.print("Enter the new quantity: ");
           double quantity = scanner.nextDouble();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           String result = fridgeManager.setFridgeItemQuantityById(id, quantity);
           System.out.println(result);
         }
         case 2 -> {
           System.out.print("Enter the ID of the item you want to add to: ");
           int id = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           System.out.print("Enter the amount to add: ");
           double amount = scanner.nextDouble();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           String result = fridgeManager.updateFridgeItemQuantityById(id, amount);
           System.out.println(result);
         }
         case 3 -> {
           System.out.print("Enter the ID of the item you want to subtract from: ");
           int id = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           System.out.print("Enter the amount to subtract: ");
           double amount = scanner.nextDouble();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           String result = fridgeManager.updateFridgeItemQuantityById(id, -amount);
           System.out.println(result);
         }
         case 4 -> {
           System.out.print("Enter the ID of the item you want to remove: ");
           int id = scanner.nextInt();
-          scanner.nextLine(); // Clear newline
+          scanner.nextLine();
           String result = fridgeManager.removeFromFridgeById(id);
           System.out.println(result);
         }

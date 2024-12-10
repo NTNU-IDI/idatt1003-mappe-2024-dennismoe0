@@ -70,10 +70,8 @@ public class UnitUtility {
       return true;
     } else if (isWeightUnit(fromMeasuringUnit) && isWeightUnit(toMeasuringUnit)) {
       return true;
-    } else if (isVolumeUnit(fromMeasuringUnit) && isVolumeUnit(toMeasuringUnit)) {
-      return true; // Redundant but will keep for safety reasons.
     } else {
-      return false;
+      return isVolumeUnit(fromMeasuringUnit) && isVolumeUnit(toMeasuringUnit);
     }
   }
 
