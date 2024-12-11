@@ -95,8 +95,14 @@ Or if you have used code from a website or other source, include a link to the s
 
 To be added
 
+hashmaps
 https://www.youtube.com/watch?v=H62Jfv1DJlU&t=498s
 
+w3schools hashmaps
 https://www.w3schools.com/java/java_hashmap.asp
 
+w3schools dates
 https://www.w3schools.com/java/java_date.asp
+
+unit testing
+https://www.youtube.com/watch?v=vZm0lHciFsQ
