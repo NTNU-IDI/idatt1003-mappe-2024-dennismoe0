@@ -41,7 +41,7 @@ public class CookBookMenu {
       System.out.println("4. Exit to main menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine();
+      scanner.nextLine(); // Clear newline
 
       switch (choice) {
         case 1 -> System.out.println(cookBookManager.listAllCookBooks());
@@ -69,7 +69,7 @@ public class CookBookMenu {
       System.out.println("5. Exit to cookbook menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine();
+      scanner.nextLine(); // Clear newline
 
       switch (choice) {
         case 1 -> {

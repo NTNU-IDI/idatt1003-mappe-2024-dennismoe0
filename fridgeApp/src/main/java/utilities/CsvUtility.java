@@ -17,9 +17,8 @@ import models.FridgeItem;
 import models.Ingredient;
 import models.Recipe;
 import services.CookBookManager;
-import services.FridgeManager;
 import services.RecipeManager;
-
+import services.FridgeManager;
 
 /**
  * Utility class for reading and writing CSV files.
@@ -33,7 +32,6 @@ public class CsvUtility {
 
   /**
    * Writes data to a CSV file.
-   * Basically a test-method.
    *
    * @param filePath path of the CSV file to write to.
    * @param data     The data to write, String[] represents a row.
@@ -50,7 +48,7 @@ public class CsvUtility {
           }
           sb.append(",");
         }
-        writer.write(sb.substring(0, sb.length() - 1));
+        writer.write(sb.substring(0, sb.length() - 1)); // Remove last comma
         writer.newLine();
       }
     } catch (IOException e) {
@@ -68,11 +66,11 @@ public class CsvUtility {
     List<String[]> data = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
-      boolean isFirstLine = true;
+      boolean isFirstLine = true; // Flag to skip the header
       while ((line = reader.readLine()) != null) {
         if (isFirstLine) {
           isFirstLine = false;
-          continue;
+          continue; // Skip the header
         }
 
         List<String> fields = new ArrayList<>();
@@ -81,7 +79,7 @@ public class CsvUtility {
 
         for (char c : line.toCharArray()) {
           if (c == '\"') {
-            inQuotes = !inQuotes;
+            inQuotes = !inQuotes; // Toggle inQuotes
           } else if (c == ',' && !inQuotes) {
             fields.add(currentField.toString().trim());
             currentField.setLength(0);
@@ -98,6 +96,10 @@ public class CsvUtility {
     return data;
   }
 
+  // Helper methods for Ingredients, FoodList, RecipeManager, and CookBookManager.
+
+  // Ingredients / FoodList
+
   /**
    * Writes a list of ingredients to a CSV file.
    *
@@ -106,7 +108,7 @@ public class CsvUtility {
    */
   public static void writeIngredientsToCsv(String filePath, HashMap<String, Ingredient> foodList) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
-
+      // Write header
       writer.println("IngredientName,Category,BaseWeight,MeasuringUnit,Cost");
       for (Ingredient ingredient : foodList.values()) {
         writer.printf(Locale.US, "%s,%s,%.2f,%s,%.2f%n",
@@ -131,7 +133,7 @@ public class CsvUtility {
     Map<String, Ingredient> foodList = new HashMap<>();
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
-      boolean isFirstLine = true;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
         if (isFirstLine) {
           isFirstLine = false;
@@ -151,7 +153,7 @@ public class CsvUtility {
     return foodList;
   }
 
-
+  // FridgeItems / FridgeManager
 
   /**
    * Writes a list of fridge items to a CSV file.
@@ -161,7 +163,7 @@ public class CsvUtility {
    */
   public static void writeFridgeItemsToCsv(String filePath, List<FridgeItem> fridgeItems) {
     try (PrintWriter writer = new PrintWriter(new File(filePath))) {
-
+      // Write header
       writer.println("IngredientName,Quantity,ExpirationDate");
       for (FridgeItem item : fridgeItems) {
         writer.printf(Locale.US, "%s,%.2f,%d%n",
@@ -188,7 +190,7 @@ public class CsvUtility {
 
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line;
-      boolean isFirstLine = true;
+      boolean isFirstLine = true; // Skip header
       while ((line = reader.readLine()) != null) {
         if (isFirstLine) {
           isFirstLine = false;
@@ -226,6 +228,14 @@ public class CsvUtility {
     return new int[] { itemsAdded, itemsFailed };
   }
 
+  // Recipes / RecipeManager
+
+  /**
+   * Writes a list of recipes to a CSV file.
+   *
+   * @param filePath the path of the CSV file to write to
+   * @param recipes  the list of recipes to write
+   */
   /**
    * Writes a list of recipes to a CSV file.
    *
@@ -234,17 +244,17 @@ public class CsvUtility {
    */
   public static void writeRecipesToCsv(String filePath, List<Recipe> recipes) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-
+      // Write header
       writer.write("RecipeName,Description,Instructions,Type,Ingredients");
       writer.newLine();
 
       for (Recipe recipe : recipes) {
-
+        // Format ingredients map into a single string with brackets
         String ingredients = recipe.getIngredients().entrySet().stream()
             .map(entry -> entry.getKey() + "=" + entry.getValue())
             .reduce((a, b) -> a + ", " + b)
-            .map(result -> "{" + result + "}")
-            .orElse("{}");
+            .map(result -> "{" + result + "}") // Enclose in brackets
+            .orElse("{}"); // Handle empty ingredients map
 
         writer.write(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n",
             recipe.getRecipeName().replace("\"", "\"\""),
@@ -271,15 +281,15 @@ public class CsvUtility {
     int itemsFailed = 0;
 
     try {
-      List<String[]> rows = readFromCsv(filePath);
+      List<String[]> rows = readFromCsv(filePath); // Header already skipped
       for (String[] row : rows) {
-        if (row.length >= 5) {
+        if (row.length >= 5) { // Ensure valid data
           String recipeName = row[0];
           String recipeDescription = row[1];
           String instructions = row[2];
           String recipeType = row[3];
 
-
+          // Remove enclosing brackets from the ingredients string
           String ingredientsData = row[4].replaceAll("[\\{\\}]", "");
           String[] ingredientsArray = ingredientsData.split(", ");
 
@@ -293,11 +303,11 @@ public class CsvUtility {
             }
           }
 
-
+          // Use the RecipeManager to create and add the recipe
           String result = recipeManager.createNewRecipeWithIngredients(
               recipeName, recipeDescription, instructions, recipeType, ingredients);
 
-          if (result.equals("Successfully created the recipe.")) {
+          if (result.equals("Succesfully created the recipe.")) {
             itemsAdded++;
           } else {
             System.err.println("Error adding recipe '" + recipeName + "': " + result);
@@ -315,6 +325,8 @@ public class CsvUtility {
     return new int[] { itemsAdded, itemsFailed };
   }
 
+  // CookBooks / CookBookManager
+
   /**
    * Writes a map of cookbooks to a CSV file.
    *
@@ -323,7 +335,7 @@ public class CsvUtility {
    */
   public static void writeCookBooksToCsv(String filePath, Map<String, CookBook> cookBooks) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-
+      // Write header
       writer.write("CookBookName,Recipes");
       writer.newLine();
 
@@ -331,16 +343,16 @@ public class CsvUtility {
         String cookBookName = entry.getKey();
         CookBook cookBook = entry.getValue();
 
-
+        // Format recipes inside brackets, correctly listing recipe names
         String recipes = cookBook.getRecipesInCookBook().keySet().stream()
             .map(recipeName -> recipeName.replace("\"",
-                "\"\""))
-            .reduce((a, b) -> a + ", " + b)
-            .map(recipeList -> "{" + recipeList + "}")
-            .orElse("{}");
+                "\"\"")) // Escape double quotes in recipe names
+            .reduce((a, b) -> a + ", " + b) // Combine recipe names with commas
+            .map(recipeList -> "{" + recipeList + "}") // Enclose recipes in curly braces
+            .orElse("{}"); // Handle case where there are no recipes
 
         writer.write(String.format("\"%s\",\"%s\"%n",
-            cookBookName.replace("\"", "\"\""),
+            cookBookName.replace("\"", "\"\""), // Escape double quotes in cookbook name
             recipes));
       }
     } catch (IOException e) {
@@ -353,6 +365,7 @@ public class CsvUtility {
    *
    * @param filePath        the path of the CSV file to read from
    * @param cookBookManager the CookBookManager instance to manage cookbooks
+   *                        cookbooks
    * @return an array of ints where index 0 is the count of successfully added
    *         cookbooks,
    *         index 1 is the count of failed cookbooks,
@@ -366,19 +379,18 @@ public class CsvUtility {
     int recipesFailed = 0;
 
     try {
-      List<String[]> rows = readFromCsv(filePath);
+      List<String[]> rows = readFromCsv(filePath); // Reads data from CSV
       for (String[] row : rows) {
-        if (row.length == 2) {
+        if (row.length == 2) { // Ensure valid data format (cookbook name, recipes)
           String cookBookName = row[0];
           String recipeData = row[1];
 
-
+          // Remove enclosing brackets and split recipes
           recipeData = recipeData.replaceAll("[\\{\\}]", "");
           String[] recipeNames = recipeData.split(",\\s*");
 
-
-          String creationResult = cookBookManager.createCookBook(cookBookName,
-              "Description", "Type");
+          // Create the cookbook
+          String creationResult = cookBookManager.createCookBook(cookBookName, "Description", "Type");
           if (creationResult.contains("CookBook created successfully!")) {
             cookBooksAdded++;
             for (String recipeName : recipeNames) {
@@ -386,21 +398,21 @@ public class CsvUtility {
               if (result.contains("Recipe added to CookBook!")) {
                 recipesAdded++;
               } else {
-                System.out.println("Failed to add recipe to cookbook: "
-                    + recipeName + " -> " + result);
+                System.out.println("Failed to add recipe to cookbook: " + recipeName + " -> " + result);
                 recipesFailed++;
               }
             }
           } else {
-            System.out.println("Failed to create cookbook: "
-                + cookBookName + " -> " + creationResult);
+            System.out.println("Failed to create cookbook: " + cookBookName + " -> " + creationResult);
             cookBooksFailed++;
           }
         }
       }
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
     }
+
     return new int[] { cookBooksAdded, cookBooksFailed, recipesAdded, recipesFailed };
   }
+
 }

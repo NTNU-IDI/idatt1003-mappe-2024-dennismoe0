@@ -30,7 +30,7 @@ public class CookBook {
   }
 
   /**
-   * Gets the name of the CookBook.
+   * Gets the namme of the CookBook.
    *
    * @return a String with the name of the CookBook.
    */
@@ -112,7 +112,7 @@ public class CookBook {
   }
 
   /**
-   * Getter for the size of the CookBook (amount of recipes).
+   * Getter for the size of the CookBook (amount of recipes)
    *
    * @return an integer with the count of recipes in the CookBook.
    */
