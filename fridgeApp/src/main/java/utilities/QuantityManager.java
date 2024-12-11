@@ -4,6 +4,8 @@ import models.FridgeItem;
 
 /**
  * Utility class for managing the quantity of FridgeItem objects.
+ * I believe this is a non-used utility class, however I will keep it because of
+ * the closeness to the deadline of the project.
  */
 public class QuantityManager {
 
