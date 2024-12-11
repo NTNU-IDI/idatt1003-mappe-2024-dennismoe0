@@ -33,7 +33,9 @@ public class RecipeList {
    * @param recipeName the name of the recipe to remove
    */
   public void removeRecipe(String recipeName) {
-    recipes.remove(recipeName);
+    if (recipeName != null) {
+      recipes.remove(recipeName.trim().toLowerCase());
+    }
   }
 
   /**

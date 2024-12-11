@@ -46,38 +46,31 @@ public class FoodList {
   public String createAndAddIngredient(String ingredientName, String ingredientCategory,
       double ingredientBaseWeight, String ingredientMeasuringUnit, double ingredientCost) {
 
-    // Validate ingredient name
     if (ingredientName == null || ingredientName.trim().isEmpty()) {
       return "Error: Ingredient name cannot be empty or null.";
     }
 
-    // Check if ingredient already exists
     if (foodList.containsKey(ingredientName)) {
       return "Error: Ingredient with the name '" + ingredientName
           + "' already exists in the food list.";
     }
 
-    // Validate category
     if (ingredientCategory == null || ingredientCategory.trim().isEmpty()) {
       return "Error: Ingredient category cannot be empty or null.";
     }
 
-    // Validate base weight
     if (ingredientBaseWeight <= 0) {
       return "Error: Base weight must be greater than 0.";
     }
 
-    // Validate measuring unit
     if (ingredientMeasuringUnit == null || ingredientMeasuringUnit.trim().isEmpty()) {
       return "Error: Measuring unit cannot be empty or null.";
     }
 
-    // Validate cost
     if (ingredientCost < 0) {
       return "Error: Cost cannot be negative.";
     }
 
-    // Create and add the ingredient
     Ingredient ingredient = new Ingredient(ingredientName, ingredientCategory, ingredientBaseWeight,
         ingredientMeasuringUnit, ingredientCost);
     foodList.put(ingredientName, ingredient);
@@ -91,17 +84,14 @@ public class FoodList {
    * @return a message indicating the result of the operation
    */
   public String removeIngredient(String ingredientName) {
-    // Validate input
     if (ingredientName == null || ingredientName.trim().isEmpty()) {
       return "Error: Ingredient name cannot be null or empty.";
     }
 
-    // Check if ingredient exists in the food list
     if (!foodList.containsKey(ingredientName)) {
       return "Error: Ingredient '" + ingredientName + "' does not exist in the food list.";
     }
 
-    // Remove ingredient
     foodList.remove(ingredientName);
     return "Ingredient '" + ingredientName + "' removed successfully.";
   }
@@ -159,15 +149,17 @@ public class FoodList {
       return "There is not ingredient with that name.";
     }
 
-    StringBuilder ingredientInfo = new StringBuilder();
-    ingredientInfo.append("Ingredient info:\n\r");
-    ingredientInfo.append("Name: ").append(ingredient.getIngredientName()).append(".\n");
-    ingredientInfo.append("Category: ").append(ingredient.getIngredientCategory()).append(".\n");
-    ingredientInfo.append("Weight: ").append(ingredient.getIngredientBaseWeight()).append(" ")
-        .append(ingredient.getIngredientMeasuringUnit()).append(".\n");
-    ingredientInfo.append("Cost per Ingredient: ").append(ingredient.getIngredientCost())
-        .append(" NOK.");
+    String ingredientInfo = "Ingredient info:\n\r"
+              + "Name: " + ingredient.getIngredientName() + ".\n"
+              + "Category: " + ingredient.getIngredientCategory()
+              + ".\n"
+              + "Weight: " + ingredient.getIngredientBaseWeight()
+              + " "
+              + ingredient.getIngredientMeasuringUnit()
+              + ".\n"
+              + "Cost per Ingredient: " + ingredient.getIngredientCost()
+              + " NOK.";
 
-    return ingredientInfo.toString();
+    return ingredientInfo;
   }
 }

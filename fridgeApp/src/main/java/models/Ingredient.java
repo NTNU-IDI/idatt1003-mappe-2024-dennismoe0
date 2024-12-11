@@ -10,7 +10,7 @@ public class Ingredient {
   private final String ingredientCategory;
   private final double ingredientBaseWeight;
   private final String ingredientMeasuringUnit;
-  private final double ingredientCost; // Make getter for cost per gram/unit.
+  private final double ingredientCost; 
 
   /**
    * Constructs a new Ingredient.
@@ -32,7 +32,7 @@ public class Ingredient {
     this.ingredientCost = ingredientCost;
   }
 
-  // Getters
+  
 
   public String getIngredientName() {
     return ingredientName;
