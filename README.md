@@ -88,7 +88,7 @@ What is the input and output of the program? What is the expected behaviour of t
 You can simply open the Launch.bat file located in the folder above fridgeApp.
 Alternatively you can execute the command "java -jar fridgeApp.jar" after opening a cmd in the folder.
 
-- If you run the project from an IDE the paths to the csv files with return an error, you either need to change the path (remove fridgeApp), or simply not use any imported data and create new ones for the current instance.
+- If you run the project from an IDE the paths to the csv files with return an error, you either need to change the path (remove fridgeApp from the path in the MainMenu.java class in the client folder), or simply not use any imported data and create new ones for the current instance.
 
 ## How to run the tests
 
