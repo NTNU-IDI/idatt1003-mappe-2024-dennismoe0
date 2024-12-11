@@ -289,12 +289,10 @@ public class FridgeManager {
   public List<FridgeItem> getAllExpiredItems() {
     long todayAsLong = DateValidation.getTodayAsLong();
 
-    // Filter expired items
     List<FridgeItem> expiredItems = fridge.getAllFridgeItems().stream()
         .filter(item -> DateValidation.compareDates(item.getExpirationDate(), todayAsLong) < 0)
         .collect(Collectors.toList());
 
-    // Log only the expired items
     for (FridgeItem expiredItem : expiredItems) {
       System.out.println("Item: " + expiredItem.getIngredient().getIngredientName()
           + ", Expiration: " + expiredItem.getFormattedExpirationDate());

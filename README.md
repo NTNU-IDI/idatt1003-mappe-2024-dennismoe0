@@ -80,10 +80,16 @@ The project should now be public and easily accessed through this link:
 
 - https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
 
+The project should now be public and easily accessed through this link:
+
+- https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
+
 ## How to run the project
 
 [//]: # "TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?"
+
+To be added
 
 To be added
 
@@ -93,10 +99,26 @@ To be added
 
 To be added
 
+To be added
+
 ## References
 
 [//]: # "TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
 Or if you have used code from a website or other source, include a link to the source."
+
+To be added
+
+hashmaps
+https://www.youtube.com/watch?v=H62Jfv1DJlU&t=498s
+
+w3schools hashmaps
+https://www.w3schools.com/java/java_hashmap.asp
+
+w3schools dates
+https://www.w3schools.com/java/java_date.asp
+
+unit testing
+https://www.youtube.com/watch?v=vZm0lHciFsQ
 
 To be added
 
