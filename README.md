@@ -59,10 +59,10 @@ My packages are located in the java directory: src/main/java/
 The CSV files for exporting and importing user changes (such as the creation of ingredients or recipes) is saved within src/main/resources/data.
   - I.e. the foodlist.csv or the recipes.csv
    
-Any compiled classes are located within the identically named folders inside of: 
+Any compiled classes are located within the identically named folders of their non-compiled counterparts inside of: 
     out/production/fridgeApp/
 
-The same goes for the JUnit-test classes which are located inside test/ folder of the main directory.
+The same goes for the JUnit-test classes which are located inside src/main/test folder of the main directory.
 
 Any libraries related to testing, such as the hamcrest-core and the junit java-files are located inside the libs folder in the root directory.
 
