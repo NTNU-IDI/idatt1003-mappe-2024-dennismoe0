@@ -94,3 +94,9 @@ To be added
 Or if you have used code from a website or other source, include a link to the source."
 
 To be added
+
+https://www.youtube.com/watch?v=H62Jfv1DJlU&t=498s
+
+https://www.w3schools.com/java/java_hashmap.asp
+
+https://www.w3schools.com/java/java_date.asp
