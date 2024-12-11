@@ -9,7 +9,7 @@ RecipeName,Description,Instructions,Type,Ingredients
 "Beef & Corn Stir Fry","Ground beef stir-fried with hermetic corn and butter.","Cook ground beef, add corn, and stir-fry with butter.","Lunch","{Ground Beef=400.0, Hermetic Corn=120.0, Cooking Butter=25.0}"
 "Apple & Cheese Delight","A fresh snack with sliced apples and feta cheese.","Slice apples and serve with crumbled feta cheese.","Snack","{Apple=1.0, Feta Cheese=50.0, Cooking Butter=10.0}"
 "Spinach & Cheese Sandwich","A sandwich filled with spinach, grated cheese, and Thousand Island sauce.","Layer bread with spinach, grated cheese, and Thousand Island sauce.","Lunch","{Bread Slices=2.0, Spinach=30.0, Grated Cheese=50.0, Thousand Island Sauce=20.0}"
-"Bacon & Eggs","A classic breakfast with bacon and eggs.","Cook bacon and eggs, serve warm.","Breakfast",{Bacon=100.0, Egg 12-pack=2.0, Cooking Butter=10.0}"
+"Bacon & Eggs","A classic breakfast with bacon and eggs.","Cook bacon and eggs, serve warm.","Breakfast","{Bacon=100.0, Egg 12-pack=2.0, Cooking Butter=10.0}"
 "Tomato Rice Delight","Basmati rice cooked with tomato sauce and spinach.","Mix cooked rice with tomato sauce and fresh spinach.","Dinner","{Basmati Rice=200.0, Tomato Sauce=200.0, Spinach=30.0}"
 "Butter Corn Rice","Basmati rice with sweet corn and butter.","Cook basmati rice, mix with corn and butter.","Lunch","{Basmati Rice=200.0, Sweet Corn=100.0, Cooking Butter=25.0}"
 "Chicken Stir Fry","Stir-fried chicken breast with spinach and Thousand Island sauce.","Cook chicken, stir-fry with spinach, and add Thousand Island sauce.","Dinner","{Chicken Breast=200.0, Spinach=50.0, Thousand Island Sauce=50.0}"

@@ -55,7 +55,7 @@ public class FridgeManager {
     return "Ingredient added to fridge successfully.";
   }
 
-
+  // gets foodlist
   public FoodList getFoodList() {
     return foodList;
   }
@@ -245,13 +245,13 @@ public class FridgeManager {
   public List<FridgeItem> getAllFridgeItemsSorted() {
     List<FridgeItem> allItems = fridge.getAllFridgeItems();
 
-
+    // Sort by Quantity
     allItems.sort(Comparator.comparing(FridgeItem::getQuantity));
-
+    // Sort by Expiration Date (overrides within the same Quantity order)
     allItems.sort(Comparator.comparing(FridgeItem::getExpirationDate));
-
+    // Sort by Name (overrides within the same Expiration Date order)
     allItems.sort(Comparator.comparing(item -> item.getIngredient().getIngredientName()));
-
+    // Sort by Type (overrides within the same Name order)
     allItems.sort(Comparator.comparing(item -> item.getIngredient().getIngredientCategory()));
 
     return allItems;
@@ -267,7 +267,7 @@ public class FridgeManager {
    */
   public void printAllFridgeItemsSorted() {
     List<FridgeItem> sortedItems = getAllFridgeItemsSorted();
-    sortedItems.forEach(System.out::println);
+    sortedItems.forEach(item -> System.out.println(item));
   }
 
   /**
@@ -300,7 +300,7 @@ public class FridgeManager {
    */
   public void printAllExpiredItems() {
     List<FridgeItem> expiredItems = getAllExpiredItems();
-    expiredItems.forEach(System.out::println);
+    expiredItems.forEach(item -> System.out.println(item));
   }
 
   /**
@@ -356,7 +356,7 @@ public class FridgeManager {
     List<FridgeItem> items = fridge.getAllIngredientInstancesByName(ingredientName);
 
     if (ingredientName == null) {
-      return "No items found for " + ingredientName + ".";
+      return "No items found for " + ingredientName;
     }
 
     StringBuilder sb = new StringBuilder();

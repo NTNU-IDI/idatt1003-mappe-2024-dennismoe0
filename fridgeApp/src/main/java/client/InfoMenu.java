@@ -7,7 +7,7 @@ import java.util.Scanner;
  * the application.
  * This is for explaining the purpose and structure of the application.
  *
- * @author Dennis Moe
+ * @Author Dennis Moe
  */
 public class InfoMenu {
 
@@ -34,7 +34,7 @@ public class InfoMenu {
       System.out.println("2. Go back to main menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine();
+      scanner.nextLine(); // Consume newline left by nextInt()
 
       switch (choice) {
         case 1 -> {
@@ -64,7 +64,7 @@ public class InfoMenu {
                   of your fridge. Either fully or partially.
                  - You can also check the price of a recipe.
                    - Both the full cost (regardless of how much you use) and the cost per serving.
-                 - You're also able to "use" the recipe,
+                 - Youre also able to "use" the recipe,
                    which will remove the ingredients from your fridge.
                    - This is done by removing the amount of each ingredient used in the recipe.
                     -> Uses the items closest to expiration first.
@@ -75,7 +75,7 @@ public class InfoMenu {
                   to a cookbook and view the recipes in a cookbook.
 
               --------------------------------------------------------------------------------------
-              """);
+                """);
         }
         case 2 -> {
           System.out.println("Returning to main menu...");
@@ -85,4 +85,5 @@ public class InfoMenu {
       }
     }
   }
+
 }

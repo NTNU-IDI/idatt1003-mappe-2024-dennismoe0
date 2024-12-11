@@ -158,7 +158,7 @@ public class CookBookManager {
       allCookBooks.append("\n"); // Add a blank line between cookbooks
     }
 
-    if (allCookBooks.isEmpty()) {
+    if (allCookBooks.length() == 0) {
       allCookBooks.append("No CookBooks available.\n");
     }
 

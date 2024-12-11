@@ -6,7 +6,7 @@ import models.FoodList;
 /**
  * Menu for managing the food list and displaying different information.
  *
- * @author Dennis Moe
+ * @Author Dennis Moe
  */
 public class FoodListMenu {
 
@@ -39,12 +39,16 @@ public class FoodListMenu {
       System.out.println("4. Go back to main menu.");
 
       int choice = scanner.nextInt();
-      scanner.nextLine();
+      scanner.nextLine(); // Consume newline left by nextInt()
 
       switch (choice) {
         case 1 -> {
           System.out.println("Generating a list of all ingredients...");
-
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
           foodList.printFoodList();
         }
         case 2 -> {
@@ -56,21 +60,25 @@ public class FoodListMenu {
 
           System.out.println("Enter base weight/volume (i.e. 400): ");
           double baseWeight = scanner.nextDouble();
-          scanner.nextLine();
+          scanner.nextLine(); // Consume newline left by nextDouble()
 
           System.out.println("Enter unit ('g', 'mL', 'L' etc.): ");
           String unit = scanner.nextLine();
 
           System.out.println("Enter cost in NOK (i.e. '79'): ");
           double cost = scanner.nextDouble();
-          scanner.nextLine();
+          scanner.nextLine(); // Consume newline left by nextDouble()
 
           String result = foodList.createAndAddIngredient(name, category, baseWeight, unit, cost);
           System.out.println(result);
         }
         case 3 -> {
           System.out.println("Generating a list of all ingredients...");
-
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
           foodList.printFoodList();
 
           System.out.print("Enter ingredient name to remove: ");
