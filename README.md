@@ -17,7 +17,7 @@ The structure of the application is divided into 4 main parts:
     - I use the name "Fridge", however for ease of use there is no moral issue using it for storing
       items such as cooking oil or popcorn.
 
-2.  The food fist menu: Where you can add, remove and view the ingredients registered.
+2.  The food list menu: Where you can add, remove and view the ingredients registered.
 
     - This is basically a registry of previously bought items/the items in "the store".
       - If you want to add an item not on this list, you need to create it first.
