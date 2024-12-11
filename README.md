@@ -2,16 +2,10 @@
 
 # Portfolio project IDATT1003
 
-This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
-
-[//]: # "TODO: Fill inn your name and student ID"
-
 STUDENT NAME = Dennis Moe  
 STUDENT ID = 123631
 
 ## Project description
-
-[//]: # "TODO: Write a short description of your project/product here."
 
 It's purpose is to act as a tracker system for what you have in your fridge/kitchen
 along with the prices, measuring units, quantity, expiration date and category of those items.
@@ -48,8 +42,6 @@ The structure of the application is divided into 4 main parts:
 
 ## Project structure
 
-[//]: # "TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc."
-
 The project structure is clearly defined. Everything referred to as the root directory is located within the fridgeApp/ folder of this project.
 
 Within the project folder the project structure is based on the "Maven Standard Directory Layout", however I have chosen to exclude the com/... folder etc. because of the relatively simple project complexity.
@@ -74,33 +66,25 @@ Any presence of folders such as .idea or .vscode are accidental, but should have
 
 ## Link to repository
 
-[//]: # "TODO: Include a link to your GitHub repository here."
-
 The project should now be public and easily accessed through this link:
 
 - https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
 
 ## How to run the project
 
-[//]: # "TODO: Describe how to run your project here. What is the main class? What is the main method?
-What is the input and output of the program? What is the expected behaviour of the program?"
-
 You can simply open the Launch.bat file located in the folder above fridgeApp.
 Alternatively you can execute the command "java -jar fridgeApp.jar" after opening a cmd in the folder.
 
 - If you run the project from an IDE the paths to the csv files with return an error, you either need to change the path (remove fridgeApp from the path in the MainMenu.java class in the client folder), or simply not use any imported data and create new ones for the current instance.
 
-## How to run the tests
+The main class is the MainMenu.java class which is what the JAR file will run at launch. It will open a terminal with information.
 
-[//]: # "TODO: Describe how to run the tests here."
+## How to run the tests
 
 Open the project folder fridgeApp in intellij and run test class you wish to run in Intellij IDEA.
 They're located in fridgeApp/src/test/....
 
 ## References
-
-[//]: # "TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source."
 
 Core Java Volume I - Fundamentals 11. edition, Cay S. Horstmann, ISBN-13 978-0-13-516630-7
 https://horstmann.com/corejava/
