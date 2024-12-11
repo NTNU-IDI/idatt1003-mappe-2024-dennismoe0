@@ -22,7 +22,7 @@ STUDENT ID = 123631
       - I use the name "Fridge", however for ease of use there is no moral issue using it for storing
         items such as cooking oil or popcorn.
 
-   3. The Food List: Where you can add, remove and view the ingredients registered.
+   3. The food fist menu: Where you can add, remove and view the ingredients registered.
       - This is basically a registry of previously bought items/the items in "the store".
         - If you want to add an item not on this list, you need to create it first.
            - This can be done in both the food list menu and in the fridge menu.
@@ -80,11 +80,17 @@ The project should now be public and easily accessed through this link:
 [//]: # "TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?"
 
+To be added
+
 ## How to run the tests
 
 [//]: # "TODO: Describe how to run the tests here."
+
+To be added
 
 ## References
 
 [//]: # "TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
 Or if you have used code from a website or other source, include a link to the source."
+
+To be added
