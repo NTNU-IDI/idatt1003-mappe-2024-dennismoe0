@@ -61,7 +61,7 @@ public class RecipeManager {
       recipe.addIngredient(ingredientName, quantity);
     }
     recipeList.addRecipe(recipe);
-    return "Succesfully created the recipe.";
+    return "Successfully created the recipe.";
   }
 
   /**
@@ -221,7 +221,7 @@ public class RecipeManager {
       double ingredientCost = ingredient.getIngredientCost();
       double baseWeight = ingredient.getIngredientBaseWeight();
 
-      // Adjust the cost for the required quantity
+
       double costForIngredient = (requiredQuantity / baseWeight) * ingredientCost;
       totalCost += costForIngredient;
     }
@@ -245,7 +245,7 @@ public class RecipeManager {
     if (!recipe.getIngredients().containsKey(ingredientName)) {
       return "Ingredient " + ingredientName + " not found in the recipe.";
     }
-    recipe.addIngredient(ingredientName, quantity); // Updates quantity
+    recipe.addIngredient(ingredientName, quantity);
     return "Ingredient quantity updated successfully.";
   }
 
@@ -296,7 +296,7 @@ public class RecipeManager {
           .append(quantity).append(" ").append(measuringUnit).append("\n");
     }
 
-    if (ingredientList.length() > 0) {
+    if (!ingredientList.isEmpty()) {
       ingredientList.setLength(ingredientList.length() - 2);
     }
 
@@ -341,7 +341,7 @@ public class RecipeManager {
     suggestions.append("Suggested Recipes Based on Fridge Contents (Partial Matches Only):\n");
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
-      int matchingIngredients = 0; // Count of ingredients with sufficient quantity
+      int matchingIngredients = 0;
       List<String> missingIngredients = new ArrayList<>();
 
       for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
@@ -350,16 +350,16 @@ public class RecipeManager {
         String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
             .getIngredientMeasuringUnit();
 
-        // Get available quantity in the same unit as required
+
         double availableQuantityInRequiredUnit = fridgeManager
             .getTotalQuantityOfIngredient(ingredientName,
                 requiredUnit);
 
-        // Check if available quantity is sufficient
+
         if (availableQuantityInRequiredUnit >= requiredQuantity) {
           matchingIngredients++;
         } else {
-          // Add the ingredient name to the missing list
+
           missingIngredients.add(ingredientName);
         }
       }
@@ -375,7 +375,7 @@ public class RecipeManager {
             .append(totalIngredients)
             .append(" ingredients available).\n");
 
-        // Append missing ingredient names
+
         if (!missingIngredients.isEmpty()) {
           suggestions.append("You need to buy/add: ")
               .append(String.join(", ", missingIngredients))
@@ -399,26 +399,26 @@ public class RecipeManager {
     suggestions.append("Recipes You Can Fully Make Based on Fridge Contents:\n");
 
     for (Recipe recipe : recipeList.getAllRecipes().values()) {
-      boolean isFullMatch = true; // Tracks if all ingredients match fully
+      boolean isFullMatch = true;
 
       for (Map.Entry<String, Double> ingredientEntry : recipe.getIngredients().entrySet()) {
         String ingredientName = ingredientEntry.getKey();
         double requiredQuantity = ingredientEntry.getValue();
 
-        // Get the required unit from the FoodList
+
         String requiredUnit = foodList.getIngredientFromFoodList(ingredientName)
             .getIngredientMeasuringUnit();
         double availableQuantity = fridgeManager
             .getTotalQuantityOfIngredient(ingredientName, requiredUnit);
 
-        // If any ingredient doesn't meet the required quantity, break out
+
         if (availableQuantity < requiredQuantity) {
           isFullMatch = false;
           break;
         }
       }
 
-      // Add recipe details to suggestions if fully fulfilled
+
       if (isFullMatch) {
         suggestions.append("--------------------------\n")
             .append("You can fully make ")
@@ -427,8 +427,8 @@ public class RecipeManager {
       }
     }
 
-    // If no recipes are fully fulfilled, provide a default message
-    if (suggestions.toString().trim().equals("Recipes You Can Fully Make Based on Fridge Contents:")) {
+    if (suggestions.toString()
+            .trim().equals("Recipes You Can Fully Make Based on Fridge Contents:")) {
       suggestions.append("No recipes can be fully made with the current fridge contents.\n");
     }
 
@@ -444,14 +444,14 @@ public class RecipeManager {
   public String removeMultipleQuantitiesByRecipe(String recipeName) {
     Recipe recipe = recipeList.getRecipe(recipeName);
 
-    // Check if recipe exists
+
     if (recipe == null) {
       return "Recipe not found.";
     }
 
     long todayAsLong = DateValidation.getTodayAsLong();
 
-    // Pre-check: Ensure sufficient quantity exists for all ingredients
+
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
@@ -467,7 +467,7 @@ public class RecipeManager {
       }
     }
 
-    // Removal process
+
     for (Map.Entry<String, Double> entry : recipe.getIngredients().entrySet()) {
       String ingredientName = entry.getKey();
       double requiredQuantity = entry.getValue();
@@ -483,7 +483,7 @@ public class RecipeManager {
         double availableQuantity = fridgeItem.getQuantity();
 
         if (availableQuantity >= requiredQuantity) {
-          // Full removal
+
           fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -requiredQuantity);
           requiredQuantity = 0;
 
@@ -492,7 +492,7 @@ public class RecipeManager {
           }
           break;
         } else {
-          // Partial removal
+
           fridgeManager.updateFridgeItemQuantityById(fridgeItem.getId(), -availableQuantity);
           requiredQuantity -= availableQuantity;
 
@@ -548,7 +548,7 @@ public class RecipeManager {
       String ingredientName = entry.getKey();
       double quantity = entry.getValue();
 
-      // Fetch ingredient details from FoodList
+
       Ingredient ingredient = foodList.getIngredientFromFoodList(ingredientName);
       String unit = (ingredient != null) ? ingredient.getIngredientMeasuringUnit()
           : "Unit not found";

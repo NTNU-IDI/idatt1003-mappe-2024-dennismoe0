@@ -13,9 +13,9 @@ import java.util.Map;
  * @author Dennis Moe
  */
 public class Fridge {
-  // Ingredient name -> list of FridgeItems.
+  
   private final Map<String, List<FridgeItem>> fridgeContents;
-  // Ingredient name -> total quantity.
+  
   private final Map<String, Double> fridgeQuantities;
 
   /**
@@ -34,10 +34,10 @@ public class Fridge {
   public void addFridgeItem(FridgeItem fridgeItem) {
     String ingredientName = fridgeItem.getIngredient().getIngredientName();
 
-    // If no list for this item exists, make a new one.
+    
     fridgeContents.computeIfAbsent(ingredientName, k -> new ArrayList<>()).add(fridgeItem);
 
-    // Update the total quantity of this ingredient.
+    
     fridgeQuantities.put(ingredientName, calculateTotalQuantity(ingredientName));
   }
 
@@ -112,7 +112,7 @@ public class Fridge {
         if (item.getId() == id) {
           item.setQuantity(item.getQuantity() + quantityChange);
 
-          // Recalculate the total quantity for this ingredient
+          
           String ingredientName = item.getIngredient().getIngredientName();
           fridgeQuantities.put(ingredientName, calculateTotalQuantity(ingredientName));
           return true;

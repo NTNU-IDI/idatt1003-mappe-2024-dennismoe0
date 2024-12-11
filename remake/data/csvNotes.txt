@@ -1,4 +1,0 @@
-Going to implement function for importing and exporting data each time the user starts/quits the program.
-
-Will import data for ingredients, items in the fridge, recipes and cookbooks.
-If no data is found I need to add "base" data (the stuff already in the client?)

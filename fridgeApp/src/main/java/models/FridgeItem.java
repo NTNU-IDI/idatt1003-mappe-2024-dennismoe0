@@ -10,8 +10,8 @@ import utilities.DateValidation;
  * @author Dennis Moe
  */
 public class FridgeItem {
-  private static int idCounter = 1; // Static counter for unique ID assignment.
-  private final int id; // Unique ID for each FridgeItem.
+  private static int idCounter = 1; 
+  private final int id; 
   private final Ingredient ingredient;
   private double quantity;
   private final long expirationDate;
@@ -32,7 +32,7 @@ public class FridgeItem {
     this.expirationDate = expirationDate;
   }
 
-  // Getters
+  
   public int getId() {
     return id;
   }
@@ -53,7 +53,7 @@ public class FridgeItem {
     return DateValidation.formatDate(expirationDate);
   }
 
-  // Setters
+  
   /**
    * Sets the quantity of the ingredient and prints a logging statement.
    *

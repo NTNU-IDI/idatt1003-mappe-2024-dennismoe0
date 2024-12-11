@@ -1,9 +1,0 @@
-No "CentralFridgeList" or manager because there is (as of yet)
-not plan to include more than 1 main storage area.
-
-CentralFoodList is for keeping a registry of ingredients
-and so is CentralRecipeList and CentralCookBooklist.
-
-Use of the word "Central" is simply future-proofing for possible
-collections, differents kitchens etc. They could all be without 
-"central".
