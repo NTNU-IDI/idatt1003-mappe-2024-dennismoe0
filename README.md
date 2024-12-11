@@ -13,8 +13,8 @@ STUDENT ID = 123631
 
 [//]: # "TODO: Write a short description of your project/product here."
 
-It's purpose is to act as a tracker-system for what you have in your fridge/kitchen
-along with the prices, measuring units, quantity and category of those items.
+It's purpose is to act as a tracker system for what you have in your fridge/kitchen
+along with the prices, measuring units, quantity, expiration date and category of those items.
 
 The structure of the application is divided into 4 main parts:
 
@@ -80,56 +80,35 @@ The project should now be public and easily accessed through this link:
 
 - https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
 
-The project should now be public and easily accessed through this link:
-
-- https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
-
 ## How to run the project
 
 [//]: # "TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?"
 
-To be added
+You can simply open the Launch.bat file located in the folder above fridgeApp.
+Alternatively you can execute the command "java -jar fridgeApp.jar" after opening a cmd in the folder.
 
-To be added
+- If you run the project from an IDE the paths to the csv files with return an error, you either need to change the path (remove fridgeApp), or simply not use any imported data and create new ones for the current instance.
 
 ## How to run the tests
 
 [//]: # "TODO: Describe how to run the tests here."
 
-To be added
-
-To be added
+Open the project folder fridgeApp in intellij and run test class you wish to run in Intellij IDEA.
+They're located in fridgeApp/src/test/....
 
 ## References
 
 [//]: # "TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
 Or if you have used code from a website or other source, include a link to the source."
 
-To be added
+Core Java Volume I - Fundamentals 11. edition, Cay S. Horstmann, ISBN-13 978-0-13-516630-7
+https://horstmann.com/corejava/
 
-hashmaps
 https://www.youtube.com/watch?v=H62Jfv1DJlU&t=498s
 
-w3schools hashmaps
 https://www.w3schools.com/java/java_hashmap.asp
 
-w3schools dates
 https://www.w3schools.com/java/java_date.asp
 
-unit testing
-https://www.youtube.com/watch?v=vZm0lHciFsQ
-
-To be added
-
-hashmaps
-https://www.youtube.com/watch?v=H62Jfv1DJlU&t=498s
-
-w3schools hashmaps
-https://www.w3schools.com/java/java_hashmap.asp
-
-w3schools dates
-https://www.w3schools.com/java/java_date.asp
-
-unit testing
 https://www.youtube.com/watch?v=vZm0lHciFsQ
