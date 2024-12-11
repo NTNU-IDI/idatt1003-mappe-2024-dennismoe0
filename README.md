@@ -64,7 +64,7 @@ Any compiled classes are located within the identically named folders of their n
 
 The same goes for the JUnit-test classes which are located inside src/test folder of the main directory.
 
-Any libraries related to testing, such as the hamcrest-core and the junit java-files are located inside the libs folder in the root directory.
+Any libraries related to testing, such as the hamcrest-core and the junit java-files are located inside the lib folder in the root directory.
 
 Any presence of folders such as .idea or .vscode are accidental, but should have been removed by the project's completion.
 
