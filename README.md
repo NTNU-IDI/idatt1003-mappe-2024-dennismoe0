@@ -72,6 +72,9 @@ Any presence of folders such as .idea or .vscode are accidental, but should have
 
 [//]: # "TODO: Include a link to your GitHub repository here."
 
+The project should now be public and easily accessed through this link:
+ - https://github.com/NTNU-IDI/idatt1003-mappe-2024-dennismoe0
+
 ## How to run the project
 
 [//]: # "TODO: Describe how to run your project here. What is the main class? What is the main method?
